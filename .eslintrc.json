@@ -29,8 +29,8 @@
         ],
         "linebreak-style": [
             "error",
-            // "windows"
-            "unix"
+            "windows"
+            // "unix"
         ],
         "no-unused-vars": [
             "error",
@@ -218,10 +218,6 @@
             }
         ],
         "arrow-parens": [
-            "error",
-            "as-needed"
-        ],
-        "arrow-body-style": [
             "error",
             "as-needed"
         ],

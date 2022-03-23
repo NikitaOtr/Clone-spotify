@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export const App = () => {
-    const [ state, setState ] = useState(5);
-
+    const fn = () => {
+        return 5 + 6;
+    };
     return (
-        <>
-            <h1>{state}</h1>
-            <button onClick={() => setState(prev => prev + 1)}></button>
-        </>
+        <h1 className='test'>{fn()}</h1>
     );
 };
