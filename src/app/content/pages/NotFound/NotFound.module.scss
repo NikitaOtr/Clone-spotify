@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+    border-radius: 50px;
+    border: 3px solid white;
+    height: 50px;
+    width: 100px;
+    &__text {
+
+    }
+}

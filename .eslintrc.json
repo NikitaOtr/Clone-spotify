@@ -32,12 +32,6 @@
             "windows"
             // "unix"
         ],
-        "no-unused-vars": [
-            "error",
-            {
-                "caughtErrorsIgnorePattern": "^ignore"
-            }
-        ],
         "semi": [
             "error",
             "always"
