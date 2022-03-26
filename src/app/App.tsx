@@ -6,11 +6,11 @@ import { Aside } from './content/aside/Aside';
 import { Footer } from './content/footer/Footer';
 import { Header } from './content/header/Header';
 
-import { Main } from './content/pages/Main/Main';
-import { Search } from './content/pages/Search/Search';
-import { CollectionItems } from './content/pages/CollectionItems/CollectionItems';
-import { Playlist } from './content/pages/Playlist/Playlist';
-import { NotFound } from './content/pages/NotFound/NotFound';
+import { MainPage } from './content/pages/MainPage/MainPage';
+import { SearchPage } from './content/pages/SearchPage/SearchPage';
+import { CollectionReleasesPage } from './content/pages/CollectionReleasesPage/CollectionReleasesPage';
+import { PlaylistPage } from './content/pages/PlaylistPage/PlaylistPage';
+import { NotFoundPage } from './content/pages/NotFoundPage/NotFoundPage';
 
 export const App = () => {
     return (
@@ -19,11 +19,11 @@ export const App = () => {
             <Aside/>
             <main className='main'>
                 <Routes>
-                    <Route path='/' element={<Main/>}/>
-                    <Route path='/Search' element={<Search/>}/>
-                    <Route path='/Playlist' element={<Playlist/>}/>
-                    <Route path='/CollectionItems' element={<CollectionItems/>}/>
-                    <Route path='*' element={<NotFound/>}/>
+                    <Route path='/' element={<MainPage/>}/>
+                    <Route path='/Search' element={<SearchPage/>}/>
+                    <Route path='/Playlist' element={<PlaylistPage/>}/>
+                    <Route path='/CollectionItems' element={<CollectionReleasesPage/>}/>
+                    <Route path='*' element={<NotFoundPage/>}/>
                 </Routes>
             </main>
             <Footer/>

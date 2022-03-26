@@ -5,7 +5,7 @@ interface IProps {
     children: ReactNode
 }
 
-export const ContainerNoWrap: FC<IProps> = ({ children }) => {
+export const ContainerWrap: FC<IProps> = ({ children }) => {
     return (
         <div className={s.containerWrap}>
             {children}

@@ -1,0 +1,42 @@
+.song {
+    display: grid;
+    grid-template-rows: 50px;
+    grid-template-columns: 16px 5fr 3fr 1fr;
+    gap: 10px;
+    background-color: inherit;
+    border-radius: 10px;
+    padding: 0 20px;
+    cursor: pointer;
+    &__box {
+        justify-self: start;
+        align-self: center;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        &__text {
+            font-size: 16px;
+            font-weight: 600; 
+        }
+        &__img {
+            height: 40px;
+        }
+        &__title {
+            display: flex;
+            flex-direction: column;
+        }
+        &__autors {
+            display: flex;
+            gap: 10px;
+            &__autor {
+            font-weight: 500;
+            color: rgba(255, 255, 255, .8);
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+}
