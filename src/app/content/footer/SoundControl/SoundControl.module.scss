@@ -1,0 +1,25 @@
+.sound {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    &__button {
+        border: none;
+        background-color: inherit;
+        &__img {
+            height: 25px;
+
+        }
+    }
+    &__progressBar {
+        height: 5px;
+        width: 100px;
+        background-color: gray;
+        border-radius: 10px;
+        &__progress {
+            height: 5px;
+            width: 34px;
+            background-color: white;
+            border-radius: 10px;
+        }
+    }
+}
