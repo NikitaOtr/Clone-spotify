@@ -45,7 +45,7 @@
             "always"
         ],
         "camelcase": [
-            "error"
+            "off"
         ],
         "eqeqeq": [
             "error",

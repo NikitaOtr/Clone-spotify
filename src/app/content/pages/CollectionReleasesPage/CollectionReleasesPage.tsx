@@ -19,7 +19,7 @@ export const CollectionReleasesPage = () => {
             <h1 className={s.headline}>Конкретный раздел</h1>
             <ContainerWrap>
                 {releases.map((release, i) =>
-                    <Release key={i} name={release.name} description={release.description} photo={release.img}/>)}
+                    <Release key={i} name={release.name} description={release.description} images={[release.img]}/>)}
             </ContainerWrap>
         </>
     );

@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import s from './Recommendation.module.scss';
 
-import { ContainerNoWrap } from '../ContainerNoWrap/ContainerNoWrap';
+import { ContainerWrap } from '../ContainerWrap/ContainerWrap';
 import { Release } from '../Release/Release';
 
 interface IProps {
-    releases: Array<{name: string, description: string, img: string}>
+    releases: Array<{name: string, description: string, images: Array<any>}>
 }
 
 export const Recommendation: FC<IProps> = ({ releases }) => {
@@ -19,10 +19,10 @@ export const Recommendation: FC<IProps> = ({ releases }) => {
                     className={s.recommendation__headline__all + ' ' + s.hoverEffect}>все</a>
             </div>
 
-            <ContainerNoWrap>
+            <ContainerWrap>
                 {releases.map((release, i) => <Release name={release.name} key={i}
-                    description={release.description} photo={release.img} />)}
-            </ContainerNoWrap>
+                    description={release.description} images={release.images} />)}
+            </ContainerWrap>
         </article>
     );
 };

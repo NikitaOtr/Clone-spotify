@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Recommendation } from '../../../components/Recommendation/Recommendation';
 import { Song } from '../../../components/Song/Song';
+import { search } from './../../../api/api';
 
 import s from './SearchPage.module.scss';
 import img from './../../aside/img/heart.svg';
 
 export const SearchPage = () => {
-    const releases = [
-        { name: 'My Release', description: 'description', img },
-        { name: 'My Release', description: 'description', img },
-        { name: 'My Release', description: 'description', img },
-        { name: 'My Release', description: 'description', img },
-        { name: 'My Release', description: 'description', img },
-        { name: 'My Release', description: 'description', img },
-    ];
+    const [text, setText] = useState('');
+    const [releases, setReleases] = useState([]);
+
+    const test = async () => {
+        const data: any = await search(text);
+        console.log(data.artists.items);
+        setReleases(data.artists.items);
+    };
+
     return (
         <>
             <section>
-                <input className={s.searchInput} type="text" placeholder="Исполнитель, трек или подкаст"/>
+                <input className={s.searchInput} value={text}
+                    onChange={e => setText(e.target.value)} type="text" placeholder="Исполнитель, трек или подкаст"/>
+                <button onClick={test}>search</button>
             </section>
 
-            <h1 className={s.headline + ' ' +  s.spaceTop}>Лучший результат</h1>
+            <h1 className={s.headline}>Лучший результат</h1>
 
-            <section className={s.theBest + ' ' +  s.HoverEffect  + ' ' +  s.SpaceTop}>
+            <section className={s.theBest}>
                 <a className={s.theBest__link} href="./playlist.html">
                     <div className={s.theBest__boxImg}>
                         <img className={s.theBest__boxImg__img} src={img} alt=""/>
@@ -39,7 +43,7 @@ export const SearchPage = () => {
             <Recommendation releases={releases}/>
 
             <section className={s.playList + ' ' + s.spaceTop}>
-                <div className={s.playList__header + s.box}>
+                <div className={s.playList__header + ' ' + s.box}>
                     <div className={s.playList__header__box + ' ' + s.box__item}>
                         <span className={s.playList__header__box__text}>№</span>
                     </div>
@@ -56,7 +60,6 @@ export const SearchPage = () => {
                         <img className={s.playList__header__box__img} src="./images/playlist/time.svg" alt=""/>
                     </div>
                 </div>
-
                 <Song/>
                 <Song/>
                 <Song/>
@@ -65,8 +68,6 @@ export const SearchPage = () => {
                 <Song/>
                 <Song/>
                 <Song/>
-
-
             </section>
         </>
     );

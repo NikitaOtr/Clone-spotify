@@ -25,11 +25,11 @@ export const MainPage = () => {
             </Mixes>
 
             <section className={s.recommendations}>
-                <Recommendation releases={releases}/>
+                {/* <Recommendation releases={releases}/>
 
                 <Recommendation releases={releases}/>
 
-                <Recommendation releases={releases}/>
+                <Recommendation releases={releases}/> */}
             </section>
         </>
     );
