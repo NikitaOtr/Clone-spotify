@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { Recommendation } from '../../../components/Recommendation/Recommendation';
 import { Song } from '../../../components/Song/Song';
-import { search } from './../../../api/api';
+// import { search } from './../../../api/api';
+import { fetch } from '../../../store/Reducers/searchReducer';
 
 import s from './SearchPage.module.scss';
 import img from './../../aside/img/heart.svg';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from './../../../hooks/useAppSelector';
 
 export const SearchPage = () => {
     const [text, setText] = useState('');
-    const [releases, setReleases] = useState([]);
 
-    const test = async () => {
-        const data: any = await search(text);
-        console.log(data.artists.items);
-        setReleases(data.artists.items);
-    };
+    const releases = useAppSelector(state => state.searchReducer.artists);
+    console.log(releases);
+    const dispatch = useDispatch();
 
     return (
         <>
             <section>
                 <input className={s.searchInput} value={text}
                     onChange={e => setText(e.target.value)} type="text" placeholder="Исполнитель, трек или подкаст"/>
-                <button onClick={test}>search</button>
+                <button onClick={() => dispatch(fetch(text))}>search</button>
             </section>
 
             <h1 className={s.headline}>Лучший результат</h1>

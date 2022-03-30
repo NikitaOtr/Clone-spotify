@@ -93,6 +93,9 @@
                 "overrides": {
                     "function": {
                         "after": false
+                    },
+                    "catch": {
+                        "after": false
                     }
                 }
             }

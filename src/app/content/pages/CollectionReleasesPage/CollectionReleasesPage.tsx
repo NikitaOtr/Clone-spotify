@@ -17,10 +17,10 @@ export const CollectionReleasesPage = () => {
     return (
         <>
             <h1 className={s.headline}>Конкретный раздел</h1>
-            <ContainerWrap>
+            {/* <ContainerWrap>
                 {releases.map((release, i) =>
                     <Release key={i} name={release.name} description={release.description} images={[release.img]}/>)}
-            </ContainerWrap>
+            </ContainerWrap> */}
         </>
     );
 };

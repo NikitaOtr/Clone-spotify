@@ -3,9 +3,11 @@ import s from './Recommendation.module.scss';
 
 import { ContainerWrap } from '../ContainerWrap/ContainerWrap';
 import { Release } from '../Release/Release';
+import { IArtist } from './../../store/Reducers/searchReducer';
+
 
 interface IProps {
-    releases: Array<{name: string, description: string, images: Array<any>}>
+    releases: Array<IArtist>
 }
 
 export const Recommendation: FC<IProps> = ({ releases }) => {
@@ -20,8 +22,7 @@ export const Recommendation: FC<IProps> = ({ releases }) => {
             </div>
 
             <ContainerWrap>
-                {releases.map((release, i) => <Release name={release.name} key={i}
-                    description={release.description} images={release.images} />)}
+                {releases.map((release, i) => <Release key={i} item={release}/>)}
             </ContainerWrap>
         </article>
     );
