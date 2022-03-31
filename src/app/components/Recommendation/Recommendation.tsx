@@ -3,11 +3,11 @@ import s from './Recommendation.module.scss';
 
 import { ContainerWrap } from '../ContainerWrap/ContainerWrap';
 import { Release } from '../Release/Release';
-import { IArtist } from './../../store/Reducers/searchReducer';
+import { IDefault } from '../../types/typeSearch';
 
 
 interface IProps {
-    releases: Array<IArtist>
+    releases: Array<IDefault>
 }
 
 export const Recommendation: FC<IProps> = ({ releases }) => {

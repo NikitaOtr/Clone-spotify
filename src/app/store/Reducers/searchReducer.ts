@@ -1,83 +1,52 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { search } from './../../api/api';
-import { tokenInstance } from './../../api/tokenInstance';
+import { StatusEnum } from '../../api/api';
+import { IReturn, searchApi } from '../../api/search';
+import { IArtist, IAlbum, IPlayList, ITrack } from '../../types/typeSearch';
 
-interface IAlbum {
-    id: string,
-    uri: string,
-    href: string,
-    name: string,
-    images: Array<{ url: string }>,
-    release_data: string
-}
-
-
-export interface IArtist {
-    id: string,
-    uri: string,
-    href: string,
-    name: string,
-    images: Array<{ url: string }>,
-}
-
-interface IPlayList {
-    id: string,
-    uri: string,
-    href: string,
-    name: string,
-    images: Array<{ url: string }>,
-    tracks: {
-        href: string
-    }
-}
-
-interface ITrack {
-    id: string,
-    uri: string,
-    href: string,
-    name: string,
-    artists: Array<{name: string, id: string, uri: string, href: string}>,
-    album: {name: string, id: string, uri: string, href: string}
-}
 
 const initialState = {
+    status: StatusEnum.Success,
     albums: [] as Array<IAlbum>,
     artists: [] as Array<IArtist>,
-    episodes: [],
     playlists: [] as Array<IPlayList>,
-    shows: [],
     tracks: [] as Array<ITrack>,
 };
+
+
 
 export const searchReducer = createSlice({
     name: 'searchReducer',
     initialState,
     reducers: {
-        setArtists(state, { payload }: PayloadAction<{artists: Array<IArtist>}>) {
-            state.artists = payload.artists;
+        setData(state, { payload }: PayloadAction<IReturn>) {
+            state.albums = payload.albums.items;
+            state.artists = payload.artists.items;
+            state.playlists = payload.playlists.items;
+            state.tracks = payload.tracks.items;
+
+            state.status = StatusEnum.Success;
+        },
+        setLoading(state) {
+            state.status = StatusEnum.Loading;
+        },
+        setError(state) {
+            state.status = StatusEnum.Error;
         }
     },
 });
 
-const { setArtists } = searchReducer.actions;
+const { setData, setError, setLoading } = searchReducer.actions;
 
 export const fetch = createAsyncThunk(
     'searchReducer/fetchAll',
     async (text: string, { dispatch }) => {
         try {
-            console.log('thunk');
-            const data = await search(text);
-            console.log(data);
-            console.log(data?.artists.items);
-            dispatch(setArtists({ artists: data?.artists.items || [] }));
-        } catch(e: any) {
-            console.log(e?.response);
-            if (e?.response.status === 401) {
-                console.log(e.response.status);
-                await tokenInstance.getToken();
-                const data = await search(text);
-                dispatch(setArtists({ artists: data?.artists.items || [] }));
-            }
+            dispatch(setLoading());
+            const data = await searchApi.search(text);
+            dispatch(setData(data));
+        } catch(e) {
+            dispatch(setError());
+            console.error(e);
         }
     }
 );

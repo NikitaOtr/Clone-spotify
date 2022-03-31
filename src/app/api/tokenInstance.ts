@@ -1,35 +1,25 @@
 import axios from 'axios';
-
-const clientId = '74ad96b2c9074c758e222dd191d1a0b4';
-const clientSecret = '62a4611aefc84095bd35292cb7416229';
+import qs from 'qs';
 
 export const tokenInstance = {
     token: null as null | string,
-    instanceAxios: axios.create({
-        baseURL: 'https://api.spotify.com/v1/',
-        headers: { 'Authorization': 'Bearer 132313' }
-    }),
-
     async getToken() {
-        const response = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
+        const clientId = '74ad96b2c9074c758e222dd191d1a0b4';
+        const clientSecret = 'acc20d172d9746c99ab05f0115d51fc6';
+        const TOKEN_URL = 'https://accounts.spotify.com/api/token';
+        const body = qs.stringify({ 'grant_type': 'client_credentials' });
+        const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
             },
-            body: 'grant_type=client_credentials'
-        });
-        const data = await response.json();
-        this.token = data.access_token;
-        console.log(data);
-        console.log(this.token);
-        this.createInstanceAxios();
-    },
-
-    createInstanceAxios() {
-        this.instanceAxios = axios.create({
-            baseURL: 'https://api.spotify.com/v1/',
-            headers: { 'Authorization': 'Bearer ' + tokenInstance.token }
-        });
+        };
+        try {
+            const response = await axios.post<{access_token: string}>(TOKEN_URL, body, config);
+            console.log(response.data.access_token);
+            this.token = response.data.access_token;
+        } catch(e) {
+            console.log(e);
+        }
     },
 };

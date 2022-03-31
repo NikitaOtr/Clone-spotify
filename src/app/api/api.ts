@@ -1,15 +1,23 @@
 import { tokenInstance } from './tokenInstance';
-import { IArtist } from './../store/Reducers/searchReducer';
+import axios, { AxiosRequestConfig } from 'axios';
 
-export const search = async (text: string) => {
-    console.log(tokenInstance.token);
-    return tokenInstance.instanceAxios
-        .get<{artists: {items: Array<IArtist>}}>(`search?type=artist,album,playlist,track,show,episode&q=${text}`)
-        .then(response => {
-            console.log(response.status);
-            return response.data;
-        });
-};
+export const api = axios.create({
+    baseURL: 'https://api.spotify.com/v1/'
+});
+
+api.interceptors.request.use((config: AxiosRequestConfig) => {
+    config.headers = {
+        'Authorization': `Bearer ${tokenInstance.token}`
+    };
+    return config;
+});
+
+export enum StatusEnum {
+    Loading,
+    Success,
+    Error,
+}
+
 
 // const api = {
 //     token: null,

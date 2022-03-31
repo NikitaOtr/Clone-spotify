@@ -5,6 +5,7 @@ import { Mix } from './Mix/Mix';
 
 import img from './../../aside/img/heart.svg';
 import { Recommendation } from '../../../components/Recommendation/Recommendation';
+import { Loader } from '../../../components/Loader/Loader';
 
 export const MainPage = () => {
     const mixes = [1, 2, 3, 4, 5, 6];
@@ -25,6 +26,7 @@ export const MainPage = () => {
             </Mixes>
 
             <section className={s.recommendations}>
+                <Loader/>
                 {/* <Recommendation releases={releases}/>
 
                 <Recommendation releases={releases}/>

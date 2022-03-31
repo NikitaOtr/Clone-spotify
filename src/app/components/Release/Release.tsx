@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import s from './Release.module.scss';
 
 import img from './../../content/aside/img/heart.svg';
-import { IArtist } from './../../store/Reducers/searchReducer';
+import { IDefault } from '../../types/typeSearch';
 
 interface IProps {
-    item : IArtist;
+    item : IDefault;
 }
 
 export const Release: FC<IProps> = ({ item }) => {

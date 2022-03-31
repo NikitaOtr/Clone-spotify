@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.scss';
+
+import { tokenInstance } from './api/tokenInstance';
 
 import { Aside } from './content/aside/Aside';
 import { Footer } from './content/footer/Footer';
@@ -13,6 +15,11 @@ import { PlaylistPage } from './content/pages/PlaylistPage/PlaylistPage';
 import { NotFoundPage } from './content/pages/NotFoundPage/NotFoundPage';
 
 export const App = () => {
+
+    useEffect(() => {
+        tokenInstance.getToken();
+    }, []);
+
     return (
         <div className='wrapper'>
             <Header/>
