@@ -13,7 +13,6 @@ const initialState = {
 };
 
 
-
 export const searchReducer = createSlice({
     name: 'searchReducer',
     initialState,
@@ -23,7 +22,6 @@ export const searchReducer = createSlice({
             state.artists = payload.artists.items;
             state.playlists = payload.playlists.items;
             state.tracks = payload.tracks.items;
-
             state.status = StatusEnum.Success;
         },
         setLoading(state) {

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Song } from '../Song/Song';
 import s from './Playlist.module.scss';
+import { ITrack } from './../../types/typeSearch';
+import time from './time.svg';
+interface IProps {
+    tracks: Array<ITrack>
+}
 
-
-export const Playlist = () => {
+export const Playlist: FC<IProps> = ({ tracks }) => {
     return (
         <section className={s.playList}>
             <div className={s.playList__header + ' ' + s.box}>
@@ -20,16 +24,10 @@ export const Playlist = () => {
                 </div>
 
                 <div className={s.playList__header__box + ' ' + s.box__item}>
-                    <img className={s.playList__header__box__img} src="./images/playlist/time.svg" alt="" />
+                    <img className={s.playList__header__box__img} src={time} alt="" />
                 </div>
             </div>
-            <Song/>
-            <Song/>
-            <Song/>
-            <Song/>
-            <Song/>
-            <Song/>
-            <Song/>
+            {tracks.map((track, i) => <Song key={track.id} index={i} track={track}/>)}
         </section>
     );
 };

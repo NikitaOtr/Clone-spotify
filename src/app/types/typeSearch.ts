@@ -20,8 +20,13 @@ export interface IPlayList extends IDefault {
     }
 }
 
-export interface ITrack extends IDefault {
-    artists: Array<{ name: string, id: string, uri: string, href: string }>,
-    album: { name: string, id: string, uri: string, href: string }
+export interface ITrack {
+    id: string,
+    uri: string,
+    href: string,
+    name: string,
+    duration_ms: number,
+    artists: Array<IArtist>,
+    album: IAlbum
 }
 

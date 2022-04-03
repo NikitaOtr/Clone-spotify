@@ -20,7 +20,7 @@ export const PlaylistPage = () => {
                 </button>
             </div>
 
-            <Playlist/>
+            {/* <Playlist/> */}
         </>
     );
 };

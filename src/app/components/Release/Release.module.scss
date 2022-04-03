@@ -1,9 +1,8 @@
 .release {
-    display: flex;
     border-radius: 15px;
     background-color: rgba(255, 255, 255, .05);
     &__link {
-        padding: 20px;
+        padding: 15px;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -11,23 +10,30 @@
         gap: 15px;
     }
     &__boxImg {
-        max-width: 200px;
+        width: 100%;
+        padding-bottom: 100%;
+        position: relative;
         &__img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
             width: 100%;
+            height: 100%;
         }
     }
     &__boxText {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        
         &__name {
             font-size: 16px;
             font-weight: 600;
-        }
-        &__description {
-            font-size: 16px;
-            font-weight: 400;
-            opacity: 0.8;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
     &:hover {

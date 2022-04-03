@@ -1,5 +1,6 @@
 import { api } from './api';
 import { IArtist, IAlbum, IPlayList, ITrack }  from './../types/typeSearch';
+import { tokenInstance } from './tokenInstance';
 
 interface ITarget<T> {
     items: Array<T>
@@ -14,7 +15,8 @@ export interface IReturn {
 
 export const searchApi = {
     search(text: string) {
-        return api.get<IReturn>(`search?type=artist,album,playlist,track&q=${text}`)
+        console.log(tokenInstance.token);
+        return api.get<IReturn>(`search?type=artist,album,playlist,track&include_external=audio&q=${text}`)
             .then(response => {
                 console.log(response.data);
                 return response.data;

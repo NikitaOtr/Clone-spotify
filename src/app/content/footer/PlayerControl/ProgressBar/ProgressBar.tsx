@@ -20,7 +20,6 @@ export const ProgressBar : FC<IProps> = ({ audio }) => {
 
     useEffect(() => {
         const callback = () => {
-            console.log(audio.currentTime, audio.duration);
             setTime(audio.currentTime);
             setDuration(audio.duration);
         };

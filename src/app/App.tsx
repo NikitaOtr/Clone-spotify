@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 
-import { tokenInstance } from './api/tokenInstance';
+import { tokenInstance, userToken } from './api/tokenInstance';
 
 import { Aside } from './content/aside/Aside';
 import { Footer } from './content/footer/Footer';
@@ -18,6 +18,12 @@ export const App = () => {
 
     useEffect(() => {
         tokenInstance.getToken();
+        const hash = window.location.search;
+        console.log('hash', hash);
+        if (hash) {
+            userToken.code = hash.split(/[?#&]/).find(elem => elem.startsWith('code='))?.slice(5) || null;
+            userToken && userToken.getToken();
+        }
     }, []);
 
     return (

@@ -1,15 +1,15 @@
-const checkDoubleNumber = (n: number): string => {
-    return n < 10 ? '0' + n : n.toString();
+const convertToTwoValuedForm = (n: number): string => {
+    return n < 10 ? '0' + n.toString() : n.toString();
 };
 
-export const timeFormat = (time: number): string => {
-    if (!time) {
+export const timeFormat = (milliseconds: number): string => {
+    if (!milliseconds) {
         return '00:00';
     }
-    time = Math.round(time);
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${checkDoubleNumber(minutes)}:${checkDoubleNumber(seconds)}`;
+    const seconds = Math.round(milliseconds / 1000);
+    const resultMinutes = Math.floor(seconds / 60);
+    const resultSeconds = seconds % 60;
+    return `${convertToTwoValuedForm(resultMinutes)}:${convertToTwoValuedForm(resultSeconds)}`;
 };
 
 

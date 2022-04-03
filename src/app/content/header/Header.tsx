@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Header.module.scss';
 
 import user from './user.svg';
-import { tokenInstance } from './../../api/tokenInstance';
+import { userToken } from './../../api/tokenInstance';
 
 export const Header = () => {
     return (
@@ -12,7 +12,8 @@ export const Header = () => {
                 <button className={s.history__button + ' ' + s.buttonUp}></button>
             </div>
             <div className={s.user}>
-                <button onClick={() => tokenInstance.getToken()} className={s.user__button}>
+                <a href={userToken.getLink()}>User</a>
+                <button className={s.user__button}>
                     <img className={s.user__button__img} src={user} alt="Аватар пользователя" />
                     <span className={s.user__button__text}>Никита</span>
                 </button>
