@@ -1,20 +1,23 @@
-export interface IDefault {
+interface IImage {
+    url : string
+}
+
+export interface ISearchItem {
     id: string,
-    uri: string,
     href: string,
     name: string,
-    images: Array<{ url: string }>,
+    images: Array<IImage>,
 }
 
-export interface IAlbum extends IDefault {
-    release_data: string
+export interface IAlbum extends ISearchItem {
+    releaseData: string
 }
 
-export interface IArtist extends IDefault {
+export interface IArtist extends ISearchItem {
     name: string
 }
 
-export interface IPlayList extends IDefault {
+export interface IPlayList extends ISearchItem {
     tracks: {
         href: string
     }

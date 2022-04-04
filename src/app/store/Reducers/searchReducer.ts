@@ -3,25 +3,45 @@ import { StatusEnum } from '../../api/api';
 import { IReturn, searchApi } from '../../api/search';
 import { IArtist, IAlbum, IPlayList, ITrack } from '../../types/typeSearch';
 
-
 const initialState = {
     status: StatusEnum.Success,
-    albums: [] as Array<IAlbum>,
-    artists: [] as Array<IArtist>,
-    playlists: [] as Array<IPlayList>,
-    tracks: [] as Array<ITrack>,
+    searchText: '',
+    albums: {
+        items: [] as Array<IAlbum>,
+        href: '',
+    },
+    artists: {
+        items: [] as Array<IArtist>,
+        href: '',
+    },
+    playlists: {
+        items: [] as Array<IPlayList>,
+        href: '',
+    },
+    tracks: {
+        items: [] as Array<ITrack>,
+        href: '',
+    },
 };
-
 
 export const searchReducer = createSlice({
     name: 'searchReducer',
     initialState,
     reducers: {
+        setSearchText(state, { payload }: PayloadAction<{text: string}>) {
+            state.searchText = payload.text;
+        },
         setData(state, { payload }: PayloadAction<IReturn>) {
-            state.albums = payload.albums.items;
-            state.artists = payload.artists.items;
-            state.playlists = payload.playlists.items;
-            state.tracks = payload.tracks.items;
+            state.albums = {
+                ...payload.albums,
+                href: payload.albums.href.slice(34),
+            };
+            state.artists = {
+                ...payload.artists,
+                href: payload.artists.href.slice(34),
+            };
+            state.playlists = payload.playlists;
+            state.tracks = payload.tracks;
             state.status = StatusEnum.Success;
         },
         setLoading(state) {
@@ -33,11 +53,12 @@ export const searchReducer = createSlice({
     },
 });
 
-const { setData, setError, setLoading } = searchReducer.actions;
+const { setData, setError, setLoading, setSearchText } = searchReducer.actions;
 
 export const fetch = createAsyncThunk(
     'searchReducer/fetchAll',
     async (text: string, { dispatch }) => {
+        dispatch(setSearchText({ text }));
         try {
             dispatch(setLoading());
             const data = await searchApi.search(text);

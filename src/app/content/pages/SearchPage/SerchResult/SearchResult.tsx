@@ -11,7 +11,7 @@ import { Error } from '../../../../components/Error/Error';
 
 export const SearchResult = () => {
 
-    const { albums, artists, playlists, tracks, status } = useAppSelector(state => state.searchReducer);
+    const { albums, artists, playlists, tracks, status, searchText } = useAppSelector(state => state.searchReducer);
 
     if (status === StatusEnum.Error) {
         return <Error />;
@@ -23,10 +23,13 @@ export const SearchResult = () => {
 
     return (
         <section>
-            { artists.length ? <Recommendation name={'Артисты'} href={'ad'} releases={artists} /> : null }
-            { albums.length ? <Recommendation name={'Альбомы'} href={'ad'} releases={albums} /> : null }
-            { playlists.length ? <Recommendation name={'Плейлисты'} href={'ad'} releases={playlists} /> : null }
-            { tracks.length ? <Playlist tracks={tracks} /> : null }
+            {/* {artists.items.length ? <Recommendation name={'Артисты'}
+                href={artists.href} releases={artists.items} /> : null } */}
+            { albums.items.length ? <Recommendation name={'Альбомы'} q={searchText}
+                href={albums.href} releases={albums.items} /> : null }
+            {/* { playlists.items.length ? <Recommendation name={'Плейлисты'}
+                href={playlists.href} releases={playlists.items} /> : null }
+            { tracks.items.length ? <Playlist tracks={tracks.items} /> : null } */}
         </section>
     );
 };

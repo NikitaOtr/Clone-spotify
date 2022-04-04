@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { searchReducer } from './Reducers/searchReducer';
+import { collectionReducer } from './Reducers/CollectionReducer';
 
 export const store = configureStore({
     reducer: {
+        [collectionReducer.name]: collectionReducer.reducer,
         [searchReducer.name]: searchReducer.reducer
     },
 });
