@@ -35,7 +35,7 @@ export const App = () => {
                     <Route path='/' element={<MainPage/>}/>
                     <Route path='/Search' element={<SearchPage/>}/>
                     <Route path='/Playlist' element={<PlaylistPage/>}/>
-                    <Route path='/CollectionItems/:type/:q' element={<CollectionReleasesPage/>}/>
+                    <Route path='/CollectionItems/:type/:searchText' element={<CollectionReleasesPage/>}/>
                     <Route path='*' element={<NotFoundPage/>}/>
                 </Routes>
             </main>

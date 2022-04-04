@@ -1,26 +1,11 @@
-interface IImage {
+export interface IImage {
     url : string
 }
-
 export interface ISearchItem {
     id: string,
-    href: string,
     name: string,
     images: Array<IImage>,
-}
-
-export interface IAlbum extends ISearchItem {
-    releaseData: string
-}
-
-export interface IArtist extends ISearchItem {
-    name: string
-}
-
-export interface IPlayList extends ISearchItem {
-    tracks: {
-        href: string
-    }
+    type: string,
 }
 
 export interface ITrack {
@@ -28,8 +13,19 @@ export interface ITrack {
     uri: string,
     href: string,
     name: string,
+    type: string,
     duration_ms: number,
-    artists: Array<IArtist>,
-    album: IAlbum
+    artists: Array<ISearchItem>,
+    album: ISearchItem
 }
 
+export interface ISearchCollectionItems<T = ISearchItem> {
+    items: Array<T>,
+    type: string,
+    name: string,
+}
+
+export type IHistory = {
+    type: string,
+    searchText: string
+}

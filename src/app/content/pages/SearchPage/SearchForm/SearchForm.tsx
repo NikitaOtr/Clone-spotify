@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import s from './SearchForm.module.scss';
 import { useAppActions } from '../../../../hooks/useAppAction';
+import { useAppSelector } from './../../../../hooks/useAppSelector';
 
 export const SearchForm = () => {
-    const [searchText, setSearchText] = useState('');
+    const globalSearchText = useAppSelector(state => state.searchReducer.searchText);
+    const [searchText, setSearchText] = useState(globalSearchText);
     const { fetch } = useAppActions();
     return (
         <section>

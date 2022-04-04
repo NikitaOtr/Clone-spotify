@@ -1,70 +1,66 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { StatusEnum } from '../../api/api';
-import { IReturn, searchApi } from '../../api/search';
-import { IArtist, IAlbum, IPlayList, ITrack } from '../../types/typeSearch';
+import { apiSearch } from '../../api/apiSearch';
+import { ISearchData } from '../../api/apiSearch';
+import { ISearchCollectionItems, ITrack } from './../../types/typeSearch';
 
 const initialState = {
     status: StatusEnum.Success,
     searchText: '',
     albums: {
-        items: [] as Array<IAlbum>,
-        href: '',
-    },
+        items: [],
+        type: 'album',
+        name: 'Альбомы'
+    } as ISearchCollectionItems,
     artists: {
-        items: [] as Array<IArtist>,
-        href: '',
-    },
+        items: [],
+        type: 'artist',
+        name: 'Артисты'
+    } as ISearchCollectionItems,
     playlists: {
-        items: [] as Array<IPlayList>,
-        href: '',
-    },
+        items: [],
+        type: 'playlist',
+        name: 'Плейлисты'
+    } as ISearchCollectionItems,
     tracks: {
-        items: [] as Array<ITrack>,
-        href: '',
-    },
+        items: [],
+        type: 'track',
+        name: 'Треки'
+    } as ISearchCollectionItems<ITrack>,
 };
 
 export const searchReducer = createSlice({
     name: 'searchReducer',
     initialState,
     reducers: {
-        setSearchText(state, { payload }: PayloadAction<{text: string}>) {
-            state.searchText = payload.text;
+        setSearchText(state, { payload }: PayloadAction<{searchText: string}>) {
+            state.searchText = payload.searchText;
         },
-        setData(state, { payload }: PayloadAction<IReturn>) {
-            state.albums = {
-                ...payload.albums,
-                href: payload.albums.href.slice(34),
-            };
-            state.artists = {
-                ...payload.artists,
-                href: payload.artists.href.slice(34),
-            };
-            state.playlists = payload.playlists;
-            state.tracks = payload.tracks;
-            state.status = StatusEnum.Success;
+        setData(state, { payload }: PayloadAction<ISearchData>) {
+            state.albums.items = payload.albums.items;
+            state.artists.items = payload.artists.items;
+            state.playlists.items = payload.playlists.items;
+            state.tracks.items = payload.tracks.items;
         },
-        setLoading(state) {
-            state.status = StatusEnum.Loading;
-        },
-        setError(state) {
-            state.status = StatusEnum.Error;
+        setStatus(state, { payload }: PayloadAction<{status: StatusEnum}>) {
+            state.status = payload.status;
         }
     },
 });
 
-const { setData, setError, setLoading, setSearchText } = searchReducer.actions;
+const { setStatus, setData, setSearchText } = searchReducer.actions;
 
 export const fetch = createAsyncThunk(
     'searchReducer/fetchAll',
-    async (text: string, { dispatch }) => {
-        dispatch(setSearchText({ text }));
+    async (searchText: string, { dispatch }) => {
+        dispatch(setSearchText({ searchText }));
         try {
-            dispatch(setLoading());
-            const data = await searchApi.search(text);
+            dispatch(setStatus({ status: StatusEnum.Loading }));
+            const data = await apiSearch.searchAll(searchText);
             dispatch(setData(data));
+            dispatch(setStatus({ status: StatusEnum.Success }));
         } catch(e) {
-            dispatch(setError());
+            dispatch(setStatus({ status: StatusEnum.Error }));
             console.error(e);
         }
     }
