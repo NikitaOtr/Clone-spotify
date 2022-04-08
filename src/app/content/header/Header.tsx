@@ -1,15 +1,17 @@
 import React from 'react';
 import s from './Header.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 import user from './user.svg';
 import { userToken } from './../../api/tokenInstance';
 
 export const Header = () => {
+    const navigation = useNavigate();
     return (
         <header className={s.header}>
             <div className={s.history}>
-                <button className={s.history__button + ' ' + s.buttonBack}></button>
-                <button className={s.history__button + ' ' + s.buttonUp}></button>
+                <button onClick={() => navigation(-1)} className={s.history__button + ' ' + s.buttonBack}></button>
+                <button onClick={() => navigation(1)} className={s.history__button + ' ' + s.buttonUp}></button>
             </div>
             <div className={s.user}>
                 <a href={userToken.getLink()}>User</a>

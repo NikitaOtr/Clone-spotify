@@ -6,8 +6,6 @@ import { ContainerNoWrap } from '../ContainerNoWrap/ContainerNoWrap';
 import { Release } from '../Release/Release';
 import { ISearchCollectionItems } from '../../types/typeSearch';
 
-
-
 interface IProps {
     releases: ISearchCollectionItems,
     searchText: string,

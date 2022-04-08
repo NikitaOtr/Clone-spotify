@@ -1,26 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import s from './PlaylistPage.module.scss';
+
+import heart from './../../aside/img/heart.svg';
+import btn from './greenBtn.svg';
+
+import { fetchAlbum } from '../../../store/Reducers/playlistReducer';
+
 import { Playlist } from '../../../components/Playlist/Playlist';
+import { useAppSelector } from './../../../hooks/useAppSelector';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchPlayList } from '../../../store/Reducers/playlistReducer';
 
 export const PlaylistPage = () => {
+
+    const dispatch = useDispatch();
+
+    const history = useParams<{type: string, id: string}>();
+
+    useEffect(() => {
+        if (history.type === 'album' && history.id) {
+            console.log('new');
+            dispatch(fetchAlbum(history.id));
+        } else if (history.type === 'playlist' && history.id) {
+            dispatch(fetchPlayList(history.id));
+        }
+    }, []);
+
+    const album = useAppSelector(state => state.playListReducer.album);
+    const status = useAppSelector(state => state.playListReducer.status);
+    console.log(album);
+    if (!album) {
+        return <div>null</div>;
+    }
     return (
         <>
-            <div className="play-list-title">
-                <div className="play-list-title__box-img">
-                    <img className="play-list-title__box-img__img" src="./images/aside/heart.svg" alt=""/>
+            <div className={s.playListTitle}>
+                <div className={s.playListTitle__boxImg}>
+                    <img className={s.playListTitle__boxImg__img} src={album.images[0].url} alt=""/>
                 </div>
-                <div className="play-list-title__box-text">
-                    <h1 className="play-list-title__box-text__name">Любимые треки</h1>
-                    <span className="play-list-title__box-text__count">Количество треков: 172</span>
+                <div className={s.playListTitle__boxText}>
+                    <h1 className={s.playListTitle__boxText__name}>{album.name}</h1>
+                    <span className={s.playListTitle__boxText__count}>Количество треков: {album.total_tracks}</span>
                 </div>
             </div>
 
-            <div className="play-list-btn-play">
-                <button className="play-list-btn-play__btn">
-                    <img className="play-list-btn-play__btn__img" src="./images/greenBtn.svg" alt=""/>
+            <div className={s.playListBtnPlay}>
+                <button className={s.playListBtnPlay__btn}>
+                    <img className={s.playListBtnPlay__btn__img} src={btn} alt=""/>
                 </button>
             </div>
 
-            {/* <Playlist/> */}
+            <Playlist tracks={album.tracks.items}/>
         </>
     );
 };

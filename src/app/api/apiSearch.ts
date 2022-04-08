@@ -28,3 +28,10 @@ export const apiSearch = {
             });
     },
 };
+
+export const Album = {
+    getAlbum(id: string) {
+        return api.get(`albums/${id}`)
+            .then(response => response.data);
+    }
+};

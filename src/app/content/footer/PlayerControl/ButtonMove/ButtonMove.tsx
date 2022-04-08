@@ -2,13 +2,13 @@ import React, { FC } from 'react';
 import s from './ButtonMove.module.scss';
 
 interface IProps {
-    click(): void
+    onClick(): void
     img: string
 }
 
-export const ButtonMove: FC<IProps> = ({ click, img }) => {
+export const ButtonMove: FC<IProps> = ({ onClick, img }) => {
     return (
-        <button onClick={click} className={s.button}>
+        <button onClick={onClick} className={s.button}>
             <img className={s.button__img} src={img} alt="Следующая" />
         </button>
     );

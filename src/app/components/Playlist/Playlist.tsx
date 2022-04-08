@@ -27,7 +27,7 @@ export const Playlist: FC<IProps> = ({ tracks }) => {
                     <img className={s.playList__header__box__img} src={time} alt="" />
                 </div>
             </div>
-            {tracks.map((track, i) => <Song key={track.id} index={i} track={track}/>)}
+            {tracks.map((track, i) => <Song key={track.id} tracks={tracks} index={i} track={track}/>)}
         </section>
     );
 };

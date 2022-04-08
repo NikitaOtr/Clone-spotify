@@ -10,13 +10,14 @@ export interface ISearchItem {
 
 export interface ITrack {
     id: string,
-    uri: string,
-    href: string,
+    uri?: string,
+    href?: string,
     name: string,
     type: string,
+    preview_url: string,
     duration_ms: number,
     artists: Array<ISearchItem>,
-    album: ISearchItem
+    album?: ISearchItem
 }
 
 export interface ISearchCollectionItems<T = ISearchItem> {

@@ -16,7 +16,7 @@ export const tokenInstance = {
     token: null as null | string,
 
     async getToken() {
-        const clientSecret = '528e078bdb564ef6bdb2dc58fc4bb1f1';
+        const clientSecret = '3eb7056b336544b982596cdb85247728';
         const TOKEN_URL = 'https://accounts.spotify.com/api/token';
         const body = qs.stringify({ 'grant_type': 'client_credentials' });
         const config = {
