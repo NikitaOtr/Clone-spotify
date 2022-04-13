@@ -1,7 +1,7 @@
 import React, { VFC, MouseEvent, useEffect } from 'react';
 import s from './ProgressBar.module.scss';
 
-import { timeFormatSeconds } from './../../../../utils/timeFormat';
+import { timeFormatFromSeconds } from './../../../../utils/timeFormat';
 import { useAppSelector } from './../../../../hooks/useAppSelector';
 import { useAppActions } from './../../../../hooks/useAppAction';
 
@@ -28,11 +28,11 @@ export const ProgressBar : VFC<IProps> = ({ audio }) => {
 
     return (
         <div className={s.container}>
-            <span className={s.container__time}>{timeFormatSeconds(currentTime)}</span>
+            <span className={s.container__time}>{timeFormatFromSeconds(currentTime)}</span>
             <div onClick={setProgress} className={s.progressBar}>
                 <div style={{ width: currentTime / duration * 100 + '%' }} className={s.progressBar__progress}></div>
             </div>
-            <span className={s.container__time}>{timeFormatSeconds(duration)}</span>
+            <span className={s.container__time}>{timeFormatFromSeconds(duration)}</span>
         </div>
     );
 };

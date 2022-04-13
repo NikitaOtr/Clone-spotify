@@ -1,7 +1,9 @@
 .sound {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 15px;
+    width: 300px;
     &__button {
         border: none;
         background-color: inherit;

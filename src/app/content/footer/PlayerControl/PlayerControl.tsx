@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export const PlayerControl: VFC<IProps> = ({ audio }) => {
-    const { previousTrack, nextTrack, togglePlaying, setDuration } = useAppActions();
+    const { previousTrack, nextTrack, togglePlaying, setDuration, setPlayerStatus } = useAppActions();
     const isPlaying = useAppSelector(state => state.playerReducer.isPlaying);
     const track = useAppSelector(state => state.playerReducer.track);
 
@@ -26,18 +26,26 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
     }, []);
 
     useEffect(() => {
-        isPlaying ? audio.play() : audio.pause();
-    }, [isPlaying]);
-
-    useEffect(() => {
         audio.addEventListener('ended', () => nextTrack());
         return () => audio.removeEventListener('ended', () => nextTrack());
     }, []);
 
     useEffect(() => {
-        audio.src = track?.preview_url as string;
-        isPlaying ? audio.play() : audio.pause();
+        if (track) {
+            if (track.preview_url) {
+                audio.src = track.preview_url;
+                isPlaying ? audio.play() : audio.pause();
+                setPlayerStatus({ status: 'good' });
+            } else {
+                audio.src = '';
+                setPlayerStatus({ status: 'error' });
+            }
+        }
     }, [track]);
+
+    useEffect(() => {
+        isPlaying ? audio.play() : audio.pause();
+    }, [isPlaying]);
 
     return (
         <div className={s.playerControl}>

@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITrack } from '../../types/typeSearch';
 
+type StatusType = 'good' | 'error';
+
 const initialState = {
     currentTrackIndex: 0,
     playlist: [] as Array<ITrack>,
@@ -9,6 +11,7 @@ const initialState = {
     duration: 0,
     currentTime: 0,
     isPlaying: false,
+    status: 'good' as StatusType,
 
 };
 
@@ -41,6 +44,9 @@ export const playerReducer = createSlice({
         previousTrack(state) {
             state.currentTrackIndex = (state.currentTrackIndex + (state.playlist.length - 1)) % state.playlist.length;
             state.track = state.playlist[state.currentTrackIndex];
+        },
+        setPlayerStatus(state, { payload }: PayloadAction<{status: StatusType }>) {
+            state.status = payload.status;
         }
     },
 });

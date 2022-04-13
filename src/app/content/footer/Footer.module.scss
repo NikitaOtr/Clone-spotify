@@ -1,10 +1,29 @@
-.player {
-    background-color: #181818;
+.footer {
     position: fixed;
     bottom: 0;
+    height: 100px;
     width: 100%;
-    height: 90px;
     display: flex;
-    padding: 15px 30px 15px 24px;
+    flex-direction: column;
+}
+.error {
+    background-color: blue;
+    text-align: center;
+    height: 20px;
+    width: 100%;
+    font-size: 16px;
+}
+.success {
+   background-color: #181818;
+   height: 20px;
+   width: 100%;
+}
+
+.player {
+    background-color: #181818; 
+    width: 100%;
+    height: 80px;
+    display: flex;
+    padding: 5px 30px 15px 24px;
     justify-content: space-between;
 }

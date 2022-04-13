@@ -41,7 +41,6 @@ export const PlaylistPage = () => {
                 </div>
                 <div className={s.playListTitle__boxText}>
                     <h1 className={s.playListTitle__boxText__name}>{album.name}</h1>
-                    <span className={s.playListTitle__boxText__count}>Количество треков: {album.total_tracks}</span>
                 </div>
             </div>
 

@@ -3,14 +3,22 @@ import s from './Footer.module.scss';
 import { MusicTitle } from './MusicTitle/MusicTitle';
 import { PlayerControl } from './PlayerControl/PlayerControl';
 import { SoundControl } from './SoundControl/SoundControl';
+import { useAppSelector } from './../../hooks/useAppSelector';
 
 export const Footer = () => {
     const audio = useMemo(() => new Audio(), []);
+    const status = useAppSelector(state => state.playerReducer.status);
     return (
-        <footer className={s.player}>
-            <MusicTitle/>
-            <PlayerControl audio={audio}/>
-            <SoundControl audio={audio}/>
+        <footer className={s.footer}>
+            {status === 'error'
+                ? <div className={s.error}>Увы, но этот трек невозможно прослушать</div>
+                : <div className={s.success}></div>
+            }
+            <div className={s.player}>
+                <MusicTitle/>
+                <PlayerControl audio={audio}/>
+                <SoundControl audio={audio}/>
+            </div>
         </footer>
     );
 };

@@ -3,7 +3,7 @@ import s from './Song.module.scss';
 
 import img from './../../content/aside/img/heart.svg';
 import { ITrack } from './../../types/typeSearch';
-import { timeFormat } from './../../utils/timeFormat';
+import { timeFormatFromMilliseconds } from './../../utils/timeFormat';
 import { useAppActions } from '../../hooks/useAppAction';
 
 interface IProps {
@@ -22,9 +22,11 @@ export const Song :FC<IProps> = ({ track, index, tracks }) => {
             </div>
 
             <div className={s.song__box}>
-                <div>
-                    <img className={s.song__box__img} src={track?.album?.images[0].url || img} alt=""/>
-                </div>
+                {track.album?.images[0].url &&
+                    <div>
+                        <img className={s.song__box__img} src={track?.album?.images[0].url || img} alt=""/>
+                    </div>
+                }
                 <div className={s.song__box__title}>
                     <span className={s.song__box__text}>{track.name}</span>
                     <div className={s.song__box__autors}>
@@ -40,7 +42,7 @@ export const Song :FC<IProps> = ({ track, index, tracks }) => {
             </div>
 
             <div className={s.song__box}>
-                <span className={s.song__box__text}>{timeFormat(track?.duration_ms || 0)}</span>
+                <span className={s.song__box__text}>{timeFormatFromMilliseconds(track?.duration_ms || 0)}</span>
             </div>
         </article>
     );
