@@ -3,7 +3,7 @@ import s from './Footer.module.scss';
 import { MusicTitle } from './MusicTitle/MusicTitle';
 import { PlayerControl } from './PlayerControl/PlayerControl';
 import { SoundControl } from './SoundControl/SoundControl';
-import { useAppSelector } from './../../hooks/useAppSelector';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 export const Footer = () => {
     const audio = useMemo(() => new Audio(), []);

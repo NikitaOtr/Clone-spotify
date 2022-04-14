@@ -1,9 +1,9 @@
-import React, { VFC, MouseEvent, useEffect } from 'react';
+import React, { VFC, MouseEvent, useEffect, useState } from 'react';
 import s from './ProgressBar.module.scss';
 
-import { timeFormatFromSeconds } from './../../../../utils/timeFormat';
-import { useAppSelector } from './../../../../hooks/useAppSelector';
-import { useAppActions } from './../../../../hooks/useAppAction';
+import { timeFormatFromSeconds } from '../../../../utils/timeFormat';
+import { useAppSelector } from '../../../../hooks/useAppSelector';
+import { useAppActions } from '../../../../hooks/useAppAction';
 
 interface IProps {
     audio: HTMLAudioElement
@@ -13,6 +13,7 @@ export const ProgressBar : VFC<IProps> = ({ audio }) => {
     const duration = useAppSelector(state => state.playerReducer.duration);
     const currentTime = useAppSelector(state => state.playerReducer.currentTime);
     const { setCurrentTime } = useAppActions();
+    const [hover, setHover] = useState(false);
 
     const setProgress = (event: MouseEvent<HTMLDivElement>) => {
         const width = 300;
@@ -29,7 +30,8 @@ export const ProgressBar : VFC<IProps> = ({ audio }) => {
     return (
         <div className={s.container}>
             <span className={s.container__time}>{timeFormatFromSeconds(currentTime)}</span>
-            <div onClick={setProgress} className={s.progressBar}>
+            <div className={`${s.progressBar} ${hover ? s.hover : s.noHover}`} onClick={setProgress}
+                onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 <div style={{ width: currentTime / duration * 100 + '%' }} className={s.progressBar__progress}></div>
             </div>
             <span className={s.container__time}>{timeFormatFromSeconds(duration)}</span>

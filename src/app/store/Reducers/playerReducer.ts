@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITrack } from '../../types/typeSearch';
 
-type StatusType = 'good' | 'error';
+type StatusType = 'success' | 'error';
 
 const initialState = {
     currentTrackIndex: 0,
     playlist: [] as Array<ITrack>,
     track: null as null | ITrack,
+    saveVolume: 0.5,
     volume: 0.5,
     duration: 0,
     currentTime: 0,
     isPlaying: false,
-    status: 'good' as StatusType,
+    status: 'success' as StatusType,
 
 };
 
@@ -29,7 +30,14 @@ export const playerReducer = createSlice({
             state.currentTime = payload.currentTime;
         },
         setVolume(state, { payload }: PayloadAction<{volume: number}>) {
-            state.duration = payload.volume;
+            state.volume = payload.volume;
+        },
+        SaveVolume(state) {
+            state.saveVolume = state.volume;
+            state.volume = 0;
+        },
+        setVolumeFromSaveVolume(state) {
+            state.volume = state.saveVolume;
         },
         setPlaylist(state, { payload }: PayloadAction<{playlist: Array<ITrack>, startIndex?: number}>) {
             state.playlist = payload.playlist;

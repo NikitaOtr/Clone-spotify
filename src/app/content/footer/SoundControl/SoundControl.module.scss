@@ -1,27 +1,48 @@
+@import './../../../Vars.scss';
+@import './../../../hoverEffect.scss';
+
 .sound {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 15px;
     width: 300px;
-    &__button {
-        border: none;
-        background-color: inherit;
-        &__img {
-            height: 25px;
+}
 
-        }
+.button {
+    padding: 0;
+    border: none;
+    background-color: inherit;
+    @extend .hoverEffect;
+    &__img {
+        height: 30px;
     }
-    &__progressBar {
-        height: 5px;
-        width: 100px;
-        background-color: gray;
+}
+
+.progressBar {
+    transition: all 0.3s;
+    cursor: pointer;
+    height: 6px;
+    width: 100px;
+    border-radius: 10px;
+    &__progress {
+        transition: all 0.3s;
+        height: 6px;
+        width: 34px;
         border-radius: 10px;
-        &__progress {
-            height: 5px;
-            width: 34px;
-            background-color: white;
-            border-radius: 10px;
-        }
     }
+}
+
+.noHover {
+    background-color: gray;
+    .progressBar__progress {
+        background-color: white;
+    }
+}
+
+.hover {
+    background-color: rgba(255, 255, 255, 0.6);
+        .progressBar__progress {
+            background-color: $colorGreen;
+        }
 }

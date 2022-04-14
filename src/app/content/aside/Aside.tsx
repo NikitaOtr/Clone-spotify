@@ -5,7 +5,7 @@ import s from './Aside.module.scss';
 
 import logo from './img/LogoSpotify.svg';
 import home from './img/home.svg';
-import heart from './img/heart.svg';
+import heart from './img/book.svg';
 import book from './img/book.svg';
 import add from './img/add.svg';
 import search from './img/search.svg';

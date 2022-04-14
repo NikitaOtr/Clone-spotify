@@ -1,4 +1,6 @@
-.fakePlayer {
+@import './../../../../hoverEffect.scss';
+
+.button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,12 +9,13 @@
     border: 0.2rem solid white;
     border-radius: 50%;
     background-color: inherit;
+    @extend .hoverEffect
 }
-
 
 .play {
     height: 0;
     width: 0;
+    margin-left: 3px;
     background: none;
     border: none;
     border-top: 10px solid transparent;

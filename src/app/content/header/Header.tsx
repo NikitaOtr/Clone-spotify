@@ -3,7 +3,7 @@ import s from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 import user from './user.svg';
-import { userToken } from './../../api/tokenInstance';
+import { userToken } from '../../api/tokenInstance';
 
 export const Header = () => {
     const navigation = useNavigate();

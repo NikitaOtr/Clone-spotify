@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import s from './ButtonPlay.module.scss';
-import { useAppSelector } from './../../../../hooks/useAppSelector';
 
 interface IProps {
     toggle(): void
@@ -9,7 +8,7 @@ interface IProps {
 
 export const ButtonPlay: FC<IProps> = ({ toggle, isPlaying }) => {
     return (
-        <button onClick={() => toggle()} className={s.fakePlayer}>
+        <button onClick={() => toggle()} className={s.button}>
             <div className={isPlaying ? s.pause : s.play }></div>
         </button>
     );

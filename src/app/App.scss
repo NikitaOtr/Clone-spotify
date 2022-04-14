@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
+
 body {
     margin: 0;
 }
@@ -26,6 +27,11 @@ h1 {
 
 span {
     color: white;
+    cursor: default;
+}
+
+button {
+    cursor: pointer;
 }
 
 a {

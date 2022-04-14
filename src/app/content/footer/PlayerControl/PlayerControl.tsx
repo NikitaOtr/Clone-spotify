@@ -1,14 +1,14 @@
 import React, { VFC, useEffect } from 'react';
 import s from './PlayerControl.module.scss';
-import left from './../img/control/left.svg';
-import right from './../img/control/right.svg';
+import left from './img/left.svg';
+import right from './img/right.svg';
 
 import { useAppSelector } from '../../../hooks/useAppSelector';
+import { useAppActions } from './../../../hooks/useAppAction';
 
 import { ButtonPlay } from './ButtonPlay/ButtonPlay';
 import { ButtonMove } from './ButtonMove/ButtonMove';
 import { ProgressBar } from './ProgressBar/ProgressBar';
-import { useAppActions } from './../../../hooks/useAppAction';
 
 interface IProps {
     audio : HTMLAudioElement
@@ -35,7 +35,7 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
             if (track.preview_url) {
                 audio.src = track.preview_url;
                 isPlaying ? audio.play() : audio.pause();
-                setPlayerStatus({ status: 'good' });
+                setPlayerStatus({ status: 'success' });
             } else {
                 audio.src = '';
                 setPlayerStatus({ status: 'error' });
@@ -44,7 +44,9 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
     }, [track]);
 
     useEffect(() => {
-        isPlaying ? audio.play() : audio.pause();
+        if (track && track.preview_url) {
+            isPlaying ? audio.play() : audio.pause();
+        }
     }, [isPlaying]);
 
     return (

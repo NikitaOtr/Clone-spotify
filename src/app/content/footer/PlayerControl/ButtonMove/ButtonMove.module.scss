@@ -1,6 +1,8 @@
+@import './../../../../hoverEffect.scss';
 .button {
     background-color: inherit;
     border: none;
+    @extend .hoverEffect;
     &__img {
         height: 20px;
     }

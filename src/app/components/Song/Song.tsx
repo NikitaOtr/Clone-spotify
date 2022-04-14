@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import s from './Song.module.scss';
 
-import img from './../../content/aside/img/heart.svg';
+// import img from './../../content/aside/img/heart.svg';
 import { ITrack } from './../../types/typeSearch';
 import { timeFormatFromMilliseconds } from './../../utils/timeFormat';
 import { useAppActions } from '../../hooks/useAppAction';
@@ -14,7 +14,6 @@ interface IProps {
 
 export const Song :FC<IProps> = ({ track, index, tracks }) => {
     const { setPlaylist } = useAppActions();
-
     return (
         <article onClick={() => setPlaylist({ playlist: tracks, startIndex: index })} className={s.song}>
             <div className={s.song__box}>
@@ -24,7 +23,7 @@ export const Song :FC<IProps> = ({ track, index, tracks }) => {
             <div className={s.song__box}>
                 {track.album?.images[0].url &&
                     <div>
-                        <img className={s.song__box__img} src={track?.album?.images[0].url || img} alt=""/>
+                        <img className={s.song__box__img} src={track?.album?.images[0].url || ''} alt=""/>
                     </div>
                 }
                 <div className={s.song__box__title}>

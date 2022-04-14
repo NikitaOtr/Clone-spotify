@@ -4,9 +4,9 @@ import './App.scss';
 
 import { tokenInstance, userToken } from './api/tokenInstance';
 
-import { Aside } from './content/aside/Aside';
-import { Footer } from './content/footer/Footer';
-import { Header } from './content/header/Header';
+import { Aside } from './content/Aside/Aside';
+import { Footer } from './content/Footer/Footer';
+import { Header } from './content/Header/Header';
 
 import { MainPage } from './content/pages/MainPage/MainPage';
 import { SearchPage } from './content/pages/SearchPage/SearchPage';
