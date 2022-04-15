@@ -15,9 +15,12 @@
             font-size: 14px;
             font-weight: 600;
         }
-        &__autor {
-            font-size: 10px;
+        &__author {
+            font-size: 12px;
             font-weight: 400;
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }

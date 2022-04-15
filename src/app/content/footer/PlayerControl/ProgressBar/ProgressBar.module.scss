@@ -1,10 +1,11 @@
-@import './../../../../Vars.scss';
+@import './../../../../Style/Vars.scss';
 
 .container {
     display: flex;
     align-items: center;
     gap: 15px;
     &__time {
+        cursor: default;
         font-size: 14px;
         font-weight: 600;
     }
@@ -33,7 +34,7 @@
 }
 
 .hover {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: white;
         .progressBar__progress {
             background-color: $colorGreen;
         }

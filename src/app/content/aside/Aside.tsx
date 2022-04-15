@@ -1,17 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import s from './Aside.module.scss';
 
-
 import logo from './img/LogoSpotify.svg';
-import home from './img/home.svg';
-import heart from './img/book.svg';
-import book from './img/book.svg';
-import add from './img/add.svg';
-import search from './img/search.svg';
-
+import { ReactComponent as Home } from './img/home.svg';
+import { ReactComponent as Heart } from './img/heart.svg';
+import { ReactComponent as Book } from './img/book.svg';
+import { ReactComponent as Add } from './img/add.svg';
+import { ReactComponent as Search } from './img/search.svg';
 
 export const Aside = () => {
+
+    const setActiveClass = ({ isActive }: { isActive: boolean}): string => {
+        return `${s.navigation__link} ${isActive ? s.active : ''}`;
+    };
+
     return (
         <aside className={s.aside}>
             <div className={s.containerLink}>
@@ -22,64 +25,42 @@ export const Aside = () => {
 
             <nav className={s.navigation}>
                 <div className={s.containerLink}>
-                    <Link className={s.navigation__link} to='/'>
-                        <img className={s.navigation__img} src={home} alt="Домик"/>
+                    <NavLink className={setActiveClass} to='/'>
+                        <Home className={s.navigation__img}/>
                         <span className={s.navigation__text}>Главная</span>
-                    </Link>
+                    </NavLink>
                 </div>
 
                 <div className={s.containerLink}>
-                    <Link className={s.navigation__link} to='/Search'>
-                        <img className={s.navigation__img} src={search} alt="Лупа"/>
+                    <NavLink className={setActiveClass} to='/Search'>
+                        <Search className={s.navigation__img}/>
                         <span className={s.navigation__text}>Поиск</span>
-                    </Link>
+                    </NavLink>
                 </div>
 
                 <div className={s.containerLink}>
-                    <Link className={s.navigation__link} to='/CollectionItems'>
-                        <img className={s.navigation__img} src={book} alt="Медиатека" />
+                    <NavLink className={setActiveClass} to='/CollectionItems'>
+                        <Book className={s.navigation__img}/>
                         <span className={s.navigation__text}>Медиатека</span>
-                    </Link>
+                    </NavLink>
+                </div>
+
+                <div className={s.containerLink}>
+                    <NavLink className={setActiveClass} to='/adfsfad'>
+                        <Add className={s.navigation__img}/>
+                        <span className={s.navigation__text}>Поиск</span>
+                    </NavLink>
+                </div>
+
+                <div className={s.containerLink}>
+                    <NavLink className={setActiveClass} to='/sfasdfasdfa'>
+                        <Heart className={s.navigation__img}/>
+                        <span className={s.navigation__text}>Медиатека</span>
+                    </NavLink>
                 </div>
             </nav>
 
-            <div className={s.asideOptions}>
-                <div className={s.containerLink}>
-                    <Link className={s.asideOptions__link} to='/CollectionItems'>
-                        <img className={s.asideOptions__img} src={add} alt="Плюсик" />
-                        <span className={s.asideOptions__text}>Создать плейлист</span>
-                    </Link>
-                </div>
-
-                <div className={s.containerLink}>
-                    <Link className={s.asideOptions__link} to='/Playlist'>
-                        <img className={s.asideOptions__img} src={heart} alt="Сердечко" />
-                        <span className={s.asideOptions__text}>Любимые треки</span>
-                    </Link>
-                </div>
-            </div>
-
             <div className={s.aside__line}></div>
-
-            <div className={s.playlists}>
-                <div className={s.containerLink}>
-                    <Link className={s.playlists__link} to='/Playlist'>
-                        <span className={s.playlists__text}>Плейлист для прослушивания длинный</span>
-                    </Link>
-                </div>
-
-                <div className={s.containerLink}>
-                    <Link className={s.playlists__link} to='/Playlist'>
-                        <span className={s.playlists__text}>Плейлист №2</span>
-                    </Link>
-                </div>
-
-                <div className={s.containerLink}>
-                    <Link className={s.playlists__link} to='/Playlist'>
-                        <span className={s.playlists__text}>Плейлист №2</span>
-                    </Link>
-                </div>
-            </div>
         </aside>
     );
 };

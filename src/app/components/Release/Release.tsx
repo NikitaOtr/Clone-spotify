@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import s from './Release.module.scss';
 
-import question from './question.svg';
+import question from './../../img/question.svg';
 import { ISearchItem } from '../../types/typeSearch';
 
 interface IProps {

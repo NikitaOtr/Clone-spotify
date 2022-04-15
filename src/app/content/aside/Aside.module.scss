@@ -1,3 +1,6 @@
+@import './../../Style/Vars.scss';
+@import './../../Style/hoverEffect.scss';
+
 .aside {
     display: flex;
     flex-direction: column;
@@ -14,6 +17,7 @@
 
 .containerLink {
     display: flex;
+    @extend .hoverEffect;
 }
 
 .logo {
@@ -27,6 +31,7 @@
 
 .navigation {
     &__link {
+        transition: all .3s;
         flex: 1;
         display: flex;
         align-items: center;
@@ -45,42 +50,10 @@
     }
 }
 
-.asideOptions {
-    &__link {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 0 24px;
-        z-index: 50;
-        height: 35px;
-    }
-    &__img {
-        height: 20px;
-        width: 20px;
-    }
-    &__text {
-        font-size: 16px;
-        font-weight: 400;
+.active {
+    color: $colorGreen;
+    .navigation__img * {
+        fill: $colorGreen;
     }
 }
 
-.playlists {
-     &__link {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 0 24px;
-        z-index: 50;
-        height: 30px;
-    }
-    &__text {
-        width: 202px;
-        font-size: 14px;
-        font-weight: 300;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-}
