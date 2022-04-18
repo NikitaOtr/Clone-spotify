@@ -1,22 +1,31 @@
+@import './../../Style/Vars.scss';
+
 .recommendation {
-    &__headline {
-        padding: 20px 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        &__header {
-            font-size: 28px;
-            font-weight: 600;
-            &:hover {
-                text-decoration: underline;
-            }
+    margin-bottom: 30px;
+}
+
+ .headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    &__header {
+        margin: 0;
+        transition: all 0.2s;
+        font-size: 28px;
+        font-weight: 600;
+        &:hover {
+            text-decoration: underline;
+            color: $colorGreen;
         }
-        &__all {
-            font-size: 16px;
-            font-weight: 600;
-             &:hover {
-                text-decoration: underline;
-            }
+    }
+    &__all {
+        transition: all 0.2s;
+        font-size: 16px;
+        font-weight: 600;
+        &:hover {
+            text-decoration: underline;
+            color: $colorGreen;
         }
     }
 }

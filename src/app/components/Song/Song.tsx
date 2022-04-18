@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import s from './Song.module.scss';
 
 // import img from './../../content/aside/img/heart.svg';
@@ -23,25 +24,31 @@ export const Song :FC<IProps> = ({ track, index, tracks }) => {
             <div className={s.song__box}>
                 {track.album?.images[0].url &&
                     <div>
-                        <img className={s.song__box__img} src={track?.album?.images[0].url || ''} alt=""/>
+                        <img className={s.song__box__img} src={track?.album?.images[0].url} alt=""/>
                     </div>
                 }
                 <div className={s.song__box__title}>
                     <span className={s.song__box__text}>{track.name}</span>
-                    <div className={s.song__box__autors}>
-                        {track?.artists?.map(artist => (
-                            <a key={artist.id} className={s.song__box__autors__autor}>{artist.name}</a>
+                    <div className={s.song__box__authors}>
+                        {track?.artists.map(artist => (
+                            <Link onClick={e => e.stopPropagation()} to={`/Artist/${artist.id}`}
+                                key={artist.id} className={s.song__box__authors__author}>
+                                {artist.name}
+                            </Link>
                         ))}
                     </div>
                 </div>
             </div>
 
             <div className={s.song__box}>
-                <span className={s.song__box__text}>{track?.album?.name}</span>
+                <Link onClick={e => e.stopPropagation()} className={s.song__box__album}
+                    to={`/Playlist/album/${track?.album?.id}`}>
+                    {track?.album?.name}
+                </Link>
             </div>
 
             <div className={s.song__box}>
-                <span className={s.song__box__text}>{timeFormatFromMilliseconds(track?.duration_ms || 0)}</span>
+                <span className={s.song__box__text}>{timeFormatFromMilliseconds(track.duration_ms)}</span>
             </div>
         </article>
     );

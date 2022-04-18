@@ -5,9 +5,9 @@ import { SearchResult } from './SerchResult/SearchResult';
 
 export const SearchPage = () => {
     return (
-        <>
+        <div>
             <SearchForm/>
             <SearchResult/>
-        </>
+        </div>
     );
 };

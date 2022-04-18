@@ -1,46 +1,50 @@
 import React, { useEffect } from 'react';
 import s from './PlaylistPage.module.scss';
 
-import heart from './../../aside/img/heart.svg';
 import btn from './greenBtn.svg';
 
-import { fetchAlbum } from '../../../store/Reducers/playlistReducer';
+import { StatusEnum } from '../../../api/api';
+
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from './../../../hooks/useAppSelector';
+import { useAppActions } from '../../../hooks/useAppAction';
 
 import { Playlist } from '../../../components/Playlist/Playlist';
-import { useAppSelector } from './../../../hooks/useAppSelector';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { fetchPlayList } from '../../../store/Reducers/playlistReducer';
+import { Error } from '../../../components/Error/Error';
+import { Loader } from '../../../components/Loader/Loader';
+import { TypePlaylistEnum } from '../../../types/typePlaylist';
 
 export const PlaylistPage = () => {
+    const playlist = useAppSelector(state => state.playListReducer.playlist);
+    const status = useAppSelector(state => state.playListReducer.status);
 
-    const dispatch = useDispatch();
+    const { fetchPlaylist } = useAppActions();
 
-    const history = useParams<{type: string, id: string}>();
+    const history = useParams<{type: TypePlaylistEnum, id: string}>();
 
     useEffect(() => {
-        if (history.type === 'album' && history.id) {
-            console.log('new');
-            dispatch(fetchAlbum(history.id));
-        } else if (history.type === 'playlist' && history.id) {
-            dispatch(fetchPlayList(history.id));
+        window.scrollTo(0, 0);
+        if (history.type && history.id) {
+            fetchPlaylist({ id: history.id, type: history.type });
         }
-    }, []);
+    }, [history]);
 
-    const album = useAppSelector(state => state.playListReducer.album);
-    const status = useAppSelector(state => state.playListReducer.status);
-    console.log(album);
-    if (!album) {
-        return <div>null</div>;
+    if (status === StatusEnum.Error) {
+        return <Error/>;
     }
+
+    if (status === StatusEnum.Loading || !playlist) {
+        return <Loader/>;
+    }
+
     return (
-        <>
+        <div>
             <div className={s.playListTitle}>
                 <div className={s.playListTitle__boxImg}>
-                    <img className={s.playListTitle__boxImg__img} src={album.images[0].url} alt=""/>
+                    <img className={s.playListTitle__boxImg__img} src={playlist.images[0].url} alt=""/>
                 </div>
                 <div className={s.playListTitle__boxText}>
-                    <h1 className={s.playListTitle__boxText__name}>{album.name}</h1>
+                    <h1 className={s.playListTitle__boxText__name}>{playlist.name}</h1>
                 </div>
             </div>
 
@@ -50,7 +54,7 @@ export const PlaylistPage = () => {
                 </button>
             </div>
 
-            <Playlist tracks={album.tracks.items}/>
-        </>
+            <Playlist tracks={playlist.tracks.items}/>
+        </div>
     );
 };

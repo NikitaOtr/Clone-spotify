@@ -1,11 +1,18 @@
 export interface IImage {
     url : string
 }
+
+export enum EnumSearchType {
+    album = 'album',
+    artist = 'artist',
+    playlist = 'playlist',
+}
+
 export interface ISearchItem {
     id: string,
     name: string,
     images: Array<IImage>,
-    type: string,
+    type: EnumSearchType,
 }
 
 export interface ITrack {
@@ -18,15 +25,4 @@ export interface ITrack {
     duration_ms: number,
     artists: Array<ISearchItem>,
     album?: ISearchItem
-}
-
-export interface ISearchCollectionItems<T = ISearchItem> {
-    items: Array<T>,
-    type: string,
-    name: string,
-}
-
-export type IHistory = {
-    type: string,
-    searchText: string
 }

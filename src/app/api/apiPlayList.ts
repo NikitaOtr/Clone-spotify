@@ -1,25 +1,11 @@
 import { api } from './api';
-import { ITrack, IImage, ISearchItem } from './../types/typeSearch';
+import { ITrack, IImage } from './../types/typeSearch';
+import { IPlayList } from './../types/typePlaylist';
 
-export interface TestAlbum {
+export interface ServerPlayList {
     id: string,
     name: string,
     images: Array<IImage>,
-    artists: Array<ISearchItem>,
-    release_data: string,
-    total_tracks: number,
-    tracks: {
-        items: Array<ITrack>,
-    }
-}
-
-export interface TestPlayList {
-    id: string,
-    name: string,
-    images: Array<IImage>,
-    artists: Array<ISearchItem>,
-    release_data: string,
-    total_tracks: number,
     tracks: {
         items: Array<{track : ITrack}>
     }
@@ -27,11 +13,18 @@ export interface TestPlayList {
 
 export const apiPlayList = {
     getAlbum(id: string) {
-        return api.get<TestAlbum>(`albums/${id}`)
+        return api.get<IPlayList>(`albums/${id}`)
             .then(response => response.data);
     },
+
     getPlayList(id: string) {
-        return api.get<TestPlayList>(`playlists/${id}`)
-            .then(response => response.data);
+        return api.get<ServerPlayList>(`playlists/${id}`)
+            .then(response => response.data)
+            .then(data => ({
+                ...data,
+                tracks: {
+                    items: data.tracks.items.map(item => item.track)
+                },
+            }));
     }
 };

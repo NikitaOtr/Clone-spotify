@@ -1,3 +1,5 @@
+@import './../../Style/hoverEffect.scss';
+
 .header {
     position: fixed;
     left: 250px;
@@ -21,6 +23,7 @@
         position: relative;
         border-radius: 100%;
         border: 2px solid white;
+        @extend .hoverEffect;
     }
 }
 
@@ -51,31 +54,5 @@
         border-left: 4px solid white;
         border-bottom: 4px solid white;
         transform: rotate(-135deg);
-    }
-}
-
-.user {
-    display: flex;
-    gap: 30px;
-    &__button {
-        padding: 3px 10px 3px 3px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        border-radius: 500px;
-        text-align: center;
-        background-color: black;
-        color: inherit;
-        border: 3px white solid;
-        &__img {
-            background-color: gray;
-            height: 30px;
-            border-radius: 100%;
-            }
-        &__text {
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
-        }
     }
 }

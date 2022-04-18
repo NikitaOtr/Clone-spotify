@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: 15px;
-    width: 300px;
+    width: 200px;
 }
 
 .button {
@@ -15,7 +15,13 @@
     background-color: inherit;
     @extend .hoverEffect;
     &__img {
+        transition: all 0.2s;
         height: 30px;
+    }
+    &:active {
+        .button__img {
+            height: 27px;
+        }
     }
 }
 

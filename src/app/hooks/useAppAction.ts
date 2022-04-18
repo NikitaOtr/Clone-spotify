@@ -1,12 +1,19 @@
-import { bindActionCreators } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import { searchReducerAction } from './../store/Reducers/searchReducer';
-import { fetch } from './../store/Reducers/searchReducer';
+import { bindActionCreators } from '@reduxjs/toolkit';
+
+import { fetchAll } from './../store/Reducers/searchReducer';
+import { fetchCollection, fetchT } from './../store/Reducers/collectionReducer';
+import { fetchPlaylist } from './../store/Reducers/playlistReducer';
+import { fetchArtist } from '../store/Reducers/artistReducer';
+
 import { playerReducerActions } from '../store/Reducers/playerReducer';
 
 const allActions = {
-    fetch,
-    ...searchReducerAction,
+    fetchAll,
+    fetchCollection,
+    fetchPlaylist,
+    fetchArtist,
+    fetchT,
     ...playerReducerActions,
 };
 

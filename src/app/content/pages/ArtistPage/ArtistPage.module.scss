@@ -1,0 +1,22 @@
+.playListTitle {
+    display: flex;
+    gap: 50px;
+    &__boxImg {
+        max-width: 300px;
+        max-height: 300px;
+        &__img {
+            height: 300px
+        }
+    }
+    &__boxText {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 20px;
+        &__name {
+            font-size: 42px;
+            font-weight: 700;
+        }
+    }
+}

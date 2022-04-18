@@ -13,25 +13,22 @@ export interface ISearchData {
 }
 
 export const apiSearch = {
-    searchAll(text: string) {
+    getAll(text: string) {
         return api.get<ISearchData>(`search?type=album,artist,playlist,track&q=${text}&limit=10`)
-            .then(response => {
-                console.log(response.data);
-                return response.data;
-            });
-    },
-    searchForType(type: string, searchText: string) {
-        return api.get<ISearchData>(`search?type=${type}&q=${searchText}&limit=50`)
-            .then(response => {
-                console.log(response.data);
-                return response.data;
-            });
-    },
-};
-
-export const Album = {
-    getAlbum(id: string) {
-        return api.get(`albums/${id}`)
             .then(response => response.data);
-    }
+    },
+
+    getPlaylists(searchText: string) {
+        return api.get<ISearchData>(`search?type=playlist&q=${searchText}&limit=50`)
+            .then(response => response.data.playlists);
+    },
+
+    getAlbums(searchText: string) {
+        return api.get<ISearchData>(`search?type=album&q=${searchText}&limit=50`)
+            .then(response => response.data.albums);
+    },
+    getArtists(searchText: string) {
+        return api.get<ISearchData>(`search?type=artist&q=${searchText}&limit=50`)
+            .then(response => response.data.artists);
+    },
 };

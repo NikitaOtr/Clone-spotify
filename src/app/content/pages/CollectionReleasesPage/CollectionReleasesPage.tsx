@@ -1,32 +1,38 @@
 import React, { useEffect } from 'react';
-import { ContainerWrap } from '../../../components/ContainerWrap/ContainerWrap';
 import s from './CollectionReleasesPage.module.scss';
 
-import { useDispatch } from 'react-redux';
-
 import { useParams } from 'react-router-dom';
-
-import { fetchCollection } from '../../../store/Reducers/collectionReducer';
-
-import { Release } from '../../../components/Release/Release';
 import { useAppSelector } from './../../../hooks/useAppSelector';
-import { IHistory } from './../../../types/typeSearch';
+import { useAppActions } from '../../../hooks/useAppAction';
+
 import { StatusEnum } from '../../../api/api';
 
+import { ContainerWrap } from '../../../components/ContainerWrap/ContainerWrap';
+import { Release } from '../../../components/Release/Release';
 import { Loader } from '../../../components/Loader/Loader';
 import { Error } from '../../../components/Error/Error';
+import { EnumSearchType } from '../../../types/typeSearch';
 
 export const CollectionReleasesPage = () => {
+    const status = useAppSelector(state => state.collectionReducer.status);
+    const collection = useAppSelector(state => state.collectionReducer.collection);
 
-    const dispatch = useDispatch();
+    const { fetchCollection, fetchT } = useAppActions();
+    const history = useParams<{type: EnumSearchType, searchText: string, id: string}>();
 
-    const { collection, status } = useAppSelector(state => state.collectionReducer);
-
-    const history = useParams<IHistory>();
+    const TranslateSearchType = {
+        'album': 'Альбомы',
+        'artist': 'Артисты',
+        'playlist': 'Плейлисты'
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchCollection(history as IHistory));
+        if (history.type && history.searchText) {
+            fetchCollection({ searchText: history.searchText, type: history.type });
+        } else if (history.id && history.type) {
+            fetchT({ id: history.id, type: history.type });
+        }
     }, []);
 
     if (status === StatusEnum.Loading) {
@@ -38,12 +44,16 @@ export const CollectionReleasesPage = () => {
     }
 
     return (
-        <>
-            <h1 className={s.headline}>Конкретный раздел</h1>
+        <div>
+            {history.type && history.searchText
+                && <h1 className={s.headline}>
+                    {`${TranslateSearchType[history.type]} по запросу: ${history.searchText}`}
+                </h1>
+            }
             <ContainerWrap>
                 {collection.map(item =>
                     <Release key={item.id} item={item}/>)}
             </ContainerWrap>
-        </>
+        </div>
     );
 };

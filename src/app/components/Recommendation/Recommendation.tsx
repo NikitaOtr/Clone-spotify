@@ -4,28 +4,36 @@ import { Link } from 'react-router-dom';
 
 import { ContainerNoWrap } from '../ContainerNoWrap/ContainerNoWrap';
 import { Release } from '../Release/Release';
-import { ISearchCollectionItems } from '../../types/typeSearch';
+import { ISearchItem, EnumSearchType } from '../../types/typeSearch';
 
 interface IProps {
-    releases: ISearchCollectionItems,
-    searchText: string,
+    title: string,
+    releases: Array<ISearchItem>,
+
+    searchType?: EnumSearchType,
+    searchText?: string,
+
+    id?: string,
 }
 
-export const Recommendation: FC<IProps> = ({ releases, searchText }) => {
+export const Recommendation: FC<IProps> = ({ title, releases, searchType, searchText, id }) => {
+    const href = id
+        ? `/CollectionItems/artist/${searchType}/${id}`
+        : `/CollectionItems/${searchType}/${searchText}`;
+
     return (
         <article className={s.recommendation}>
-            <div className={s.recommendation__headline}>
-                <h2 className={s.recommendation__headline__header + ' ' + s.hoverEffect}>
-                    <Link to={`/CollectionItems/${releases.type}/${searchText}`}>{releases.name}</Link>
-                </h2>
-                <Link to={`/CollectionItems/${releases.type}/${searchText}`}
-                    className={s.recommendation__headline__all + ' ' + s.hoverEffect}>
+            <div className={s.headline}>
+                <Link className={s.headline__header} to={href}>
+                    {title}
+                </Link>
+                <Link className={s.headline__all} to={href}>
                     все
                 </Link>
             </div>
 
             <ContainerNoWrap>
-                {releases.items.map((release, i) => <Release key={i} item={release}/>)}
+                {releases.map(release => <Release key={release.id} item={release}/>)}
             </ContainerNoWrap>
         </article>
     );

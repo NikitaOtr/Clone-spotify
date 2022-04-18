@@ -13,6 +13,7 @@ import { SearchPage } from './content/pages/SearchPage/SearchPage';
 import { CollectionReleasesPage } from './content/pages/CollectionReleasesPage/CollectionReleasesPage';
 import { PlaylistPage } from './content/pages/PlaylistPage/PlaylistPage';
 import { NotFoundPage } from './content/pages/NotFoundPage/NotFoundPage';
+import { ArtistPage } from './content/pages/ArtistPage/ArtistPage';
 
 export const App = () => {
 
@@ -36,6 +37,8 @@ export const App = () => {
                     <Route path='/Search' element={<SearchPage/>}/>
                     <Route path='/Playlist/:type/:id' element={<PlaylistPage/>}/>
                     <Route path='/CollectionItems/:type/:searchText' element={<CollectionReleasesPage/>}/>
+                    <Route path='/CollectionItems/artist/:type/:id/' element={<CollectionReleasesPage/>} />
+                    <Route path='/Artist/:id' element={<ArtistPage/>}/>
                     <Route path='*' element={<NotFoundPage/>}/>
                 </Routes>
             </main>

@@ -2,31 +2,15 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { StatusEnum } from '../../api/api';
 import { apiSearch } from '../../api/apiSearch';
 import { ISearchData } from '../../api/apiSearch';
-import { ISearchCollectionItems, ITrack } from './../../types/typeSearch';
+import { ISearchItem, ITrack } from './../../types/typeSearch';
 
 const initialState = {
     status: StatusEnum.Success,
     searchText: '',
-    albums: {
-        items: [],
-        type: 'album',
-        name: 'Альбомы'
-    } as ISearchCollectionItems,
-    artists: {
-        items: [],
-        type: 'artist',
-        name: 'Артисты'
-    } as ISearchCollectionItems,
-    playlists: {
-        items: [],
-        type: 'playlist',
-        name: 'Плейлисты'
-    } as ISearchCollectionItems,
-    tracks: {
-        items: [],
-        type: 'track',
-        name: 'Треки'
-    } as ISearchCollectionItems<ITrack>,
+    albums: [] as Array<ISearchItem>,
+    artists: [] as Array<ISearchItem>,
+    playlists: [] as Array<ISearchItem>,
+    tracks: [] as Array<ITrack>,
 };
 
 export const searchReducer = createSlice({
@@ -36,12 +20,14 @@ export const searchReducer = createSlice({
         setSearchText(state, { payload }: PayloadAction<{searchText: string}>) {
             state.searchText = payload.searchText;
         },
+
         setData(state, { payload }: PayloadAction<ISearchData>) {
-            state.albums.items = payload.albums.items;
-            state.artists.items = payload.artists.items;
-            state.playlists.items = payload.playlists.items;
-            state.tracks.items = payload.tracks.items;
+            state.albums = payload.albums.items;
+            state.artists = payload.artists.items;
+            state.playlists = payload.playlists.items;
+            state.tracks = payload.tracks.items;
         },
+
         setStatus(state, { payload }: PayloadAction<{status: StatusEnum}>) {
             state.status = payload.status;
         }
@@ -50,13 +36,13 @@ export const searchReducer = createSlice({
 
 const { setStatus, setData, setSearchText } = searchReducer.actions;
 
-export const fetch = createAsyncThunk(
+export const fetchAll = createAsyncThunk(
     'searchReducer/fetchAll',
     async (searchText: string, { dispatch }) => {
         dispatch(setSearchText({ searchText }));
         try {
             dispatch(setStatus({ status: StatusEnum.Loading }));
-            const data = await apiSearch.searchAll(searchText);
+            const data = await apiSearch.getAll(searchText);
             dispatch(setData(data));
             dispatch(setStatus({ status: StatusEnum.Success }));
         } catch(e) {
@@ -65,5 +51,3 @@ export const fetch = createAsyncThunk(
         }
     }
 );
-
-export const searchReducerAction = searchReducer.actions;
