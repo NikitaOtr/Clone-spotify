@@ -50,7 +50,10 @@ export const SearchResult = () => {
                 : null
             }
 
-            { tracks.length ? <Playlist tracks={tracks}/> : null }
+            { tracks.length
+                ? <Playlist tracks={tracks}/>
+                : null
+            }
         </section>
     );
 };

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import s from './CollectionReleasesPage.module.scss';
+import s from './CollectionPage.module.scss';
 
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from './../../../hooks/useAppSelector';
+import { useAppSelector } from '../../../hooks/useAppSelector';
 import { useAppActions } from '../../../hooks/useAppAction';
 
 import { StatusEnum } from '../../../api/api';
@@ -28,6 +28,7 @@ export const CollectionReleasesPage = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        console.log(history);
         if (history.type && history.searchText) {
             fetchCollection({ searchText: history.searchText, type: history.type });
         } else if (history.id && history.type) {
@@ -51,8 +52,7 @@ export const CollectionReleasesPage = () => {
                 </h1>
             }
             <ContainerWrap>
-                {collection.map(item =>
-                    <Release key={item.id} item={item}/>)}
+                {collection.map(item => <Release key={item.id} item={item}/>)}
             </ContainerWrap>
         </div>
     );

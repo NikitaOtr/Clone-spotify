@@ -34,12 +34,13 @@ export const searchReducer = createSlice({
     },
 });
 
-const { setStatus, setData, setSearchText } = searchReducer.actions;
+export const searchReducerActions = { setSearchText: searchReducer.actions.setSearchText };
+
+const { setStatus, setData } = searchReducer.actions;
 
 export const fetchAll = createAsyncThunk(
     'searchReducer/fetchAll',
     async (searchText: string, { dispatch }) => {
-        dispatch(setSearchText({ searchText }));
         try {
             dispatch(setStatus({ status: StatusEnum.Loading }));
             const data = await apiSearch.getAll(searchText);

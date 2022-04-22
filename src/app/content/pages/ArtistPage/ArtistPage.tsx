@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import s from './ArtistPage.module.scss';
 
+import question from './../../../img/question.svg';
+
 import { useAppActions } from '../../../hooks/useAppAction';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 
@@ -42,20 +44,29 @@ export const ArtistPage = () => {
         <div>
             <div className={s.playListTitle}>
                 <div className={s.playListTitle__boxImg}>
-                    <img className={s.playListTitle__boxImg__img} src={artist.images[0].url} alt=""/>
+                    <img className={s.playListTitle__boxImg__img} src={artist.images[0]?.url || question } alt=""/>
                 </div>
                 <div className={s.playListTitle__boxText}>
                     <h1 className={s.playListTitle__boxText__name}>{artist.name}</h1>
                 </div>
             </div>
 
-            <Recommendation releases={relatedArtists} title='Похожие исполнители'
-                searchType={EnumSearchType.artist} id={artist.id}/>
+            {relatedArtists.length
+                ? <Recommendation releases={relatedArtists} title='Похожие исполнители'
+                    searchType={EnumSearchType.artist} id={artist.id}/>
+                : null
+            }
 
-            <Recommendation releases={albums} title='Альбомы'
-                searchType={EnumSearchType.album} id={artist.id}/>
+            {albums.length
+                ? <Recommendation releases={albums} title='Альбомы'
+                    searchType={EnumSearchType.album} id={artist.id} />
+                : null
+            }
 
-            <Playlist tracks={tracks}/>
+            {tracks.length
+                ? <Playlist tracks={tracks}/>
+                : null
+            }
         </div>
     );
 };

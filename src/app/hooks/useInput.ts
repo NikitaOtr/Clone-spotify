@@ -12,5 +12,5 @@ export const useInput = (initialValue = '') => {
         }
     };
 
-    return [value, bind, reset] as [string, typeof bind, () => void];
+    return [value, bind, setValue, reset] as [string, typeof bind, (s: string) => void, () => void];
 };

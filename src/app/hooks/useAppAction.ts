@@ -6,6 +6,7 @@ import { fetchCollection, fetchT } from './../store/Reducers/collectionReducer';
 import { fetchPlaylist } from './../store/Reducers/playlistReducer';
 import { fetchArtist } from '../store/Reducers/artistReducer';
 
+import { searchReducerActions } from './../store/Reducers/searchReducer';
 import { playerReducerActions } from '../store/Reducers/playerReducer';
 
 const allActions = {
@@ -15,6 +16,7 @@ const allActions = {
     fetchArtist,
     fetchT,
     ...playerReducerActions,
+    ...searchReducerActions,
 };
 
 export const useAppActions = () => {

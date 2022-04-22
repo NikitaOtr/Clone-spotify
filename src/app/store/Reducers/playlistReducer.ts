@@ -15,6 +15,7 @@ export const playListReducer = createSlice({
         setStatus(state, { payload }: PayloadAction<{ status: StatusEnum }>) {
             state.status = payload.status;
         },
+
         setData(state, { payload }: PayloadAction<IPlayList>) {
             state.playlist = payload;
         },

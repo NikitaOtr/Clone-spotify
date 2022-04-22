@@ -20,7 +20,7 @@ export const Playlist: FC<IProps> = ({ tracks }) => {
                 </div>
 
                 <div className={s.playList__header__box + ' ' + s.box__item}>
-                    <span className={s.playList__header__box__text}>{tracks[0].album ? 'Альбом' : ''}</span>
+                    <span className={s.playList__header__box__text}>{tracks[0]?.album ? 'Альбом' : ''}</span>
                 </div>
 
                 <div className={s.playList__header__box + ' ' + s.box__item}>

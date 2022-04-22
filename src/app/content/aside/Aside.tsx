@@ -32,14 +32,14 @@ export const Aside = () => {
                 </div>
 
                 <div className={s.containerLink}>
-                    <NavLink className={setActiveClass} to='/Search'>
+                    <NavLink className={setActiveClass} to='/search'>
                         <Search className={s.navigation__img}/>
                         <span className={s.navigation__text}>Поиск</span>
                     </NavLink>
                 </div>
 
                 <div className={s.containerLink}>
-                    <NavLink className={setActiveClass} to='/CollectionItems'>
+                    <NavLink className={setActiveClass} to='/collection'>
                         <Book className={s.navigation__img}/>
                         <span className={s.navigation__text}>Медиатека</span>
                     </NavLink>

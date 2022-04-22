@@ -18,8 +18,8 @@ interface IProps {
 
 export const Recommendation: FC<IProps> = ({ title, releases, searchType, searchText, id }) => {
     const href = id
-        ? `/CollectionItems/artist/${searchType}/${id}`
-        : `/CollectionItems/${searchType}/${searchText}`;
+        ? `/artist/collection/${searchType}/${id}`
+        : `/search/collection/${searchType}/${searchText}`;
 
     return (
         <article className={s.recommendation}>

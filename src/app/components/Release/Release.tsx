@@ -12,9 +12,9 @@ interface IProps {
 export const Release: FC<IProps> = ({ item }) => {
     const test = (type: EnumSearchType) => {
         if (type === EnumSearchType.artist) {
-            return `/Artist/${item.id}`;
+            return `/artist/${item.id}`;
         }
-        return `/Playlist/${item.type}/${item.id}`;
+        return `/playlist/${item.type}/${item.id}`;
     };
 
     return (

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
 import './App.scss';
+
+import { Routes, Route } from 'react-router-dom';
 
 import { tokenInstance, userToken } from './api/tokenInstance';
 
@@ -10,7 +11,7 @@ import { Header } from './content/Header/Header';
 
 import { MainPage } from './content/pages/MainPage/MainPage';
 import { SearchPage } from './content/pages/SearchPage/SearchPage';
-import { CollectionReleasesPage } from './content/pages/CollectionReleasesPage/CollectionReleasesPage';
+import { CollectionReleasesPage } from './content/pages/CollectionPage/CollectionPage';
 import { PlaylistPage } from './content/pages/PlaylistPage/PlaylistPage';
 import { NotFoundPage } from './content/pages/NotFoundPage/NotFoundPage';
 import { ArtistPage } from './content/pages/ArtistPage/ArtistPage';
@@ -33,13 +34,22 @@ export const App = () => {
             <Aside/>
             <main className='main'>
                 <Routes>
-                    <Route path='/' element={<MainPage/>}/>
-                    <Route path='/Search' element={<SearchPage/>}/>
-                    <Route path='/Playlist/:type/:id' element={<PlaylistPage/>}/>
-                    <Route path='/CollectionItems/:type/:searchText' element={<CollectionReleasesPage/>}/>
-                    <Route path='/CollectionItems/artist/:type/:id/' element={<CollectionReleasesPage/>} />
-                    <Route path='/Artist/:id' element={<ArtistPage/>}/>
-                    <Route path='*' element={<NotFoundPage/>}/>
+                    <Route path='/'>
+                        <Route index element={<MainPage/>}/>
+
+                        <Route path='search/'>
+                            <Route index element={<SearchPage/>}/>
+                            <Route path='collection/:type/:searchText' element={<CollectionReleasesPage />} />
+                        </Route>
+
+                        <Route path='artist/'>
+                            <Route path=':id' element={<ArtistPage/>}/>
+                            <Route path='collection/:type/:id' element={<CollectionReleasesPage />} />
+                        </Route>
+
+                        <Route path='playlist/:type/:id' element={<PlaylistPage />} />
+                        <Route path='*' element={<NotFoundPage/>}/>
+                    </Route>
                 </Routes>
             </main>
             <Footer/>
