@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.scss';
 
 import { Routes, Route } from 'react-router-dom';
-
-import { tokenInstance, userToken } from './api/tokenInstance';
 
 import { Aside } from './content/Aside/Aside';
 import { Footer } from './content/Footer/Footer';
@@ -17,17 +15,6 @@ import { NotFoundPage } from './content/pages/NotFoundPage/NotFoundPage';
 import { ArtistPage } from './content/pages/ArtistPage/ArtistPage';
 
 export const App = () => {
-
-    useEffect(() => {
-        tokenInstance.getToken();
-        const hash = window.location.search;
-        console.log('hash', hash);
-        if (hash) {
-            userToken.code = hash.split(/[?#&]/).find(elem => elem.startsWith('code='))?.slice(5) || null;
-            userToken && userToken.getToken();
-        }
-    }, []);
-
     return (
         <div className='wrapper'>
             <Header/>
@@ -39,15 +26,15 @@ export const App = () => {
 
                         <Route path='search/'>
                             <Route index element={<SearchPage/>}/>
-                            <Route path='collection/:type/:searchText' element={<CollectionReleasesPage />} />
+                            <Route path='collection/:type/:searchText' element={<CollectionReleasesPage/>}/>
                         </Route>
 
                         <Route path='artist/'>
                             <Route path=':id' element={<ArtistPage/>}/>
-                            <Route path='collection/:type/:id' element={<CollectionReleasesPage />} />
+                            <Route path='collection/:type/:id' element={<CollectionReleasesPage/>}/>
                         </Route>
 
-                        <Route path='playlist/:type/:id' element={<PlaylistPage />} />
+                        <Route path='playlist/:type/:id' element={<PlaylistPage/>}/>
                         <Route path='*' element={<NotFoundPage/>}/>
                     </Route>
                 </Routes>

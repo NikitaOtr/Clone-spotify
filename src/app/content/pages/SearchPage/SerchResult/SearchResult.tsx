@@ -2,13 +2,12 @@ import React from 'react';
 
 import { useAppSelector } from '../../../../hooks/useAppSelector';
 
-import { StatusEnum } from '../../../../api/api';
+import { EnumOfStatusFetching } from '../../../../types/apiTypes';
 
 import { Recommendation } from '../../../../components/Recommendation/Recommendation';
 import { Playlist } from '../../../../components/Playlist/Playlist';
 import { Loader } from '../../../../components/Loader/Loader';
 import { Error } from '../../../../components/Error/Error';
-import { EnumSearchType } from '../../../../types/typeSearch';
 
 export const SearchResult = () => {
     const searchText = useAppSelector(state => state.searchReducer.searchText);
@@ -18,35 +17,32 @@ export const SearchResult = () => {
     const playlists = useAppSelector(state => state.searchReducer.playlists);
     const tracks = useAppSelector(state => state.searchReducer.tracks);
 
-    if (status === StatusEnum.Error) {
+    if (status === EnumOfStatusFetching.Error) {
         return <Error/>;
     }
 
-    if (status === StatusEnum.Loading) {
+    if (status === EnumOfStatusFetching.Loading) {
         return <Loader/>;
     }
 
-    if (!artists.length && !albums.length && !playlists.length && !tracks.length) {
+    if (!artists.items.length && !albums.items.length && !playlists.items.length && !tracks.length) {
         return <div>Увы, по вашему запросу ничего не найдено</div>;
     }
 
     return (
         <section>
-            { artists.length
-                ? <Recommendation title='Исполнители' searchType={EnumSearchType.artist} releases={artists}
-                    searchText={searchText}/>
+            { artists.items.length
+                ? <Recommendation title='Исполнители' releases={artists} id={searchText}/>
                 : null
             }
 
-            { albums.length
-                ? <Recommendation title='Альбомы' searchType={EnumSearchType.album} releases={albums}
-                    searchText={searchText}/>
+            { albums.items.length
+                ? <Recommendation title='Альбомы'  releases={albums} id={searchText}/>
                 : null
             }
 
-            { playlists.length
-                ? <Recommendation title='Плейлисты' searchType={EnumSearchType.playlist} releases={playlists}
-                    searchText={searchText}/>
+            { playlists.items.length
+                ? <Recommendation title='Плейлисты' releases={playlists} id={searchText}/>
                 : null
             }
 

@@ -3,7 +3,7 @@ import s from './PlaylistPage.module.scss';
 
 import btn from './greenBtn.svg';
 
-import { StatusEnum } from '../../../api/api';
+import { EnumOfStatusFetching } from '../../../types/apiTypes';
 
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from './../../../hooks/useAppSelector';
@@ -12,15 +12,15 @@ import { useAppActions } from '../../../hooks/useAppAction';
 import { Playlist } from '../../../components/Playlist/Playlist';
 import { Error } from '../../../components/Error/Error';
 import { Loader } from '../../../components/Loader/Loader';
-import { TypePlaylistEnum } from '../../../types/typePlaylist';
+import { EnumOfPlaylistTypes } from '../../../types/commonTypes';
 
 export const PlaylistPage = () => {
-    const playlist = useAppSelector(state => state.playListReducer.playlist);
-    const status = useAppSelector(state => state.playListReducer.status);
+    const playlist = useAppSelector(state => state.playlistReducer.playlist);
+    const status = useAppSelector(state => state.playlistReducer.status);
 
     const { fetchPlaylist } = useAppActions();
 
-    const history = useParams<{type: TypePlaylistEnum, id: string}>();
+    const history = useParams<{type: EnumOfPlaylistTypes, id: string}>();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -29,11 +29,11 @@ export const PlaylistPage = () => {
         }
     }, [history]);
 
-    if (status === StatusEnum.Error) {
+    if (status === EnumOfStatusFetching.Error) {
         return <Error/>;
     }
 
-    if (status === StatusEnum.Loading || !playlist) {
+    if (status === EnumOfStatusFetching.Loading || !playlist) {
         return <Loader/>;
     }
 
@@ -54,7 +54,7 @@ export const PlaylistPage = () => {
                 </button>
             </div>
 
-            <Playlist tracks={playlist.tracks.items}/>
+            <Playlist tracks={playlist.tracks}/>
         </div>
     );
 };

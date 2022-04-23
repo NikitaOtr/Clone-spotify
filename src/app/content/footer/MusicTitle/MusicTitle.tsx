@@ -20,7 +20,7 @@ export const MusicTitle = () => {
                 <span className={s.musicTitle__text__name}>{track.name}</span>
                 <div className={s.box__authors}>
                     {track.artists.map(artist => (
-                        <Link to={`Artist/${artist.id}`} key={artist.id} className={s.musicTitle__text__author}>
+                        <Link to={`artist/${artist.id}`} key={artist.id} className={s.musicTitle__text__author}>
                             {`${artist.name}`}
                         </Link>
                     ))}

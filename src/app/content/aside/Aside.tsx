@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
 import s from './Aside.module.scss';
 
-import logo from './img/LogoSpotify.svg';
+import { NavLink } from 'react-router-dom';
+
+import { ReactComponent as Logo } from './img/LogoSpotify.svg';
 import { ReactComponent as Home } from './img/home.svg';
 import { ReactComponent as Heart } from './img/heart.svg';
 import { ReactComponent as Book } from './img/book.svg';
@@ -18,12 +19,13 @@ export const Aside = () => {
     return (
         <aside className={s.aside}>
             <div className={s.containerLink}>
-                <Link className={s.logo} to='/'>
-                    <img src={logo} alt="Логотип" />
-                </Link>
+                <NavLink className={s.logo} to='/'>
+                    <Logo/>
+                </NavLink>
             </div>
 
             <nav className={s.navigation}>
+
                 <div className={s.containerLink}>
                     <NavLink className={setActiveClass} to='/'>
                         <Home className={s.navigation__img}/>

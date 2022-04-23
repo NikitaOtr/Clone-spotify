@@ -1,7 +1,7 @@
 import { api } from './api';
-import { ISearchItem, ITrack } from '../types/typeSearch';
+import { IRelease, ITrack } from '../types/commonTypes';
 
-export interface IServerCollectionItems<T = ISearchItem> {
+export interface IServerCollectionItems<T = IRelease> {
     items: Array<T>
 }
 
@@ -13,8 +13,8 @@ export interface ISearchData {
 }
 
 export const apiSearch = {
-    getAll(text: string) {
-        return api.get<ISearchData>(`search?type=album,artist,playlist,track&q=${text}&limit=10`)
+    getAll(searchText: string) {
+        return api.get<ISearchData>(`search?type=album,artist,playlist,track&q=${searchText}&limit=10`)
             .then(response => response.data);
     },
 

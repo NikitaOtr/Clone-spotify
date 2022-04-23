@@ -13,24 +13,25 @@ function generateString(length: number): string {
 
 export const tokenInstance = {
     clientId: '74ad96b2c9074c758e222dd191d1a0b4',
-    token: null as null | string,
+    clientSecret: '581c7ca90a2e422c84fc9f9a689287d2',
+    TOKEN_URL: 'https://accounts.spotify.com/api/token',
 
     async getToken() {
-        const clientSecret = '581c7ca90a2e422c84fc9f9a689287d2';
-        const TOKEN_URL = 'https://accounts.spotify.com/api/token';
         const body = qs.stringify({ 'grant_type': 'client_credentials' });
         const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + btoa(this.clientId + ':' + clientSecret)
+                'Authorization': 'Basic ' + btoa(this.clientId + ':' + this.clientSecret)
             },
         };
         try {
-            const response = await axios.post<{access_token: string}>(TOKEN_URL, body, config);
-            console.log(response.data.access_token);
-            this.token = response.data.access_token;
+            const response = await axios.post<{access_token: string}>(this.TOKEN_URL, body, config);
+            localStorage.setItem('token', response.data.access_token);
         } catch(e) {
-            console.log(e);
+            if (e instanceof Error) {
+                console.error(e.message);
+            }
+            console.error(e);
         }
     },
 };

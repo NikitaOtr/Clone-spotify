@@ -1,16 +1,25 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StatusEnum } from '../../api/api';
+import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { apiSearch } from '../../api/apiSearch';
 import { ISearchData } from '../../api/apiSearch';
-import { ISearchItem, ITrack } from './../../types/typeSearch';
+import { EnumOfSearchTypes, IRelease, ITrack } from './../../types/commonTypes';
 
 const initialState = {
-    status: StatusEnum.Success,
+    status: EnumOfStatusFetching.Success,
     searchText: '',
-    albums: [] as Array<ISearchItem>,
-    artists: [] as Array<ISearchItem>,
-    playlists: [] as Array<ISearchItem>,
-    tracks: [] as Array<ITrack>,
+    albums: {
+        type: EnumOfSearchTypes.albums,
+        items: [] as Array<IRelease>
+    },
+    artists: {
+        type: EnumOfSearchTypes.artists,
+        items: [] as Array<IRelease>
+    },
+    playlists: {
+        type: EnumOfSearchTypes.playlists,
+        items: [] as Array<IRelease>,
+    },
+    tracks: [] as Array<ITrack>
 };
 
 export const searchReducer = createSlice({
@@ -22,13 +31,13 @@ export const searchReducer = createSlice({
         },
 
         setData(state, { payload }: PayloadAction<ISearchData>) {
-            state.albums = payload.albums.items;
-            state.artists = payload.artists.items;
-            state.playlists = payload.playlists.items;
+            state.albums.items = payload.albums.items;
+            state.artists.items = payload.artists.items;
+            state.playlists.items = payload.playlists.items;
             state.tracks = payload.tracks.items;
         },
 
-        setStatus(state, { payload }: PayloadAction<{status: StatusEnum}>) {
+        setStatus(state, { payload }: PayloadAction<{ status: EnumOfStatusFetching}>) {
             state.status = payload.status;
         }
     },
@@ -40,14 +49,14 @@ const { setStatus, setData } = searchReducer.actions;
 
 export const fetchAll = createAsyncThunk(
     'searchReducer/fetchAll',
-    async (searchText: string, { dispatch }) => {
+    async ({ searchText }: { searchText: string }, { dispatch }) => {
         try {
-            dispatch(setStatus({ status: StatusEnum.Loading }));
+            dispatch(setStatus({ status: EnumOfStatusFetching.Loading }));
             const data = await apiSearch.getAll(searchText);
             dispatch(setData(data));
-            dispatch(setStatus({ status: StatusEnum.Success }));
+            dispatch(setStatus({ status: EnumOfStatusFetching.Success }));
         } catch(e) {
-            dispatch(setStatus({ status: StatusEnum.Error }));
+            dispatch(setStatus({ status: EnumOfStatusFetching.Error }));
             console.error(e);
         }
     }

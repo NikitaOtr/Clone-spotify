@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './Header.module.scss';
+
 import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
@@ -7,8 +8,11 @@ export const Header = () => {
     return (
         <header className={s.header}>
             <div className={s.history}>
-                <button onClick={() => navigation(-1)} className={`${s.history__button} ${s.buttonBack}`}></button>
-                <button onClick={() => navigation(1)} className={`${s.history__button} ${s.buttonUp}`}></button>
+                <button className={`${s.history__button} ${s.buttonBack}`}
+                    onClick={() => navigation(-1)}></button>
+
+                <button className={`${s.history__button} ${s.buttonUp}`}
+                    onClick={() => navigation(1)}></button>
             </div>
         </header>
     );

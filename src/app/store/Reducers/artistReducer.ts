@@ -1,35 +1,45 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StatusEnum } from '../../api/api';
+import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { apiArtist } from '../../api/apiArtist';
-import { ISearchItem, ITrack } from '../../types/typeSearch';
+import { EnumOfSearchTypes, IRelease, ITrack } from '../../types/commonTypes';
 
 const initialState = {
-    status: StatusEnum.Success,
-    artist: null as null | ISearchItem,
-    relatedArtists: [] as Array<ISearchItem>,
-    albums: [] as Array<ISearchItem>,
-    tracks: [] as Array<ITrack>,
+    status: EnumOfStatusFetching.Success,
+    artist: null as null | IRelease,
+    relatedArtists: {
+        type: EnumOfSearchTypes.artists,
+        items: [] as Array<IRelease>
+    },
+    albums: {
+        type: EnumOfSearchTypes.albums,
+        items: [] as Array<IRelease>
+    },
+    tracks:  [] as Array<ITrack>,
 };
 
 export const artistReducer = createSlice({
     name: 'artistReducer',
     initialState,
     reducers: {
-        setStatus(state, { payload }: PayloadAction<{ status: StatusEnum }>) {
+        setStatus(state, { payload }: PayloadAction<{ status: EnumOfStatusFetching }>) {
             state.status = payload.status;
         },
-        setArtist(state, { payload }: PayloadAction<{ artist: ISearchItem }>) {
+
+        setArtist(state, { payload }: PayloadAction<{ artist: IRelease }>) {
             state.artist = payload.artist;
         },
-        setRelatedArtists(state, { payload } : PayloadAction<{relatedArtists: Array<ISearchItem>}>) {
-            state.relatedArtists = payload.relatedArtists;
+
+        setRelatedArtists(state, { payload }: PayloadAction<{relatedArtists: Array<IRelease>}>) {
+            state.relatedArtists.items = payload.relatedArtists;
         },
-        setAlbums(state, { payload }: PayloadAction<{ albums: Array<ISearchItem> }>) {
-            state.albums = payload.albums;
+
+        setAlbums(state, { payload }: PayloadAction<{ albums: Array<IRelease> }>) {
+            state.albums.items = payload.albums;
         },
+
         setTracks(state, { payload }: PayloadAction<{ tracks: Array<ITrack>}>) {
             state.tracks = payload.tracks;
-        }
+        },
     },
 });
 
@@ -37,25 +47,30 @@ const { setStatus, setArtist, setRelatedArtists, setAlbums, setTracks } = artist
 
 export const fetchArtist = createAsyncThunk(
     'searchReducer/fetchArtist',
-    async (id: string, { dispatch }) => {
+    async ({ id }: { id: string }, { dispatch }) => {
         try {
-            dispatch(setStatus({ status: StatusEnum.Loading }));
-            const t = await apiArtist.getArtist(id);
-            dispatch(setArtist({ artist: t }));
+            dispatch(setStatus({ status: EnumOfStatusFetching.Loading }));
 
-            const tt = await apiArtist.getArtistAlbums(id);
-            dispatch(setAlbums({ albums: tt }));
+            const artist = await apiArtist.getArtist(id);
+            dispatch(setArtist({ artist }));
 
-            const ttt = await apiArtist.getArtistTopTrack(id);
-            dispatch(setTracks({ tracks: ttt }));
+            const albums = await apiArtist.getArtistAlbums(id);
+            dispatch(setAlbums({ albums }));
 
-            const tttt = await apiArtist.getRelatedArtists(id);
-            dispatch(setRelatedArtists({ relatedArtists: tttt }));
+            const tracks = await apiArtist.getArtistTopTrack(id);
+            dispatch(setTracks({ tracks }));
 
-            dispatch(setStatus({ status: StatusEnum.Success }));
+            const relatedArtists = await apiArtist.getRelatedArtists(id);
+            dispatch(setRelatedArtists({ relatedArtists }));
+
+            dispatch(setStatus({ status: EnumOfStatusFetching.Success }));
         } catch(e) {
-            dispatch(setStatus({ status: StatusEnum.Error }));
-            console.error(e);
+            dispatch(setStatus({ status: EnumOfStatusFetching.Error }));
+            if (e instanceof Error) {
+                console.error(e.message);
+            } else {
+                console.error(e);
+            }
         }
     }
 );

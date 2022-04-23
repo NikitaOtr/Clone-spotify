@@ -1,4 +1,3 @@
-
 export function timeFormatFromMilliseconds(milliseconds: number): string {
     const seconds = Math.round(milliseconds / 1000);
     return timeFormatFromSeconds(seconds);

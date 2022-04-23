@@ -1,47 +1,34 @@
-import { ISearchItem } from '../types/typeSearch';
+import { IRelease } from '../types/commonTypes';
 import { api } from './api';
 import { IServerCollectionItems } from './apiSearch';
-import { ITrack } from './../types/typeSearch';
+import { ITrack } from './../types/commonTypes';
 
-interface testTrack {
+interface ITracks {
     tracks: Array<ITrack>
 }
 
-interface testArtists {
-    artists: Array<ISearchItem>
+interface IArtists {
+    artists: Array<IRelease>
 }
 
 export const apiArtist =  {
     getArtist(id: string) {
-        return api.get<ISearchItem>(`artists/${id}`)
-            .then(response => {
-                console.log(response.data);
-                return response.data;
-            });
+        return api.get<IRelease>(`artists/${id}`)
+            .then(response => response.data);
     },
 
     getArtistAlbums(id: string) {
         return api.get<IServerCollectionItems>(`artists/${id}/albums`)
-            .then(response => {
-                console.log(response.data);
-                return response.data.items;
-            });
+            .then(response => response.data.items);
     },
 
     getArtistTopTrack(id: string) {
-        return api.get<testTrack>(`artists/${id}/top-tracks?market=ES`)
-            .then(response => {
-                console.log(response.data);
-                return response.data.tracks;
-            });
+        return api.get<ITracks>(`artists/${id}/top-tracks?market=ES`)
+            .then(response => response.data.tracks);
     },
 
     getRelatedArtists(id: string) {
-        return api.get<testArtists>(`artists/${id}/related-artists`)
-            .then(response => {
-                console.log(response.data);
-                return response.data.artists;
-            });
-
+        return api.get<IArtists>(`artists/${id}/related-artists`)
+            .then(response => response.data.artists);
     }
 };

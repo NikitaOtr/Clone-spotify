@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
 import s from './Song.module.scss';
 
-// import img from './../../content/aside/img/heart.svg';
-import { ITrack } from './../../types/typeSearch';
+import { Link } from 'react-router-dom';
+import { ITrack } from './../../types/commonTypes';
 import { timeFormatFromMilliseconds } from './../../utils/timeFormat';
 import { useAppActions } from '../../hooks/useAppAction';
 
@@ -13,7 +12,7 @@ interface IProps {
     tracks: Array<ITrack>
 }
 
-export const Song :FC<IProps> = ({ track, index, tracks }) => {
+export const Song: FC<IProps> = ({ track, index, tracks }) => {
     const { setPlaylist } = useAppActions();
     return (
         <article onClick={() => setPlaylist({ playlist: tracks, startIndex: index })} className={s.song}>
@@ -30,8 +29,8 @@ export const Song :FC<IProps> = ({ track, index, tracks }) => {
                 <div className={s.song__box__title}>
                     <span className={s.song__box__text}>{track.name}</span>
                     <div className={s.song__box__authors}>
-                        {track?.artists.map(artist => (
-                            <Link onClick={e => e.stopPropagation()} to={`/Artist/${artist.id}`}
+                        {track.artists.map(artist => (
+                            <Link onClick={e => e.stopPropagation()} to={`/artist/${artist.id}`}
                                 key={artist.id} className={s.song__box__authors__author}>
                                 {artist.name}
                             </Link>
@@ -42,7 +41,7 @@ export const Song :FC<IProps> = ({ track, index, tracks }) => {
 
             <div className={s.song__box}>
                 <Link onClick={e => e.stopPropagation()} className={s.song__box__album}
-                    to={`/Playlist/album/${track?.album?.id}`}>
+                    to={`/playlist/album/${track?.album?.id}`}>
                     {track?.album?.name}
                 </Link>
             </div>

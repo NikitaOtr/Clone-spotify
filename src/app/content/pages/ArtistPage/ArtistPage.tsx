@@ -8,11 +8,11 @@ import { useAppSelector } from '../../../hooks/useAppSelector';
 
 import { Error } from '../../../components/Error/Error';
 import { Playlist } from './../../../components/Playlist/Playlist';
-import { StatusEnum } from '../../../api/api';
+import { EnumOfStatusFetching } from '../../../types/apiTypes';
 import { Loader } from '../../../components/Loader/Loader';
 import { useParams } from 'react-router-dom';
 import { Recommendation } from './../../../components/Recommendation/Recommendation';
-import { EnumSearchType } from '../../../types/typeSearch';
+import { EnumOfSearchTypes } from '../../../types/commonTypes';
 
 export const ArtistPage = () => {
     const status = useAppSelector(state => state.artistReducer.status);
@@ -28,15 +28,15 @@ export const ArtistPage = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         if (history.id) {
-            fetchArtist(history.id);
+            fetchArtist({ id: history.id });
         }
     }, [history]);
 
-    if (status === StatusEnum.Error) {
+    if (status === EnumOfStatusFetching.Error) {
         return <Error/>;
     }
 
-    if (status === StatusEnum.Loading || !artist) {
+    if (status === EnumOfStatusFetching.Loading || !artist) {
         return <Loader/>;
     }
 
@@ -51,15 +51,13 @@ export const ArtistPage = () => {
                 </div>
             </div>
 
-            {relatedArtists.length
-                ? <Recommendation releases={relatedArtists} title='Похожие исполнители'
-                    searchType={EnumSearchType.artist} id={artist.id}/>
+            {relatedArtists.items.length
+                ? <Recommendation releases={relatedArtists} title='Похожие исполнители' id={artist.id}/>
                 : null
             }
 
-            {albums.length
-                ? <Recommendation releases={albums} title='Альбомы'
-                    searchType={EnumSearchType.album} id={artist.id} />
+            {albums.items.length
+                ? <Recommendation releases={albums} title='Альбомы' id={artist.id} />
                 : null
             }
 

@@ -5,25 +5,25 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { useAppActions } from '../../../hooks/useAppAction';
 
-import { StatusEnum } from '../../../api/api';
+import { EnumOfStatusFetching } from '../../../types/apiTypes';
 
 import { ContainerWrap } from '../../../components/ContainerWrap/ContainerWrap';
 import { Release } from '../../../components/Release/Release';
 import { Loader } from '../../../components/Loader/Loader';
 import { Error } from '../../../components/Error/Error';
-import { EnumSearchType } from '../../../types/typeSearch';
+import { EnumOfSearchTypes } from '../../../types/commonTypes';
 
 export const CollectionReleasesPage = () => {
     const status = useAppSelector(state => state.collectionReducer.status);
     const collection = useAppSelector(state => state.collectionReducer.collection);
 
     const { fetchCollection, fetchT } = useAppActions();
-    const history = useParams<{type: EnumSearchType, searchText: string, id: string}>();
+    const history = useParams<{type: EnumOfSearchTypes, searchText: string, id: string}>();
 
     const TranslateSearchType = {
-        'album': 'Альбомы',
-        'artist': 'Артисты',
-        'playlist': 'Плейлисты'
+        'albums': 'Альбомы',
+        'artists': 'Артисты',
+        'playlists': 'Плейлисты'
     };
 
     useEffect(() => {
@@ -36,11 +36,11 @@ export const CollectionReleasesPage = () => {
         }
     }, []);
 
-    if (status === StatusEnum.Loading) {
+    if (status === EnumOfStatusFetching.Loading) {
         return <Loader/>;
     }
 
-    if (status === StatusEnum.Error) {
+    if (status === EnumOfStatusFetching.Error) {
         return <Error/>;
     }
 
