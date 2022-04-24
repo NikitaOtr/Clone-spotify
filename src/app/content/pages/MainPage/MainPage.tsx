@@ -1,37 +1,41 @@
 import React, { useEffect } from 'react';
 import s from './MainPage.module.scss';
 import { Mixes } from './Mixes/Mixes';
-import { Mix } from './Mix/Mix';
 
-// import img from './../../aside/img/heart.svg';
 import { Recommendation } from '../../../components/Recommendation/Recommendation';
 import { Loader } from '../../../components/Loader/Loader';
-
-import { apiPlayList } from '../../../api/apiPlayList';
+import { Error } from '../../../components/Error/Error';
+import { useAppSelector } from '../../../hooks/useAppSelector';
+import { EnumOfStatusFetching } from '../../../types/apiTypes';
+import { useAppActions } from '../../../hooks/useAppAction';
 
 export const MainPage = () => {
+    const status = useAppSelector(state => state.mainPageReducer.status);
+    const mixes = useAppSelector(state => state.mainPageReducer.mixes);
+    const collectionOfPlaylists = useAppSelector(state => state.mainPageReducer.collectionOfPlaylists);
 
-    // const fetchData = async () => {
-    //     const data = await apiPlayList.getPlayList('6yl1J64As9To41977OXaBx');
-    //     console.log(data);
-    // };
+    const { fetchMainPage } = useAppActions();
 
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
+    useEffect(() => {
+        fetchMainPage();
+    }, []);
 
-    const mixes = [1, 2, 3, 4, 5, 6];
+    if (status === EnumOfStatusFetching.Error) {
+        return <Error/>;
+    }
+
+    if (status === EnumOfStatusFetching.Loading || !mixes) {
+        return <Loader/>;
+    }
+
     return (
-        <>
+        <div>
             <h1 className={s.headline}>Добрый день</h1>
-
-            {/* <Mixes>
-                {mixes.map(mix => <Mix key={mix} number={mix} photo={img}/>)}
-            </Mixes> */}
-
-            <section className={s.recommendations}>
-                <Loader/>
-            </section>
-        </>
+            <Mixes mixes={mixes}/>
+            {collectionOfPlaylists.map(playlist => (
+                <Recommendation id={playlist.id}
+                    releases={playlist} title='Рекомендации для вас' key={playlist.id}/>
+            ))}
+        </div>
     );
 };

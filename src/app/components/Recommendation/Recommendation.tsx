@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { ContainerNoWrap } from '../ContainerNoWrap/ContainerNoWrap';
 import { Release } from '../Release/Release';
-import { EnumOfSearchTypes, ICollectionOfReleases } from '../../types/commonTypes';
+import { ICollectionOfReleases } from '../../types/commonTypes';
 
 interface IProps {
     title: string,
@@ -13,17 +13,12 @@ interface IProps {
 }
 
 export const Recommendation: FC<IProps> = ({ title, releases, id }) => {
-    console.log(releases, id);
-    // don't correct examinations
-    const href = releases.type === EnumOfSearchTypes.artists
-        ? `/artist/collection/${releases.type}/${id}`
-        : `/search/collection/${releases.type}/${id}`;
-
+    const hrefToCollection = `collection/${releases.type}/${id}`;
     return (
         <article className={s.recommendation}>
             <div className={s.headline}>
-                <Link className={s.headline__header} to={href}>{title}</Link>
-                <Link className={s.headline__all} to={href}>все</Link>
+                <Link className={s.headline__header} to={hrefToCollection}>{title}</Link>
+                <Link className={s.headline__all} to={hrefToCollection}>все</Link>
             </div>
 
             <ContainerNoWrap>

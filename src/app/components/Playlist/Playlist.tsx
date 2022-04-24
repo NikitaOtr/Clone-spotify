@@ -1,8 +1,11 @@
 import React, { FC } from 'react';
-import { Song } from '../Song/Song';
 import s from './Playlist.module.scss';
-import { ITrack } from './../../types/commonTypes';
+
 import time from './time.svg';
+
+import { Song } from '../Song/Song';
+import { ITrack } from './../../types/commonTypes';
+
 interface IProps {
     tracks: Array<ITrack>
 }

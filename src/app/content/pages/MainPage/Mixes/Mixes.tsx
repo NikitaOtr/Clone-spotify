@@ -1,14 +1,17 @@
-import React, { FC, ReactNode } from 'react';
+import React, { VFC } from 'react';
 import s from './Mixes.module.scss';
 
+import { Mix } from './Mix/Mix';
+import { ICollectionOfReleases } from './../../../../types/commonTypes';
+
 interface IProps {
-    children: ReactNode
+    mixes: ICollectionOfReleases
 }
 
-export const Mixes: FC<IProps> = ({ children }) => {
+export const Mixes: VFC<IProps> = ({ mixes }) => {
     return (
         <section className={s.mixes}>
-            {children}
+            {mixes.items.map((mix, index) => <Mix key={mix.id} number={index + 1} mix={mix}/>)}
         </section>
     );
 };

@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EnumOfStatusFetching } from '../../types/apiTypes';
-import { IRelease, EnumOfSearchTypes } from '../../types/commonTypes';
-import { apiSearch, IServerCollectionItems } from './../../api/apiSearch';
+import { EnumOfSearchTypes, ICollectionOfReleases } from '../../types/commonTypes';
+import { apiSearch } from './../../api/apiSearch';
 import { apiArtist } from './../../api/apiArtist';
 
 const initialState = {
     status: EnumOfStatusFetching.Success,
-    collection: [] as Array<IRelease>
+    collection: null as null | ICollectionOfReleases,
 };
 
 export const collectionReducer = createSlice({
@@ -17,29 +17,28 @@ export const collectionReducer = createSlice({
             state.status = payload.status;
         },
 
-        setData(state, { payload }: PayloadAction<IServerCollectionItems>) {
-            state.collection = payload.items;
+        setCollection(state, { payload }: PayloadAction<{ collection: ICollectionOfReleases }>) {
+            state.collection = payload.collection;
         },
     },
 });
 
-const { setStatus, setData } = collectionReducer.actions;
+const { setStatus, setCollection } = collectionReducer.actions;
 
 export const fetchCollection = createAsyncThunk(
     'searchReducer/fetchCollection',
     async ({ searchText, type }: {searchText: string, type: EnumOfSearchTypes}, { dispatch }) => {
         try {
             dispatch(setStatus({ status: EnumOfStatusFetching.Loading }));
-            let data;
             if (type === EnumOfSearchTypes.albums) {
-                data = await apiSearch.getAlbums(searchText);
-                dispatch(setData(data));
+                const collection = await apiSearch.getAlbums(searchText);
+                dispatch(setCollection({ collection }));
             } else if (type === EnumOfSearchTypes.playlists) {
-                data = await apiSearch.getPlaylists(searchText);
-                dispatch(setData(data));
+                const collection = await apiSearch.getPlaylists(searchText);
+                dispatch(setCollection({ collection }));
             } else if (type === EnumOfSearchTypes.artists) {
-                data = await apiSearch.getArtists(searchText);
-                dispatch(setData(data));
+                const collection = await apiSearch.getArtists(searchText);
+                dispatch(setCollection({ collection }));
             }
             dispatch(setStatus({ status: EnumOfStatusFetching.Success }));
         } catch(e) {
@@ -55,11 +54,11 @@ export const fetchT = createAsyncThunk(
         try {
             dispatch(setStatus({ status: EnumOfStatusFetching.Loading }));
             if (type === EnumOfSearchTypes.albums) {
-                const data = await apiArtist.getArtistAlbums(id);
-                dispatch(setData({ items: data }));
+                const collection = await apiArtist.getArtistAlbums(id);
+                dispatch(setCollection({ collection }));
             } else if (type === EnumOfSearchTypes.artists) {
-                const data = await apiArtist.getRelatedArtists(id);
-                dispatch(setData({ items: data }));
+                const collection = await apiArtist.getRelatedArtists(id);
+                dispatch(setCollection({ collection }));
             }
             dispatch(setStatus({ status: EnumOfStatusFetching.Success }));
         } catch(e) {

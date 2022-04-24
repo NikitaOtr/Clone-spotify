@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SearchForm } from './SearchForm/SearchForm';
-import { SearchResult } from './SerchResult/SearchResult';
+import { SearchResult } from './SearchResult/SearchResult';
 
 export const SearchPage = () => {
     return (

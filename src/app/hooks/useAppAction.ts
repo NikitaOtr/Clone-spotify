@@ -5,11 +5,13 @@ import { fetchAll } from './../store/Reducers/searchReducer';
 import { fetchCollection, fetchT } from './../store/Reducers/collectionReducer';
 import { fetchPlaylist } from './../store/Reducers/playlistReducer';
 import { fetchArtist } from '../store/Reducers/artistReducer';
+import { fetchMainPage } from '../store/Reducers/mainPageReducer';
 
 import { searchReducerActions } from './../store/Reducers/searchReducer';
 import { playerReducerActions } from '../store/Reducers/playerReducer';
 
 const allActions = {
+    fetchMainPage,
     fetchAll,
     fetchCollection,
     fetchPlaylist,

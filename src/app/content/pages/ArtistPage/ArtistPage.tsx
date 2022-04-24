@@ -12,7 +12,6 @@ import { EnumOfStatusFetching } from '../../../types/apiTypes';
 import { Loader } from '../../../components/Loader/Loader';
 import { useParams } from 'react-router-dom';
 import { Recommendation } from './../../../components/Recommendation/Recommendation';
-import { EnumOfSearchTypes } from '../../../types/commonTypes';
 
 export const ArtistPage = () => {
     const status = useAppSelector(state => state.artistReducer.status);

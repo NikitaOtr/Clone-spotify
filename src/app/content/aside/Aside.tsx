@@ -7,7 +7,6 @@ import { ReactComponent as Logo } from './img/LogoSpotify.svg';
 import { ReactComponent as Home } from './img/home.svg';
 import { ReactComponent as Heart } from './img/heart.svg';
 import { ReactComponent as Book } from './img/book.svg';
-import { ReactComponent as Add } from './img/add.svg';
 import { ReactComponent as Search } from './img/search.svg';
 
 export const Aside = () => {
@@ -34,30 +33,23 @@ export const Aside = () => {
                 </div>
 
                 <div className={s.containerLink}>
-                    <NavLink className={setActiveClass} to='/search'>
+                    <NavLink className={setActiveClass} to='search'>
                         <Search className={s.navigation__img}/>
                         <span className={s.navigation__text}>Поиск</span>
                     </NavLink>
                 </div>
 
                 <div className={s.containerLink}>
-                    <NavLink className={setActiveClass} to='/collection'>
+                    <NavLink className={setActiveClass} to='collection/playlists/zara'>
                         <Book className={s.navigation__img}/>
-                        <span className={s.navigation__text}>Медиатека</span>
+                        <span className={s.navigation__text}>Подборка </span>
                     </NavLink>
                 </div>
 
                 <div className={s.containerLink}>
-                    <NavLink className={setActiveClass} to='/adfsfad'>
-                        <Add className={s.navigation__img}/>
-                        <span className={s.navigation__text}>Поиск</span>
-                    </NavLink>
-                </div>
-
-                <div className={s.containerLink}>
-                    <NavLink className={setActiveClass} to='/sfasdfasdfa'>
+                    <NavLink className={setActiveClass} to='playlist/playlist/37i9dQZF1DZ06evO2k8YdG'>
                         <Heart className={s.navigation__img}/>
-                        <span className={s.navigation__text}>Медиатека</span>
+                        <span className={s.navigation__text}>Подборка треков</span>
                     </NavLink>
                 </div>
             </nav>

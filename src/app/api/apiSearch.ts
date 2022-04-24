@@ -1,5 +1,5 @@
 import { api } from './api';
-import { IRelease, ITrack } from '../types/commonTypes';
+import { EnumOfSearchTypes, IRelease, ITrack } from '../types/commonTypes';
 
 export interface IServerCollectionItems<T = IRelease> {
     items: Array<T>
@@ -18,17 +18,29 @@ export const apiSearch = {
             .then(response => response.data);
     },
 
-    getPlaylists(searchText: string) {
-        return api.get<ISearchData>(`search?type=playlist&q=${searchText}&limit=50`)
-            .then(response => response.data.playlists);
+    getPlaylists(searchText: string, limit = 50) {
+        return api.get<ISearchData>(`search?type=playlist&q=${searchText}&limit=${limit}`)
+            .then(response => ({
+                id: searchText,
+                type: EnumOfSearchTypes.playlists,
+                items: response.data.playlists.items,
+            }));
     },
 
-    getAlbums(searchText: string) {
-        return api.get<ISearchData>(`search?type=album&q=${searchText}&limit=50`)
-            .then(response => response.data.albums);
+    getAlbums(searchText: string, limit = 50) {
+        return api.get<ISearchData>(`search?type=album&q=${searchText}&limit=${limit}`)
+            .then(response => ({
+                id: searchText,
+                type: EnumOfSearchTypes.albums,
+                items: response.data.albums.items,
+            }));
     },
-    getArtists(searchText: string) {
-        return api.get<ISearchData>(`search?type=artist&q=${searchText}&limit=50`)
-            .then(response => response.data.artists);
+    getArtists(searchText: string, limit = 50) {
+        return api.get<ISearchData>(`search?type=artist&q=${searchText}&limit=${limit}`)
+            .then(response => ({
+                id: searchText,
+                type: EnumOfSearchTypes.artists,
+                items: response.data.artists.items,
+            }));
     },
 };

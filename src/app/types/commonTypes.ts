@@ -45,6 +45,7 @@ export interface IPlayList {
 }
 
 export interface ICollectionOfReleases<T = IRelease> {
+    id: string,
     type: EnumOfSearchTypes
     items: Array<T>
 }

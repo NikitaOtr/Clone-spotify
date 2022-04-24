@@ -1,15 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-function generateString(length: number): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    let result = '';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters[Math.floor(Math.random() * (charactersLength + 1))];
-    }
-    return result;
-}
+import { generateRandomString } from './../utils/generateRandomString';
 
 export const tokenInstance = {
     clientId: '74ad96b2c9074c758e222dd191d1a0b4',
@@ -36,6 +28,8 @@ export const tokenInstance = {
     },
 };
 
+
+//Пока не используется
 export const userToken = {
     accessToken: null as string | null,
     refreshToken: null as string | null,
@@ -48,7 +42,7 @@ export const userToken = {
         'user-read-playback-position playlist-modify-private playlist-read-collaborative ' +
         'app-remote-control user-read-email playlist-read-private user-top-read ' +
         'playlist-modify-public user-read-currently-playing user-read-recently-played',
-    state: generateString(16),
+    state: generateRandomString(16),
 
     getLink(): string {
         return `${this.authEndPoint}?client_id=${tokenInstance.clientId}` +

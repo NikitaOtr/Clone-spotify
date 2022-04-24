@@ -29,11 +29,12 @@ export const App = () => {
                             <Route path='collection/:type/:searchText' element={<CollectionReleasesPage/>}/>
                         </Route>
 
-                        <Route path='artist/'>
-                            <Route path=':id' element={<ArtistPage/>}/>
+                        <Route path='artist/:id'>
+                            <Route index element={<ArtistPage/>}/>
                             <Route path='collection/:type/:id' element={<CollectionReleasesPage/>}/>
                         </Route>
 
+                        <Route path='collection/:type/:searchText' element={<CollectionReleasesPage/>}/>
                         <Route path='playlist/:type/:id' element={<PlaylistPage/>}/>
                         <Route path='*' element={<NotFoundPage/>}/>
                     </Route>
