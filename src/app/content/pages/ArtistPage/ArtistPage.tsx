@@ -20,7 +20,7 @@ export const ArtistPage = () => {
     const albums = useAppSelector(state => state.artistReducer.albums);
     const tracks = useAppSelector(state => state.artistReducer.tracks);
 
-    const { fetchArtist } = useAppActions();
+    const { fetchArtist, setStatusArtistPage } = useAppActions();
 
     const history = useParams<{id: string}>();
 
@@ -29,13 +29,16 @@ export const ArtistPage = () => {
         if (history.id) {
             fetchArtist({ id: history.id });
         }
+        return () => {
+            setStatusArtistPage(EnumOfStatusFetching.Loading);
+        };
     }, [history]);
 
     if (status === EnumOfStatusFetching.Error) {
         return <Error/>;
     }
 
-    if (status === EnumOfStatusFetching.Loading || !artist) {
+    if (status === EnumOfStatusFetching.Loading || !relatedArtists || !artist || !albums) {
         return <Loader/>;
     }
 
@@ -51,12 +54,12 @@ export const ArtistPage = () => {
             </div>
 
             {relatedArtists.items.length
-                ? <Recommendation releases={relatedArtists} title='Похожие исполнители' id={artist.id}/>
+                ? <Recommendation releases={relatedArtists} title='Похожие исполнители'/>
                 : null
             }
 
             {albums.items.length
-                ? <Recommendation releases={albums} title='Альбомы' id={artist.id} />
+                ? <Recommendation releases={albums} title='Альбомы'/>
                 : null
             }
 

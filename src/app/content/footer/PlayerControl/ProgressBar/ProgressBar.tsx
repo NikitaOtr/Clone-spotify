@@ -22,7 +22,7 @@ export const ProgressBar : VFC<IProps> = ({ audio }) => {
     };
 
     useEffect(() => {
-        const callback = () => setCurrentTime({ currentTime: audio.currentTime });
+        const callback = () => setCurrentTime(audio.currentTime);
         audio.addEventListener('timeupdate', callback);
         return () => audio.removeEventListener('timeupdate', callback);
     }, []);

@@ -14,7 +14,7 @@ interface IProps {
 
 export const SoundControl: VFC<IProps> = ({ audio }) => {
     const volume = useAppSelector(state => state.playerReducer.volume);
-    const { setVolume, SaveVolume, setVolumeFromSaveVolume } = useAppActions();
+    const { setVolume, resetVolume, setVolumeFromSaveVolume } = useAppActions();
 
     const [hover, setHover] = useState(false);
 
@@ -25,7 +25,7 @@ export const SoundControl: VFC<IProps> = ({ audio }) => {
     const setProgressVolume = (event: MouseEvent<HTMLDivElement>) => {
         const width = 100;
         const clickX = event.nativeEvent.offsetX;
-        setVolume({ volume: clickX / width });
+        setVolume(clickX / width);
     };
 
     const imgVolume = useMemo(() => {
@@ -42,7 +42,7 @@ export const SoundControl: VFC<IProps> = ({ audio }) => {
 
     const onClickButton = () => {
         if (volume) {
-            SaveVolume();
+            resetVolume();
         } else {
             setVolumeFromSaveVolume();
         }

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITrack } from '../../types/commonTypes';
-
-type StatusType = 'success' | 'error';
+import { EnumOfStatusPlayer } from '../../types/playerTypes';
 
 const initialState = {
     currentTrackIndex: 0,
@@ -12,7 +11,7 @@ const initialState = {
     duration: 0,
     currentTime: 0,
     isPlaying: false,
-    status: 'success' as StatusType,
+    status: EnumOfStatusPlayer.Success,
 };
 
 export const playerReducer = createSlice({
@@ -23,19 +22,19 @@ export const playerReducer = createSlice({
             state.isPlaying = !state.isPlaying;
         },
 
-        setDuration(state, { payload }: PayloadAction<{duration: number}>) {
-            state.duration = payload.duration;
+        setDuration(state, { payload }: PayloadAction<number>) {
+            state.duration = payload;
         },
 
-        setCurrentTime(state, { payload }: PayloadAction<{currentTime: number}>) {
-            state.currentTime = payload.currentTime;
+        setCurrentTime(state, { payload }: PayloadAction<number>) {
+            state.currentTime = payload;
         },
 
-        setVolume(state, { payload }: PayloadAction<{volume: number}>) {
-            state.volume = payload.volume;
+        setVolume(state, { payload }: PayloadAction<number>) {
+            state.volume = payload;
         },
 
-        SaveVolume(state) {
+        resetVolume(state) {
             state.saveVolume = state.volume;
             state.volume = 0;
         },
@@ -61,8 +60,8 @@ export const playerReducer = createSlice({
             state.track = state.playlist[state.currentTrackIndex];
         },
 
-        setPlayerStatus(state, { payload }: PayloadAction<{status: StatusType }>) {
-            state.status = payload.status;
+        setPlayerStatus(state, { payload }: PayloadAction<EnumOfStatusPlayer>) {
+            state.status = payload;
         }
     },
 });

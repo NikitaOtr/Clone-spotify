@@ -5,7 +5,6 @@ import { ICollectionOfReleases } from '../../types/commonTypes';
 
 const initialState = {
     status: EnumOfStatusFetching.Success,
-    searchText: '',
     mixes: null as null | ICollectionOfReleases,
     collectionOfPlaylists: [] as Array<ICollectionOfReleases>
 };
@@ -14,38 +13,35 @@ export const mainPageReducer = createSlice({
     name: 'mainPageReducer',
     initialState,
     reducers: {
-        setStatus(state, { payload }: PayloadAction<{ status: EnumOfStatusFetching }>) {
-            state.status = payload.status;
+        setStatus(state, { payload }: PayloadAction<EnumOfStatusFetching>) {
+            state.status = payload;
         },
 
-        setMixes(state, { payload }: PayloadAction<{ mixes: ICollectionOfReleases }>) {
-            state.mixes = payload.mixes;
+        setData(state, { payload }:PayloadAction<Array<ICollectionOfReleases>>) {
+            state.mixes = payload[0];
+            state.collectionOfPlaylists = payload.slice(1);
         },
-
-        setPlaylists(state, { payload } : PayloadAction<{ collectionOfPlaylists: Array<ICollectionOfReleases>}>) {
-            state.collectionOfPlaylists = payload.collectionOfPlaylists;
-        }
     },
 });
 
+export const mainPageReducerActions = {
+    setStatusMainPage: mainPageReducer.actions.setStatus,
+};
 
-const { setStatus, setMixes, setPlaylists } = mainPageReducer.actions;
+const { setStatus, setData } = mainPageReducer.actions;
 
 export const fetchMainPage = createAsyncThunk(
     'mainPageReducer/fetchMainPage',
     async (_, { dispatch }) => {
         try {
-            dispatch(setStatus({ status: EnumOfStatusFetching.Loading }));
-            const mixes = await apiSearch.getPlaylists('max', 6);
-            dispatch(setMixes({ mixes }));
-
             Promise.allSettled([
-                apiSearch.getPlaylists('dua', 10),
+                apiSearch.getPlaylists('max', 6),
+                apiSearch.getPlaylists('Dua', 10),
                 apiSearch.getPlaylists('nik', 10),
                 apiSearch.getPlaylists('lol', 10),
                 apiSearch.getPlaylists('ad', 10),
                 apiSearch.getPlaylists('zara', 10),
-                apiSearch.getPlaylists('dava', 10),
+                apiSearch.getPlaylists('shawn', 10),
             ]).then(data => {
                 const arrayResponse = [];
                 for (const response of data) {
@@ -53,12 +49,11 @@ export const fetchMainPage = createAsyncThunk(
                         arrayResponse.push(response.value);
                     }
                 }
-                dispatch(setPlaylists({ collectionOfPlaylists: arrayResponse }));
+                dispatch(setData(arrayResponse));
+                dispatch(setStatus(EnumOfStatusFetching.Success));
             });
-
-            dispatch(setStatus({ status: EnumOfStatusFetching.Success }));
         } catch(e) {
-            dispatch(setStatus({ status: EnumOfStatusFetching.Error }));
+            dispatch(setStatus(EnumOfStatusFetching.Error));
             if (e instanceof Error) {
                 console.error(e.message);
             } else {

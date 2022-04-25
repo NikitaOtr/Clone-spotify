@@ -17,7 +17,7 @@ export enum EnumOfSearchTypes {
 }
 
 export interface IImage {
-    url: string,
+    url?: string,
 }
 
 export interface IRelease {
@@ -31,7 +31,7 @@ export interface ITrack {
     id: string,
     name: string,
     type: string,
-    preview_url: string,
+    preview_url: string | null,
     duration_ms: number,
     artists: Array<IRelease>,
     album?: IRelease,

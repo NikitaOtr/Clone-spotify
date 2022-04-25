@@ -9,7 +9,7 @@ interface IProps {
 export const ButtonMove: FC<IProps> = ({ onClick, img }) => {
     return (
         <button onClick={onClick} className={s.button}>
-            <img className={s.button__img} src={img} alt="Следующая" />
+            <img className={s.button__img} src={img}/>
         </button>
     );
 };

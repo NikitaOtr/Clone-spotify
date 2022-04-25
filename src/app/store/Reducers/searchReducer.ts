@@ -1,24 +1,21 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { apiSearch } from '../../api/apiSearch';
-import { ISearchData } from '../../api/apiSearch';
-import { EnumOfSearchTypes, IRelease, ITrack } from './../../types/commonTypes';
+import { ICollectionOfReleases, ITrack } from './../../types/commonTypes';
+
+interface IFetchData {
+    albums: ICollectionOfReleases,
+    artists: ICollectionOfReleases,
+    playlists: ICollectionOfReleases,
+    tracks: Array<ITrack>,
+}
 
 const initialState = {
-    status: EnumOfStatusFetching.Success,
-    searchText: '',
-    albums: {
-        type: EnumOfSearchTypes.albums,
-        items: [] as Array<IRelease>
-    },
-    artists: {
-        type: EnumOfSearchTypes.artists,
-        items: [] as Array<IRelease>
-    },
-    playlists: {
-        type: EnumOfSearchTypes.playlists,
-        items: [] as Array<IRelease>,
-    },
+    status: EnumOfStatusFetching.Loading,
+    searchText: 'popular',
+    albums: null as null | ICollectionOfReleases,
+    artists: null as null | ICollectionOfReleases,
+    playlists: null as null | ICollectionOfReleases,
     tracks: [] as Array<ITrack>
 };
 
@@ -26,24 +23,27 @@ export const searchReducer = createSlice({
     name: 'searchReducer',
     initialState,
     reducers: {
-        setSearchText(state, { payload }: PayloadAction<{searchText: string}>) {
-            state.searchText = payload.searchText;
+        setStatus(state, { payload }: PayloadAction<EnumOfStatusFetching>) {
+            state.status = payload;
         },
 
-        setData(state, { payload }: PayloadAction<ISearchData>) {
-            state.albums.items = payload.albums.items;
-            state.artists.items = payload.artists.items;
-            state.playlists.items = payload.playlists.items;
-            state.tracks = payload.tracks.items;
+        setSearchText(state, { payload }: PayloadAction<string>) {
+            state.searchText = payload;
         },
 
-        setStatus(state, { payload }: PayloadAction<{ status: EnumOfStatusFetching}>) {
-            state.status = payload.status;
-        }
+        setData(state, { payload }: PayloadAction<IFetchData>) {
+            state.albums = payload.albums;
+            state.artists = payload.artists;
+            state.playlists = payload.playlists;
+            state.tracks = payload.tracks;
+        },
     },
 });
 
-export const searchReducerActions = { setSearchText: searchReducer.actions.setSearchText };
+export const searchReducerActions = {
+    setSearchText: searchReducer.actions.setSearchText,
+    setStatusSearchPage: searchReducer.actions.setStatus,
+};
 
 const { setStatus, setData } = searchReducer.actions;
 
@@ -51,13 +51,16 @@ export const fetchAll = createAsyncThunk(
     'searchReducer/fetchAll',
     async ({ searchText }: { searchText: string }, { dispatch }) => {
         try {
-            dispatch(setStatus({ status: EnumOfStatusFetching.Loading }));
             const data = await apiSearch.getAll(searchText);
             dispatch(setData(data));
-            dispatch(setStatus({ status: EnumOfStatusFetching.Success }));
+            dispatch(setStatus(EnumOfStatusFetching.Success));
         } catch(e) {
-            dispatch(setStatus({ status: EnumOfStatusFetching.Error }));
-            console.error(e);
+            dispatch(setStatus(EnumOfStatusFetching.Error));
+            if (e instanceof Error) {
+                console.error(e.message);
+            } else {
+                console.error(e);
+            }
         }
     }
 );

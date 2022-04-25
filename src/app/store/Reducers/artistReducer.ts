@@ -1,19 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { apiArtist } from '../../api/apiArtist';
-import { EnumOfSearchTypes, IRelease, ITrack } from '../../types/commonTypes';
+import { ICollectionOfReleases, IRelease, ITrack } from '../../types/commonTypes';
+
+interface IArtistData {
+    artist: null | IRelease,
+    relatedArtists: null | ICollectionOfReleases,
+    albums: null | ICollectionOfReleases,
+    tracks: Array<ITrack>,
+}
 
 const initialState = {
-    status: EnumOfStatusFetching.Success,
+    status: EnumOfStatusFetching.Loading,
     artist: null as null | IRelease,
-    relatedArtists: {
-        type: EnumOfSearchTypes.artists,
-        items: [] as Array<IRelease>
-    },
-    albums: {
-        type: EnumOfSearchTypes.albums,
-        items: [] as Array<IRelease>
-    },
+    relatedArtists: null as null | ICollectionOfReleases,
+    albums: null as null | ICollectionOfReleases,
     tracks: [] as Array<ITrack>,
 };
 
@@ -21,61 +22,61 @@ export const artistReducer = createSlice({
     name: 'artistReducer',
     initialState,
     reducers: {
-        setStatus(state, { payload }: PayloadAction<{ status: EnumOfStatusFetching }>) {
-            state.status = payload.status;
+        setStatus(state, { payload }: PayloadAction<EnumOfStatusFetching>) {
+            state.status = payload;
         },
 
-        setArtist(state, { payload }: PayloadAction<{ artist: IRelease }>) {
+        setData(state, { payload } : PayloadAction<IArtistData>) {
             state.artist = payload.artist;
-        },
-
-        setRelatedArtists(state, { payload }: PayloadAction<{ relatedArtists: Array<IRelease> }>) {
-            state.relatedArtists.items = payload.relatedArtists;
-        },
-
-        setAlbums(state, { payload }: PayloadAction<{ albums: Array<IRelease> }>) {
-            state.albums.items = payload.albums;
-        },
-
-        setTracks(state, { payload }: PayloadAction<{ tracks: Array<ITrack> }>) {
+            state.albums = payload.albums;
+            state.relatedArtists = payload.relatedArtists;
             state.tracks = payload.tracks;
-        },
+        }
     },
 });
 
-const { setStatus, setArtist, setRelatedArtists, setAlbums, setTracks } = artistReducer.actions;
+export const artistReducerActions = {
+    setStatusArtistPage: artistReducer.actions.setStatus,
+};
+
+const { setStatus, setData } = artistReducer.actions;
 
 export const fetchArtist = createAsyncThunk(
-    'searchReducer/fetchArtist',
+    'artistReducer/fetchArtist',
     async ({ id }: { id: string }, { dispatch }) => {
         try {
-            dispatch(setStatus({ status: EnumOfStatusFetching.Loading }));
-
             Promise.allSettled([
                 apiArtist.getArtist(id),
                 apiArtist.getArtistAlbums(id),
                 apiArtist.getArtistTopTrack(id),
                 apiArtist.getRelatedArtists(id),
             ]).then(data => {
+                const objResponse: IArtistData = {
+                    artist: null,
+                    albums: null,
+                    relatedArtists: null,
+                    tracks: [],
+                };
                 if (data[0].status === 'fulfilled') {
-                    dispatch(setArtist({ artist: data[0].value }));
+                    objResponse.artist = data[0].value;
                 }
 
                 if (data[1].status === 'fulfilled') {
-                    dispatch(setAlbums({ albums: data[1].value }));
+                    objResponse.albums = data[1].value;
                 }
 
                 if (data[2].status === 'fulfilled') {
-                    dispatch(setTracks({ tracks: data[2].value }));
+                    objResponse.tracks = data[2].value;
                 }
 
                 if (data[3].status === 'fulfilled') {
-                    dispatch(setRelatedArtists({ relatedArtists: data[3].value }));
+                    objResponse.relatedArtists = data[3].value;
                 }
-                dispatch(setStatus({ status: EnumOfStatusFetching.Success }));
+                dispatch(setData(objResponse));
+                dispatch(setStatus(EnumOfStatusFetching.Success));
             });
         } catch(e) {
-            dispatch(setStatus({ status: EnumOfStatusFetching.Error }));
+            dispatch(setStatus(EnumOfStatusFetching.Error));
             if (e instanceof Error) {
                 console.error(e.message);
             } else {

@@ -15,7 +15,27 @@ export interface ISearchData {
 export const apiSearch = {
     getAll(searchText: string) {
         return api.get<ISearchData>(`search?type=album,artist,playlist,track&q=${searchText}&limit=10`)
-            .then(response => response.data);
+            .then(response => ({
+                albums: {
+                    id: searchText,
+                    type: EnumOfSearchTypes.albums,
+                    items: response.data.albums.items,
+                },
+
+                artists: {
+                    id: searchText,
+                    type: EnumOfSearchTypes.artists,
+                    items: response.data.artists.items,
+                },
+
+                playlists: {
+                    id: searchText,
+                    type: EnumOfSearchTypes.playlists,
+                    items: response.data.playlists.items,
+                },
+
+                tracks: response.data.tracks.items,
+            }));
     },
 
     getPlaylists(searchText: string, limit = 50) {

@@ -21,7 +21,7 @@ export const Song: FC<IProps> = ({ track, index, tracks }) => {
             </div>
 
             <div className={s.song__box}>
-                {track.album?.images[0].url &&
+                {track.album?.images[0]?.url &&
                     <div>
                         <img className={s.song__box__img} src={track?.album?.images[0].url} alt=""/>
                     </div>

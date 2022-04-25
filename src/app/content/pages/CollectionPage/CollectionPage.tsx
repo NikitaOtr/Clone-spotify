@@ -17,7 +17,7 @@ export const CollectionReleasesPage = () => {
     const status = useAppSelector(state => state.collectionReducer.status);
     const collection = useAppSelector(state => state.collectionReducer.collection);
 
-    const { fetchCollection, fetchT } = useAppActions();
+    const { fetchCollection, fetchT, setStatusCollection } = useAppActions();
     const history = useParams<{type: EnumOfSearchTypes, searchText: string, id: string}>();
 
     const TranslateSearchType = {
@@ -28,15 +28,17 @@ export const CollectionReleasesPage = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        console.log(history);
         if (history.type && history.searchText) {
             fetchCollection({ searchText: history.searchText, type: history.type });
         } else if (history.id && history.type) {
             fetchT({ id: history.id, type: history.type });
         }
+        return () => {
+            setStatusCollection(EnumOfStatusFetching.Loading);
+        };
     }, []);
 
-    if (status === EnumOfStatusFetching.Loading) {
+    if (status === EnumOfStatusFetching.Loading || !collection) {
         return <Loader/>;
     }
 
@@ -52,7 +54,7 @@ export const CollectionReleasesPage = () => {
                 </h1>
             }
             <ContainerWrap>
-                {collection.map(item => <Release key={item.id} item={item}/>)}
+                {collection.items.map(item => <Release key={item.id} item={item}/>)}
             </ContainerWrap>
         </div>
     );

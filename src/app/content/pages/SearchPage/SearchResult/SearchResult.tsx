@@ -10,7 +10,6 @@ import { Loader } from '../../../../components/Loader/Loader';
 import { Error } from '../../../../components/Error/Error';
 
 export const SearchResult = () => {
-    const searchText = useAppSelector(state => state.searchReducer.searchText);
     const status = useAppSelector(state => state.searchReducer.status);
     const artists = useAppSelector(state => state.searchReducer.artists);
     const albums = useAppSelector(state => state.searchReducer.albums);
@@ -21,7 +20,7 @@ export const SearchResult = () => {
         return <Error/>;
     }
 
-    if (status === EnumOfStatusFetching.Loading) {
+    if (status === EnumOfStatusFetching.Loading || !artists || !albums || !playlists) {
         return <Loader/>;
     }
 
@@ -32,17 +31,17 @@ export const SearchResult = () => {
     return (
         <section>
             { artists.items.length
-                ? <Recommendation title='Исполнители' releases={artists} id={searchText}/>
+                ? <Recommendation title='Исполнители' releases={artists}/>
                 : null
             }
 
             { albums.items.length
-                ? <Recommendation title='Альбомы'  releases={albums} id={searchText}/>
+                ? <Recommendation title='Альбомы'  releases={albums}/>
                 : null
             }
 
             { playlists.items.length
-                ? <Recommendation title='Плейлисты' releases={playlists} id={searchText}/>
+                ? <Recommendation title='Плейлисты' releases={playlists}/>
                 : null
             }
 

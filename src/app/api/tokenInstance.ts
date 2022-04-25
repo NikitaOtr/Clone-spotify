@@ -7,7 +7,6 @@ export const tokenInstance = {
     clientId: '74ad96b2c9074c758e222dd191d1a0b4',
     clientSecret: '581c7ca90a2e422c84fc9f9a689287d2',
     TOKEN_URL: 'https://accounts.spotify.com/api/token',
-
     async getToken() {
         const body = qs.stringify({ 'grant_type': 'client_credentials' });
         const config = {
@@ -27,7 +26,6 @@ export const tokenInstance = {
         }
     },
 };
-
 
 //Пока не используется
 export const userToken = {
@@ -70,7 +68,6 @@ export const userToken = {
         };
         try {
             const response = await axios.post<{ access_token: string, refresh_token: string }>(TOKEN_URL, body, config);
-            console.log(response.data);
             this.accessToken = response.data.access_token;
             this.refreshToken = response.data.refresh_token;
         } catch(e) {

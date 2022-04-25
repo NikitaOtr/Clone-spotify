@@ -9,6 +9,7 @@ import { useAppActions } from './../../../hooks/useAppAction';
 import { ButtonPlay } from './ButtonPlay/ButtonPlay';
 import { ButtonMove } from './ButtonMove/ButtonMove';
 import { ProgressBar } from './ProgressBar/ProgressBar';
+import { EnumOfStatusPlayer } from '../../../types/playerTypes';
 
 interface IProps {
     audio : HTMLAudioElement
@@ -20,14 +21,15 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
     const track = useAppSelector(state => state.playerReducer.track);
 
     useEffect(() => {
-        const callback = () => setDuration({ duration: audio.duration });
+        const callback = () => setDuration(audio.duration);
         audio.addEventListener('loadedmetadata', callback);
         return () => audio.removeEventListener('loadedmetadata', callback);
     }, []);
 
     useEffect(() => {
-        audio.addEventListener('ended', () => nextTrack());
-        return () => audio.removeEventListener('ended', () => nextTrack());
+        const callback = () => nextTrack();
+        audio.addEventListener('ended', callback);
+        return () => audio.removeEventListener('ended', callback);
     }, []);
 
     useEffect(() => {
@@ -35,10 +37,10 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
             if (track.preview_url) {
                 audio.src = track.preview_url;
                 isPlaying ? audio.play() : audio.pause();
-                setPlayerStatus({ status: 'success' });
+                setPlayerStatus(EnumOfStatusPlayer.Success);
             } else {
                 audio.src = '';
-                setPlayerStatus({ status: 'error' });
+                setPlayerStatus(EnumOfStatusPlayer.Error);
             }
         }
     }, [track]);

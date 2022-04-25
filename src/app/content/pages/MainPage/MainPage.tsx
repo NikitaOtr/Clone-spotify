@@ -14,10 +14,13 @@ export const MainPage = () => {
     const mixes = useAppSelector(state => state.mainPageReducer.mixes);
     const collectionOfPlaylists = useAppSelector(state => state.mainPageReducer.collectionOfPlaylists);
 
-    const { fetchMainPage } = useAppActions();
+    const { fetchMainPage, setStatusMainPage } = useAppActions();
 
     useEffect(() => {
         fetchMainPage();
+        return () => {
+            setStatusMainPage(EnumOfStatusFetching.Loading);
+        };
     }, []);
 
     if (status === EnumOfStatusFetching.Error) {
@@ -33,8 +36,7 @@ export const MainPage = () => {
             <h1 className={s.headline}>Добрый день</h1>
             <Mixes mixes={mixes}/>
             {collectionOfPlaylists.map(playlist => (
-                <Recommendation id={playlist.id}
-                    releases={playlist} title='Рекомендации для вас' key={playlist.id}/>
+                <Recommendation releases={playlist} title='Рекомендации для вас' key={playlist.id}/>
             ))}
         </div>
     );

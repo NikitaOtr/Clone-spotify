@@ -9,11 +9,10 @@ import { ICollectionOfReleases } from '../../types/commonTypes';
 interface IProps {
     title: string,
     releases: ICollectionOfReleases,
-    id: string,
 }
 
-export const Recommendation: FC<IProps> = ({ title, releases, id }) => {
-    const hrefToCollection = `collection/${releases.type}/${id}`;
+export const Recommendation: FC<IProps> = ({ title, releases }) => {
+    const hrefToCollection = `collection/${releases.type}/${releases.id}`;
     return (
         <article className={s.recommendation}>
             <div className={s.headline}>

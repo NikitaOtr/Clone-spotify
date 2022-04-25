@@ -8,41 +8,44 @@ const initialState = {
     playlist: null as null | IPlayList,
 };
 
-export const playListReducer = createSlice({
+export const playlistReducer = createSlice({
     name: 'playlistReducer',
     initialState,
     reducers: {
-        setStatus(state, { payload }: PayloadAction<{ status: EnumOfStatusFetching }>) {
-            state.status = payload.status;
+        setStatus(state, { payload }: PayloadAction<EnumOfStatusFetching>) {
+            state.status = payload;
         },
 
-        setData(state, { payload }: PayloadAction<{ playlist: IPlayList }>) {
-            state.playlist = payload.playlist;
+        setData(state, { payload }: PayloadAction<IPlayList>) {
+            state.playlist = payload;
         },
     },
 });
 
-const { setStatus, setData } = playListReducer.actions;
+export const playlistReducerActions = {
+    setStatusPlaylist: playlistReducer.actions.setStatus,
+};
+
+const { setStatus, setData } = playlistReducer.actions;
 
 export const fetchPlaylist = createAsyncThunk(
-    'playlistReducer/fetchPalyList',
+    'playlistReducer/fetchPlaylist',
     async ({ id, type }: { id: string, type: EnumOfPlaylistTypes }, { dispatch }) => {
         try {
-            dispatch(setStatus({ status: EnumOfStatusFetching.Loading }));
             if (type === EnumOfPlaylistTypes.album) {
                 const playlist = await apiPlayList.getAlbum(id);
-                dispatch(setData({ playlist }));
+                dispatch(setData(playlist));
             } else if (type === EnumOfPlaylistTypes.playlist) {
                 const playlist = await apiPlayList.getPlayList(id);
-                dispatch(setData({ playlist }));
+                dispatch(setData(playlist));
             }
-            dispatch(setStatus({ status: EnumOfStatusFetching.Success }));
+            dispatch(setStatus(EnumOfStatusFetching.Success));
         } catch(e) {
-            dispatch(setStatus({ status: EnumOfStatusFetching.Error }));
+            dispatch(setStatus(EnumOfStatusFetching.Error));
             if (e instanceof Error) {
                 console.error(e.message);
             } else {
-                console.log(e);
+                console.error(e);
             }
         }
     }

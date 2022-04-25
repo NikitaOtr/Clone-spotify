@@ -18,7 +18,7 @@ export const PlaylistPage = () => {
     const playlist = useAppSelector(state => state.playlistReducer.playlist);
     const status = useAppSelector(state => state.playlistReducer.status);
 
-    const { fetchPlaylist } = useAppActions();
+    const { fetchPlaylist, setStatusPlaylist } = useAppActions();
 
     const history = useParams<{type: EnumOfPlaylistTypes, id: string}>();
 
@@ -27,6 +27,9 @@ export const PlaylistPage = () => {
         if (history.type && history.id) {
             fetchPlaylist({ id: history.id, type: history.type });
         }
+        return () => {
+            setStatusPlaylist(EnumOfStatusFetching.Loading);
+        };
     }, [history]);
 
     if (status === EnumOfStatusFetching.Error) {
