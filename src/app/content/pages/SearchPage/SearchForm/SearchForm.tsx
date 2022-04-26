@@ -1,16 +1,17 @@
 import React, { useEffect, FormEvent } from 'react';
 import s from './SearchForm.module.scss';
 
-import { EnumOfStatusFetching } from '../../../../types/apiTypes';
 import { useAppActions } from '../../../../hooks/useAppAction';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { useInput } from '../../../../hooks/useInput';
 
+import { EnumOfStatusFetching } from '../../../../types/apiTypes';
+
 export const SearchForm = () => {
     const searchText = useAppSelector(state => state.searchReducer.searchText);
-    const { setSearchText, fetchAll, setStatusSearchPage } = useAppActions();
-
     const [inputValue, bind] = useInput(searchText);
+
+    const { setSearchText, fetchSearch, setStatusSearchPage } = useAppActions();
 
     const Submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -18,7 +19,7 @@ export const SearchForm = () => {
     };
 
     useEffect(() => {
-        fetchAll({ searchText });
+        fetchSearch({ searchText });
         return () => {
             setStatusSearchPage(EnumOfStatusFetching.Loading);
         };

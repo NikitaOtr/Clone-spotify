@@ -1,15 +1,6 @@
-import { EnumOfPlaylistTypes, EnumOfSearchTypes, IRelease } from '../types/commonTypes';
 import { api } from './api';
-import { IServerCollectionItems } from './apiSearch';
-import { ITrack } from './../types/commonTypes';
-
-interface ITracks {
-    tracks: Array<ITrack>
-}
-
-interface IArtists {
-    artists: Array<IRelease>
-}
+import { EnumOfPlaylistTypes, EnumOfCollectionTypes, IRelease } from '../types/commonTypes';
+import { IServerArtists, IServerCollectionItems, IServerTracks } from '../types/serverTypes';
 
 export const apiArtist =  {
     getArtist(id: string) {
@@ -21,13 +12,13 @@ export const apiArtist =  {
         return api.get<IServerCollectionItems>(`artists/${id}/albums`)
             .then(response => ({
                 id,
-                type: EnumOfSearchTypes.albums,
+                type: EnumOfCollectionTypes.albums,
                 items: response.data.items,
             }));
     },
 
     getArtistTopTrack(id: string) {
-        return api.get<ITracks>(`artists/${id}/top-tracks?market=ES`)
+        return api.get<IServerTracks>(`artists/${id}/top-tracks?market=ES`)
             .then(response => ({
                 type: EnumOfPlaylistTypes.playlist,
                 items: response.data.tracks,
@@ -35,10 +26,10 @@ export const apiArtist =  {
     },
 
     getRelatedArtists(id: string) {
-        return api.get<IArtists>(`artists/${id}/related-artists`)
+        return api.get<IServerArtists>(`artists/${id}/related-artists`)
             .then(response => ({
                 id,
-                type: EnumOfSearchTypes.artists,
+                type: EnumOfCollectionTypes.artists,
                 items: response.data.artists,
             }));
     },

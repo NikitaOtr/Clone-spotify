@@ -1,5 +1,6 @@
-import { tokenInstance } from './tokenInstance';
 import axios, { AxiosRequestConfig } from 'axios';
+import { tokenInstance } from './tokenInstance';
+
 
 export const api = axios.create({
     baseURL: 'https://api.spotify.com/v1/',
@@ -8,7 +9,7 @@ export const api = axios.create({
 api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
         config.headers = {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
         };
         return config;
     },

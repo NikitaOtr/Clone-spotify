@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EnumOfStatusFetching } from '../../types/apiTypes';
+
 import { apiSearch } from '../../api/apiSearch';
+
+import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { ICollectionOfReleases, ICollectionOfTracks } from './../../types/commonTypes';
 
 interface ISearchData {
@@ -47,8 +49,8 @@ export const searchReducerActions = {
 
 const { setStatus, setData } = searchReducer.actions;
 
-export const fetchAll = createAsyncThunk(
-    'searchReducer/fetchAll',
+export const fetchSearch = createAsyncThunk(
+    'searchReducer/fetchSearch',
     async ({ searchText }: { searchText: string }, { dispatch }) => {
         try {
             const data = await apiSearch.getAll(searchText);

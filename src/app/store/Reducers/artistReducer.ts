@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EnumOfStatusFetching } from '../../types/apiTypes';
+
 import { apiArtist } from '../../api/apiArtist';
+
+import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { ICollectionOfReleases, ICollectionOfTracks, IRelease } from '../../types/commonTypes';
 
 interface IArtistData {

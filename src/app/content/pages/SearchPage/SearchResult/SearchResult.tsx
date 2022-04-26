@@ -16,36 +16,38 @@ export const SearchResult = () => {
     const playlists = useAppSelector(state => state.searchReducer.playlists);
     const tracks = useAppSelector(state => state.searchReducer.tracks);
 
-    if (status === EnumOfStatusFetching.Error) {
+    if (status === EnumOfStatusFetching.Loading) {
+        return <Loader />;
+    }
+
+    if (status === EnumOfStatusFetching.Error ||
+        !(artists || albums || playlists || tracks)) {
         return <Error/>;
     }
 
-    if (status === EnumOfStatusFetching.Loading || !artists || !albums || !playlists || !tracks) {
-        return <Loader/>;
-    }
-
-    if (!artists.items.length && !albums.items.length && !playlists.items.length && !tracks.items.length) {
+    if ((artists && !artists.items.length) && (albums && !albums.items.length)
+        && (playlists && !playlists.items.length) && (tracks && !tracks.items.length)) {
         return <div>Увы, по вашему запросу ничего не найдено</div>;
     }
 
     return (
         <section>
-            { artists.items.length
+            {artists && artists.items.length
                 ? <Recommendation title='Исполнители' releases={artists}/>
                 : null
             }
 
-            { albums.items.length
+            {albums && albums.items.length
                 ? <Recommendation title='Альбомы'  releases={albums}/>
                 : null
             }
 
-            { playlists.items.length
+            {playlists && playlists.items.length
                 ? <Recommendation title='Плейлисты' releases={playlists}/>
                 : null
             }
 
-            { tracks.items.length
+            {tracks && tracks.items.length
                 ? <Playlist tracks={tracks}/>
                 : null
             }

@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EnumOfStatusFetching } from '../../types/apiTypes';
-import { EnumOfSearchTypes, ICollectionOfReleases } from '../../types/commonTypes';
+
 import { apiSearch } from './../../api/apiSearch';
 import { apiArtist } from './../../api/apiArtist';
+
+import { EnumOfStatusFetching } from '../../types/apiTypes';
+import { EnumOfCollectionTypes, ICollectionOfReleases } from '../../types/commonTypes';
 
 const initialState = {
     status: EnumOfStatusFetching.Loading,
@@ -29,18 +31,17 @@ export const collectionReducerActions = {
 
 const { setStatus, setData } = collectionReducer.actions;
 
-
 export const fetchSearchCollection = createAsyncThunk(
-    'searchReducer/fetchSearchCollection',
-    async ({ searchText, type }: {searchText: string, type: EnumOfSearchTypes}, { dispatch }) => {
+    'collectionReducer/fetchSearchCollection',
+    async ({ searchText, type }: { searchText: string, type: EnumOfCollectionTypes}, { dispatch }) => {
         try {
-            if (type === EnumOfSearchTypes.albums) {
+            if (type === EnumOfCollectionTypes.albums) {
                 const collection = await apiSearch.getAlbums(searchText);
                 dispatch(setData(collection));
-            } else if (type === EnumOfSearchTypes.playlists) {
+            } else if (type === EnumOfCollectionTypes.playlists) {
                 const collection = await apiSearch.getPlaylists(searchText);
                 dispatch(setData(collection));
-            } else if (type === EnumOfSearchTypes.artists) {
+            } else if (type === EnumOfCollectionTypes.artists) {
                 const collection = await apiSearch.getArtists(searchText);
                 dispatch(setData(collection));
             }
@@ -52,13 +53,13 @@ export const fetchSearchCollection = createAsyncThunk(
 );
 
 export const fetchArtistCollection = createAsyncThunk(
-    'searchReducer/fetchArtistCollection',
-    async ({ id, type }: {id: string, type: EnumOfSearchTypes}, { dispatch }) => {
+    'collectionReducer/fetchArtistCollection',
+    async ({ id, type }: { id: string, type: EnumOfCollectionTypes}, { dispatch }) => {
         try {
-            if (type === EnumOfSearchTypes.albums) {
+            if (type === EnumOfCollectionTypes.albums) {
                 const collection = await apiArtist.getArtistAlbums(id);
                 dispatch(setData(collection));
-            } else if (type === EnumOfSearchTypes.artists) {
+            } else if (type === EnumOfCollectionTypes.artists) {
                 const collection = await apiArtist.getRelatedArtists(id);
                 dispatch(setData(collection));
             }

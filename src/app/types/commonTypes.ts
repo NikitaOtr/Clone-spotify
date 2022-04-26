@@ -3,14 +3,14 @@ export enum EnumOfPlaylistTypes {
     playlist = 'playlist',
 }
 
-export enum EnumOfTargetTypes {
+export enum EnumOfItemTypes {
     album = 'album',
     artist = 'artist',
     playlist = 'playlist',
     track = 'track',
 }
 
-export enum EnumOfSearchTypes {
+export enum EnumOfCollectionTypes {
     albums = 'albums',
     artists = 'artists',
     playlists = 'playlists',
@@ -24,7 +24,13 @@ export interface IRelease {
     id: string,
     name: string,
     images: Array<IImage>,
-    type: EnumOfTargetTypes,
+    type: EnumOfItemTypes,
+}
+
+export interface ICollectionOfReleases {
+    id: string,
+    type: EnumOfCollectionTypes,
+    items: Array<IRelease>,
 }
 
 export interface ITrack {
@@ -47,10 +53,4 @@ export interface IPlaylist {
     name: string,
     images: Array<IImage>,
     tracks: ICollectionOfTracks,
-}
-
-export interface ICollectionOfReleases<T = IRelease> {
-    id: string,
-    type: EnumOfSearchTypes
-    items: Array<T>
 }

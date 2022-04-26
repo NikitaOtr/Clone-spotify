@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 
-import { fetchAll } from './../store/Reducers/searchReducer';
+import { fetchSearch } from './../store/Reducers/searchReducer';
 import { fetchArtistCollection, fetchSearchCollection } from './../store/Reducers/collectionReducer';
 import { fetchPlaylist } from './../store/Reducers/playlistReducer';
 import { fetchArtist } from '../store/Reducers/artistReducer';
@@ -16,7 +16,7 @@ import { searchReducerActions } from './../store/Reducers/searchReducer';
 
 const allActions = {
     fetchMainPage,
-    fetchAll,
+    fetchSearch,
     fetchArtistCollection,
     fetchPlaylist,
     fetchArtist,

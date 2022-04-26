@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import s from './MainPage.module.scss';
-import { Mixes } from './Mixes/Mixes';
 
+import { useAppSelector } from '../../../hooks/useAppSelector';
+import { useAppActions } from '../../../hooks/useAppAction';
+
+import { EnumOfStatusFetching } from '../../../types/apiTypes';
+
+import { Mixes } from './Mixes/Mixes';
 import { Recommendation } from '../../../components/Recommendation/Recommendation';
 import { Loader } from '../../../components/Loader/Loader';
 import { Error } from '../../../components/Error/Error';
-import { useAppSelector } from '../../../hooks/useAppSelector';
-import { EnumOfStatusFetching } from '../../../types/apiTypes';
-import { useAppActions } from '../../../hooks/useAppAction';
 
 export const MainPage = () => {
     const status = useAppSelector(state => state.mainPageReducer.status);

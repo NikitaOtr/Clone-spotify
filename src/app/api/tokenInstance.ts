@@ -17,7 +17,7 @@ export const tokenInstance = {
         };
         try {
             const response = await axios.post<{access_token: string}>(this.TOKEN_URL, body, config);
-            localStorage.setItem('token', response.data.access_token);
+            sessionStorage.setItem('token', response.data.access_token);
         } catch(e) {
             console.error(e);
         }

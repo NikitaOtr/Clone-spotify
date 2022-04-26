@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { mainPageReducer } from './Reducers/mainPageReducer';
+import { playerReducer } from './Reducers/playerReducer';
+import { playlistReducer } from './Reducers/playlistReducer';
 import { searchReducer } from './Reducers/searchReducer';
 import { collectionReducer } from './Reducers/collectionReducer';
-import { playlistReducer } from './Reducers/playlistReducer';
-import { playerReducer } from './Reducers/playerReducer';
 import { artistReducer } from './Reducers/artistReducer';
-import { mainPageReducer } from './Reducers/mainPageReducer';
 
 export const store = configureStore({
     reducer: {

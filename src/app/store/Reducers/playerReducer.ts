@@ -3,6 +3,7 @@ import { ITrack } from '../../types/commonTypes';
 import { EnumOfStatusPlayer } from '../../types/playerTypes';
 
 const initialState = {
+    status: EnumOfStatusPlayer.Success,
     currentTrackIndex: 0,
     playlist: [] as Array<ITrack>,
     track: null as null | ITrack,
@@ -11,7 +12,6 @@ const initialState = {
     duration: 0,
     currentTime: 0,
     isPlaying: false,
-    status: EnumOfStatusPlayer.Success,
 };
 
 export const playerReducer = createSlice({

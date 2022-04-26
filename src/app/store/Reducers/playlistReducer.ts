@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EnumOfStatusFetching } from '../../types/apiTypes';
+
 import { apiPlayList } from '../../api/apiPlayList';
+
+import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { EnumOfPlaylistTypes, IPlaylist } from './../../types/commonTypes';
 
 const initialState = {
-    status: EnumOfStatusFetching.Success,
+    status: EnumOfStatusFetching.Loading,
     playlist: null as null | IPlaylist,
 };
 

@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
 import s from './ArtistPage.module.scss';
 
-import question from './../../../img/question.svg';
-
+import { useParams } from 'react-router-dom';
 import { useAppActions } from '../../../hooks/useAppAction';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 
-import { Error } from '../../../components/Error/Error';
-import { Playlist } from './../../../components/Playlist/Playlist';
 import { EnumOfStatusFetching } from '../../../types/apiTypes';
-import { Loader } from '../../../components/Loader/Loader';
-import { useParams } from 'react-router-dom';
+
 import { Recommendation } from './../../../components/Recommendation/Recommendation';
+import { Playlist } from './../../../components/Playlist/Playlist';
+import { Loader } from '../../../components/Loader/Loader';
+import { Error } from '../../../components/Error/Error';
+
+import question from './../../../img/question.svg';
 
 export const ArtistPage = () => {
+    const history = useParams<{ id: string }>();
     const status = useAppSelector(state => state.artistReducer.status);
     const artist = useAppSelector(state => state.artistReducer.artist);
     const relatedArtists = useAppSelector(state => state.artistReducer.relatedArtists);
@@ -22,24 +24,25 @@ export const ArtistPage = () => {
 
     const { fetchArtist, setStatusArtistPage } = useAppActions();
 
-    const history = useParams<{id: string}>();
-
     useEffect(() => {
         window.scrollTo(0, 0);
         if (history.id) {
             fetchArtist({ id: history.id });
+        } else {
+            setStatusArtistPage(EnumOfStatusFetching.Error);
         }
         return () => {
             setStatusArtistPage(EnumOfStatusFetching.Loading);
         };
-    }, []);
+    }, [history]);
 
-    if (status === EnumOfStatusFetching.Error) {
-        return <Error/>;
+    if (status === EnumOfStatusFetching.Loading) {
+        return <Loader/>;
     }
 
-    if (status === EnumOfStatusFetching.Loading || !relatedArtists || !artist || !albums || !tracks) {
-        return <Loader/>;
+    if (status === EnumOfStatusFetching.Error ||
+        !artist || !(relatedArtists || albums || tracks)) {
+        return <Error/>;
     }
 
     return (
@@ -53,17 +56,17 @@ export const ArtistPage = () => {
                 </div>
             </div>
 
-            {relatedArtists.items.length
+            {relatedArtists && relatedArtists.items.length
                 ? <Recommendation releases={relatedArtists} title='Похожие исполнители'/>
                 : null
             }
 
-            {albums.items.length
+            {albums && albums.items.length
                 ? <Recommendation releases={albums} title='Альбомы'/>
                 : null
             }
 
-            {tracks.items.length
+            {tracks && tracks.items.length
                 ? <Playlist tracks={tracks}/>
                 : null
             }

@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EnumOfStatusFetching } from '../../types/apiTypes';
+
 import { apiSearch } from '../../api/apiSearch';
+
+import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { ICollectionOfReleases } from '../../types/commonTypes';
 
 interface IMainPageData {
@@ -38,16 +40,16 @@ const { setStatus, setData } = mainPageReducer.actions;
 export const fetchMainPage = createAsyncThunk(
     'mainPageReducer/fetchMainPage',
     async (_, { dispatch }) => {
-        try {
-            Promise.allSettled([
-                apiSearch.getPlaylists('max', 6),
-                apiSearch.getPlaylists('Dua', 10),
-                apiSearch.getPlaylists('nik', 10),
-                apiSearch.getPlaylists('lol', 10),
-                apiSearch.getPlaylists('ad', 10),
-                apiSearch.getPlaylists('zara', 10),
-                apiSearch.getPlaylists('shawn', 10),
-            ]).then(data => {
+        Promise.allSettled([
+            apiSearch.getPlaylists('max', 6),
+            apiSearch.getPlaylists('Dua', 10),
+            apiSearch.getPlaylists('nik', 10),
+            apiSearch.getPlaylists('lol', 10),
+            apiSearch.getPlaylists('ad', 10),
+            apiSearch.getPlaylists('zara', 10),
+            apiSearch.getPlaylists('shawn', 10),
+        ])
+            .then(data => {
                 const objResponse: IMainPageData = {
                     mixes: null,
                     collectionOfPlaylists: [],
@@ -65,9 +67,7 @@ export const fetchMainPage = createAsyncThunk(
                 });
                 dispatch(setData(objResponse));
                 dispatch(setStatus(EnumOfStatusFetching.Success));
-            });
-        } catch(e) {
-            dispatch(setStatus(EnumOfStatusFetching.Error));
-        }
+            })
+            .catch(e => dispatch(setStatus(EnumOfStatusFetching.Error)));
     },
 );

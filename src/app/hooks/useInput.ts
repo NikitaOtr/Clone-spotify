@@ -9,8 +9,8 @@ export const useInput = (initialValue = '') => {
         value,
         onChange(e: ChangeEvent<HTMLInputElement>) {
             setValue(e.target.value);
-        }
+        },
     };
 
-    return [value, bind, setValue, reset] as [string, typeof bind, (s: string) => void, () => void];
+    return [value, bind, reset] as [string, typeof bind, () => void];
 };

@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import s from './Release.module.scss';
 
 import question from './../../img/question.svg';
-import { EnumOfTargetTypes, IRelease } from '../../types/commonTypes';
+import { EnumOfItemTypes, IRelease } from '../../types/commonTypes';
 
 interface IProps {
     item: IRelease,
 }
 
 export const Release: VFC<IProps> = ({ item }) => {
-    const href = item.type === EnumOfTargetTypes.artist
+    const href = item.type === EnumOfItemTypes.artist
         ? `/artist/${item.id}`
         : `/playlist/${item.type}/${item.id}`;
 

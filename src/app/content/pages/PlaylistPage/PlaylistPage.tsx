@@ -1,44 +1,45 @@
 import React, { useEffect } from 'react';
 import s from './PlaylistPage.module.scss';
 
-import btn from './greenBtn.svg';
-
-import { EnumOfStatusFetching } from '../../../types/apiTypes';
-
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from './../../../hooks/useAppSelector';
 import { useAppActions } from '../../../hooks/useAppAction';
 
+import { EnumOfStatusFetching } from '../../../types/apiTypes';
+import { EnumOfPlaylistTypes } from '../../../types/commonTypes';
+
 import { Playlist } from '../../../components/Playlist/Playlist';
 import { Error } from '../../../components/Error/Error';
 import { Loader } from '../../../components/Loader/Loader';
-import { EnumOfPlaylistTypes } from '../../../types/commonTypes';
+
+import btn from './img/greenBtn.svg';
 
 export const PlaylistPage = () => {
+    const history = useParams<{ type: EnumOfPlaylistTypes, id: string }>();
     const playlist = useAppSelector(state => state.playlistReducer.playlist);
     const status = useAppSelector(state => state.playlistReducer.status);
 
     const { fetchPlaylist, setStatusPlaylist } = useAppActions();
 
-    const history = useParams<{type: EnumOfPlaylistTypes, id: string}>();
-
-
     useEffect(() => {
         window.scrollTo(0, 0);
         if (history.type && history.id) {
             fetchPlaylist({ id: history.id, type: history.type });
+        } else {
+            setStatusPlaylist(EnumOfStatusFetching.Error);
         }
         return () => {
             setStatusPlaylist(EnumOfStatusFetching.Loading);
         };
     }, [history]);
 
-    if (status === EnumOfStatusFetching.Error) {
-        return <Error/>;
+    if (status === EnumOfStatusFetching.Loading) {
+        return <Loader/>;
     }
 
-    if (status === EnumOfStatusFetching.Loading || !playlist) {
-        return <Loader/>;
+    if (status === EnumOfStatusFetching.Error
+        || !playlist) {
+        return <Error/>;
     }
 
     return (
@@ -54,7 +55,7 @@ export const PlaylistPage = () => {
 
             <div className={s.playListBtnPlay}>
                 <button className={s.playListBtnPlay__btn}>
-                    <img className={s.playListBtnPlay__btn__img} src={btn} alt=""/>
+                    <img className={s.playListBtnPlay__btn__img} src={btn}/>
                 </button>
             </div>
 

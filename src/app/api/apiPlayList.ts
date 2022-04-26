@@ -1,25 +1,6 @@
 import { api } from './api';
-import { ITrack, IImage, EnumOfPlaylistTypes } from './../types/commonTypes';
-
-interface IServerAlbum {
-    id: string,
-    type: EnumOfPlaylistTypes,
-    name: string,
-    images: Array<IImage>,
-    tracks: {
-        items: Array<ITrack>
-    }
-}
-
-interface IServerPlayList {
-    id: string,
-    type: EnumOfPlaylistTypes,
-    name: string,
-    images: Array<IImage>,
-    tracks: {
-        items: Array<{track : ITrack}>
-    }
-}
+import { EnumOfPlaylistTypes } from './../types/commonTypes';
+import { IServerAlbum, IServerPlayList } from '../types/serverTypes';
 
 export const apiPlayList = {
     getAlbum(id: string) {
