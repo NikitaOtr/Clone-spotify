@@ -2,16 +2,16 @@ import { tokenInstance } from './tokenInstance';
 import axios, { AxiosRequestConfig } from 'axios';
 
 export const api = axios.create({
-    baseURL: 'https://api.spotify.com/v1/'
+    baseURL: 'https://api.spotify.com/v1/',
 });
 
 api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
         config.headers = {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
         };
         return config;
-    }
+    },
 );
 
 api.interceptors.response.use(
@@ -24,5 +24,5 @@ api.interceptors.response.use(
             return api.request(originalRequest);
         }
         throw error;
-    }
+    },
 );

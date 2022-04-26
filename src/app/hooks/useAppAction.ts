@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 
 import { fetchAll } from './../store/Reducers/searchReducer';
-import { fetchCollection, fetchT } from './../store/Reducers/collectionReducer';
+import { fetchArtistCollection, fetchSearchCollection } from './../store/Reducers/collectionReducer';
 import { fetchPlaylist } from './../store/Reducers/playlistReducer';
 import { fetchArtist } from '../store/Reducers/artistReducer';
 import { fetchMainPage } from '../store/Reducers/mainPageReducer';
@@ -17,10 +17,10 @@ import { searchReducerActions } from './../store/Reducers/searchReducer';
 const allActions = {
     fetchMainPage,
     fetchAll,
-    fetchCollection,
+    fetchArtistCollection,
     fetchPlaylist,
     fetchArtist,
-    fetchT,
+    fetchSearchCollection,
     ...artistReducerActions,
     ...collectionReducerActions,
     ...mainPageReducerActions,

@@ -1,16 +1,17 @@
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 import s from './Playlist.module.scss';
 
 import time from './time.svg';
 
 import { Song } from '../Song/Song';
-import { ITrack } from './../../types/commonTypes';
+import { EnumOfPlaylistTypes, ICollectionOfTracks } from './../../types/commonTypes';
 
 interface IProps {
-    tracks: Array<ITrack>
+    tracks: ICollectionOfTracks
 }
 
-export const Playlist: FC<IProps> = ({ tracks }) => {
+export const Playlist: VFC<IProps> = ({ tracks }) => {
+
     return (
         <section className={s.playList}>
             <div className={s.playList__header + ' ' + s.box}>
@@ -24,7 +25,7 @@ export const Playlist: FC<IProps> = ({ tracks }) => {
 
                 <div className={s.playList__header__box + ' ' + s.box__item}>
                     <span className={s.playList__header__box__text}>
-                        {tracks[0]?.album ? 'Альбом' : ''}
+                        {tracks.type === EnumOfPlaylistTypes.playlist ? 'Альбом' : ''}
                     </span>
                 </div>
 
@@ -33,7 +34,7 @@ export const Playlist: FC<IProps> = ({ tracks }) => {
                 </div>
             </div>
             <div>
-                {tracks.map((track, i) => <Song key={i} tracks={tracks} index={i} track={track}/>)}
+                {tracks.items.map((track, i) => <Song key={i} tracks={tracks.items} index={i} track={track}/>)}
             </div>
         </section>
     );

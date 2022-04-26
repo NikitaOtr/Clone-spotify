@@ -12,16 +12,13 @@ export const tokenInstance = {
         const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + btoa(this.clientId + ':' + this.clientSecret)
+                'Authorization': 'Basic ' + btoa(this.clientId + ':' + this.clientSecret),
             },
         };
         try {
             const response = await axios.post<{access_token: string}>(this.TOKEN_URL, body, config);
             localStorage.setItem('token', response.data.access_token);
         } catch(e) {
-            if (e instanceof Error) {
-                console.error(e.message);
-            }
             console.error(e);
         }
     },
@@ -59,11 +56,11 @@ export const userToken = {
         const body = qs.stringify({
             'grant_type': 'authorization_code',
             'code': this.code,
-            'redirect_uri': RedirectUrl
+            'redirect_uri': RedirectUrl,
         });
         const config = {
             headers: {
-                'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+                'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret),
             },
         };
         try {

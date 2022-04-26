@@ -1,5 +1,5 @@
 import { api } from './api';
-import { EnumOfSearchTypes, IRelease, ITrack } from '../types/commonTypes';
+import { EnumOfPlaylistTypes, EnumOfSearchTypes, IRelease, ITrack } from '../types/commonTypes';
 
 export interface IServerCollectionItems<T = IRelease> {
     items: Array<T>
@@ -34,7 +34,10 @@ export const apiSearch = {
                     items: response.data.playlists.items,
                 },
 
-                tracks: response.data.tracks.items,
+                tracks: {
+                    type: EnumOfPlaylistTypes.playlist,
+                    items: response.data.tracks.items,
+                },
             }));
     },
 
@@ -55,6 +58,7 @@ export const apiSearch = {
                 items: response.data.albums.items,
             }));
     },
+
     getArtists(searchText: string, limit = 50) {
         return api.get<ISearchData>(`search?type=artist&q=${searchText}&limit=${limit}`)
             .then(response => ({

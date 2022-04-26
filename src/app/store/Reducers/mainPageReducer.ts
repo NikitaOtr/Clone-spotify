@@ -3,10 +3,15 @@ import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { apiSearch } from '../../api/apiSearch';
 import { ICollectionOfReleases } from '../../types/commonTypes';
 
+interface IMainPageData {
+    mixes: null | ICollectionOfReleases,
+    collectionOfPlaylists: Array<ICollectionOfReleases>,
+}
+
 const initialState = {
-    status: EnumOfStatusFetching.Success,
+    status: EnumOfStatusFetching.Loading,
     mixes: null as null | ICollectionOfReleases,
-    collectionOfPlaylists: [] as Array<ICollectionOfReleases>
+    collectionOfPlaylists: [] as Array<ICollectionOfReleases>,
 };
 
 export const mainPageReducer = createSlice({
@@ -17,9 +22,9 @@ export const mainPageReducer = createSlice({
             state.status = payload;
         },
 
-        setData(state, { payload }:PayloadAction<Array<ICollectionOfReleases>>) {
-            state.mixes = payload[0];
-            state.collectionOfPlaylists = payload.slice(1);
+        setData(state, { payload }: PayloadAction<IMainPageData>) {
+            state.mixes = payload.mixes;
+            state.collectionOfPlaylists = payload.collectionOfPlaylists;
         },
     },
 });
@@ -43,22 +48,26 @@ export const fetchMainPage = createAsyncThunk(
                 apiSearch.getPlaylists('zara', 10),
                 apiSearch.getPlaylists('shawn', 10),
             ]).then(data => {
-                const arrayResponse = [];
-                for (const response of data) {
-                    if (response.status === 'fulfilled') {
-                        arrayResponse.push(response.value);
+                const objResponse: IMainPageData = {
+                    mixes: null,
+                    collectionOfPlaylists: [],
+                };
+
+                data.forEach((response, index) => {
+                    if (response.status === 'rejected') {
+                        return;
                     }
-                }
-                dispatch(setData(arrayResponse));
+                    if (index === 0) {
+                        objResponse.mixes = response.value;
+                    } else {
+                        objResponse.collectionOfPlaylists.push(response.value);
+                    }
+                });
+                dispatch(setData(objResponse));
                 dispatch(setStatus(EnumOfStatusFetching.Success));
             });
         } catch(e) {
             dispatch(setStatus(EnumOfStatusFetching.Error));
-            if (e instanceof Error) {
-                console.error(e.message);
-            } else {
-                console.error(e);
-            }
         }
-    }
+    },
 );

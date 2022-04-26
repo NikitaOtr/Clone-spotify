@@ -22,6 +22,7 @@ export const PlaylistPage = () => {
 
     const history = useParams<{type: EnumOfPlaylistTypes, id: string}>();
 
+
     useEffect(() => {
         window.scrollTo(0, 0);
         if (history.type && history.id) {

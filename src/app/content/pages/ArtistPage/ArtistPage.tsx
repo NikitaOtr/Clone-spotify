@@ -32,13 +32,13 @@ export const ArtistPage = () => {
         return () => {
             setStatusArtistPage(EnumOfStatusFetching.Loading);
         };
-    }, [history]);
+    }, []);
 
     if (status === EnumOfStatusFetching.Error) {
         return <Error/>;
     }
 
-    if (status === EnumOfStatusFetching.Loading || !relatedArtists || !artist || !albums) {
+    if (status === EnumOfStatusFetching.Loading || !relatedArtists || !artist || !albums || !tracks) {
         return <Loader/>;
     }
 
@@ -63,7 +63,7 @@ export const ArtistPage = () => {
                 : null
             }
 
-            {tracks.length
+            {tracks.items.length
                 ? <Playlist tracks={tracks}/>
                 : null
             }

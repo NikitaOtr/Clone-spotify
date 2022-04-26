@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { apiPlayList } from '../../api/apiPlayList';
-import { EnumOfPlaylistTypes, IPlayList,  } from './../../types/commonTypes';
+import { EnumOfPlaylistTypes, IPlaylist } from './../../types/commonTypes';
 
 const initialState = {
     status: EnumOfStatusFetching.Success,
-    playlist: null as null | IPlayList,
+    playlist: null as null | IPlaylist,
 };
 
 export const playlistReducer = createSlice({
@@ -16,7 +16,7 @@ export const playlistReducer = createSlice({
             state.status = payload;
         },
 
-        setData(state, { payload }: PayloadAction<IPlayList>) {
+        setData(state, { payload }: PayloadAction<IPlaylist>) {
             state.playlist = payload;
         },
     },
@@ -33,8 +33,8 @@ export const fetchPlaylist = createAsyncThunk(
     async ({ id, type }: { id: string, type: EnumOfPlaylistTypes }, { dispatch }) => {
         try {
             if (type === EnumOfPlaylistTypes.album) {
-                const playlist = await apiPlayList.getAlbum(id);
-                dispatch(setData(playlist));
+                const album = await apiPlayList.getAlbum(id);
+                dispatch(setData(album));
             } else if (type === EnumOfPlaylistTypes.playlist) {
                 const playlist = await apiPlayList.getPlayList(id);
                 dispatch(setData(playlist));
@@ -42,11 +42,6 @@ export const fetchPlaylist = createAsyncThunk(
             dispatch(setStatus(EnumOfStatusFetching.Success));
         } catch(e) {
             dispatch(setStatus(EnumOfStatusFetching.Error));
-            if (e instanceof Error) {
-                console.error(e.message);
-            } else {
-                console.error(e);
-            }
         }
-    }
+    },
 );

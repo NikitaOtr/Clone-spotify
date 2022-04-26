@@ -17,7 +17,7 @@ export const collectionReducer = createSlice({
             state.status = payload;
         },
 
-        setCollection(state, { payload }: PayloadAction<ICollectionOfReleases>) {
+        setData(state, { payload }: PayloadAction<ICollectionOfReleases>) {
             state.collection = payload;
         },
     },
@@ -27,56 +27,46 @@ export const collectionReducerActions = {
     setStatusCollection: collectionReducer.actions.setStatus,
 };
 
-const { setStatus, setCollection } = collectionReducer.actions;
+const { setStatus, setData } = collectionReducer.actions;
 
 
-export const fetchCollection = createAsyncThunk(
-    'searchReducer/fetchCollection',
+export const fetchSearchCollection = createAsyncThunk(
+    'searchReducer/fetchSearchCollection',
     async ({ searchText, type }: {searchText: string, type: EnumOfSearchTypes}, { dispatch }) => {
         try {
             if (type === EnumOfSearchTypes.albums) {
                 const collection = await apiSearch.getAlbums(searchText);
-                dispatch(setCollection(collection));
+                dispatch(setData(collection));
             } else if (type === EnumOfSearchTypes.playlists) {
                 const collection = await apiSearch.getPlaylists(searchText);
-                dispatch(setCollection(collection));
+                dispatch(setData(collection));
             } else if (type === EnumOfSearchTypes.artists) {
                 const collection = await apiSearch.getArtists(searchText);
-                dispatch(setCollection(collection));
+                dispatch(setData(collection));
             }
             dispatch(setStatus(EnumOfStatusFetching.Success));
         } catch(e) {
             dispatch(setStatus(EnumOfStatusFetching.Error));
-            if (e instanceof Error) {
-                console.error(e.message);
-            } else {
-                console.error(e);
-            }
         }
-    }
+    },
 );
 
-export const fetchT = createAsyncThunk(
-    'searchReducer/fetchT',
+export const fetchArtistCollection = createAsyncThunk(
+    'searchReducer/fetchArtistCollection',
     async ({ id, type }: {id: string, type: EnumOfSearchTypes}, { dispatch }) => {
         try {
             if (type === EnumOfSearchTypes.albums) {
                 const collection = await apiArtist.getArtistAlbums(id);
-                dispatch(setCollection(collection));
+                dispatch(setData(collection));
             } else if (type === EnumOfSearchTypes.artists) {
                 const collection = await apiArtist.getRelatedArtists(id);
-                dispatch(setCollection(collection));
+                dispatch(setData(collection));
             }
             dispatch(setStatus(EnumOfStatusFetching.Success));
         } catch(e) {
             dispatch(setStatus(EnumOfStatusFetching.Error));
-            if (e instanceof Error) {
-                console.error(e.message);
-            } else {
-                console.log(e);
-            }
         }
-    }
+    },
 );
 
 

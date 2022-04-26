@@ -1,4 +1,4 @@
-import { EnumOfSearchTypes, IRelease } from '../types/commonTypes';
+import { EnumOfPlaylistTypes, EnumOfSearchTypes, IRelease } from '../types/commonTypes';
 import { api } from './api';
 import { IServerCollectionItems } from './apiSearch';
 import { ITrack } from './../types/commonTypes';
@@ -22,13 +22,16 @@ export const apiArtist =  {
             .then(response => ({
                 id,
                 type: EnumOfSearchTypes.albums,
-                items: response.data.items
+                items: response.data.items,
             }));
     },
 
     getArtistTopTrack(id: string) {
         return api.get<ITracks>(`artists/${id}/top-tracks?market=ES`)
-            .then(response => response.data.tracks);
+            .then(response => ({
+                type: EnumOfPlaylistTypes.playlist,
+                items: response.data.tracks,
+            }));
     },
 
     getRelatedArtists(id: string) {
@@ -36,7 +39,7 @@ export const apiArtist =  {
             .then(response => ({
                 id,
                 type: EnumOfSearchTypes.artists,
-                items: response.data.artists
+                items: response.data.artists,
             }));
-    }
+    },
 };

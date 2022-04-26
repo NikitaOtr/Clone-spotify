@@ -23,18 +23,19 @@ export const MainPage = () => {
         };
     }, []);
 
-    if (status === EnumOfStatusFetching.Error) {
-        return <Error/>;
+    if (status === EnumOfStatusFetching.Loading) {
+        return <Loader />;
     }
 
-    if (status === EnumOfStatusFetching.Loading || !mixes) {
-        return <Loader/>;
+    if (status === EnumOfStatusFetching.Error ||
+        !(mixes || collectionOfPlaylists.length)) {
+        return <Error/>;
     }
 
     return (
         <div>
             <h1 className={s.headline}>Добрый день</h1>
-            <Mixes mixes={mixes}/>
+            {mixes && <Mixes mixes={mixes}/>}
             {collectionOfPlaylists.map(playlist => (
                 <Recommendation releases={playlist} title='Рекомендации для вас' key={playlist.id}/>
             ))}

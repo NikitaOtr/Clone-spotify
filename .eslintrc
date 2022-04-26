@@ -22,32 +22,24 @@
     ],
     "rules": {
         "react/prop-types": 0,
+        "comma-dangle": ["error", "always-multiline"],
         "indent": [
-            "error",
+            "warn",
             4
-            // "tab"
         ],
         "linebreak-style": [
-            "error",
+            "warn",
             "windows"
-            // "unix"
         ],
         "semi": [
-            "error",
+            "warn",
             "always"
         ],
-        "no-console": "off",
+        "no-console": "warn",
         "no-loop-func": [
             "error"
         ],
         "block-spacing": [
-            "error",
-            "always"
-        ],
-        "camelcase": [
-            "off"
-        ],
-        "eqeqeq": [
             "error",
             "always"
         ],
@@ -63,11 +55,11 @@
             }
         ],
         "comma-style": [
-            "error",
+            "warn",
             "last"
         ],
         "comma-spacing": [
-            "error",
+            "warn",
             {
                 "before": false,
                 "after": true
@@ -107,12 +99,6 @@
                 "ignoreUrls": true
             }
         ],
-        "max-nested-callbacks": [
-            "error",
-            {
-                "max": 7
-            }
-        ],
         "new-cap": [
             "error",
             {
@@ -142,14 +128,14 @@
             "always"
         ],
         "semi-spacing": [
-            "error",
+            "warn",
             {
                 "before": false,
                 "after": true
             }
         ],
         "space-before-blocks": [
-            "error",
+            "warn",
             "always"
         ],
         "space-before-function-paren": [

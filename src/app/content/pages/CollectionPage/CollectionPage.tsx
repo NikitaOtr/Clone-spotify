@@ -17,41 +17,39 @@ export const CollectionReleasesPage = () => {
     const status = useAppSelector(state => state.collectionReducer.status);
     const collection = useAppSelector(state => state.collectionReducer.collection);
 
-    const { fetchCollection, fetchT, setStatusCollection } = useAppActions();
+    const { fetchArtistCollection, fetchSearchCollection, setStatusCollection } = useAppActions();
     const history = useParams<{type: EnumOfSearchTypes, searchText: string, id: string}>();
 
     const TranslateSearchType = {
         'albums': 'Альбомы',
         'artists': 'Артисты',
-        'playlists': 'Плейлисты'
+        'playlists': 'Плейлисты',
     };
 
     useEffect(() => {
         window.scrollTo(0, 0);
         if (history.type && history.searchText) {
-            fetchCollection({ searchText: history.searchText, type: history.type });
+            fetchSearchCollection({ searchText: history.searchText, type: history.type });
         } else if (history.id && history.type) {
-            fetchT({ id: history.id, type: history.type });
+            fetchArtistCollection({ id: history.id, type: history.type });
         }
         return () => {
             setStatusCollection(EnumOfStatusFetching.Loading);
         };
     }, []);
 
-    if (status === EnumOfStatusFetching.Loading || !collection) {
+    if (status === EnumOfStatusFetching.Loading) {
         return <Loader/>;
     }
 
-    if (status === EnumOfStatusFetching.Error) {
+    if (status === EnumOfStatusFetching.Error || !collection) {
         return <Error/>;
     }
 
     return (
         <div>
-            {history.type && history.searchText
-                && <h1 className={s.headline}>
-                    {`${TranslateSearchType[history.type]} по запросу: ${history.searchText}`}
-                </h1>
+            {history.type
+                && <h1 className={s.headline}>{`${TranslateSearchType[history.type]}`}</h1>
             }
             <ContainerWrap>
                 {collection.items.map(item => <Release key={item.id} item={item}/>)}

@@ -62,7 +62,7 @@ export const playerReducer = createSlice({
 
         setPlayerStatus(state, { payload }: PayloadAction<EnumOfStatusPlayer>) {
             state.status = payload;
-        }
+        },
     },
 });
 

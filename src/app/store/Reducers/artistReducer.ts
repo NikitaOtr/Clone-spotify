@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { apiArtist } from '../../api/apiArtist';
-import { ICollectionOfReleases, IRelease, ITrack } from '../../types/commonTypes';
+import { ICollectionOfReleases, ICollectionOfTracks, IRelease } from '../../types/commonTypes';
 
 interface IArtistData {
     artist: null | IRelease,
     relatedArtists: null | ICollectionOfReleases,
     albums: null | ICollectionOfReleases,
-    tracks: Array<ITrack>,
+    tracks: null | ICollectionOfTracks,
 }
 
 const initialState = {
@@ -15,7 +15,7 @@ const initialState = {
     artist: null as null | IRelease,
     relatedArtists: null as null | ICollectionOfReleases,
     albums: null as null | ICollectionOfReleases,
-    tracks: [] as Array<ITrack>,
+    tracks: null as null | ICollectionOfTracks,
 };
 
 export const artistReducer = createSlice({
@@ -31,7 +31,7 @@ export const artistReducer = createSlice({
             state.albums = payload.albums;
             state.relatedArtists = payload.relatedArtists;
             state.tracks = payload.tracks;
-        }
+        },
     },
 });
 
@@ -44,18 +44,18 @@ const { setStatus, setData } = artistReducer.actions;
 export const fetchArtist = createAsyncThunk(
     'artistReducer/fetchArtist',
     async ({ id }: { id: string }, { dispatch }) => {
-        try {
-            Promise.allSettled([
-                apiArtist.getArtist(id),
-                apiArtist.getArtistAlbums(id),
-                apiArtist.getArtistTopTrack(id),
-                apiArtist.getRelatedArtists(id),
-            ]).then(data => {
+        Promise.allSettled([
+            apiArtist.getArtist(id),
+            apiArtist.getArtistAlbums(id),
+            apiArtist.getArtistTopTrack(id),
+            apiArtist.getRelatedArtists(id),
+        ])
+            .then(data => {
                 const objResponse: IArtistData = {
                     artist: null,
                     albums: null,
                     relatedArtists: null,
-                    tracks: [],
+                    tracks: null,
                 };
                 if (data[0].status === 'fulfilled') {
                     objResponse.artist = data[0].value;
@@ -74,14 +74,7 @@ export const fetchArtist = createAsyncThunk(
                 }
                 dispatch(setData(objResponse));
                 dispatch(setStatus(EnumOfStatusFetching.Success));
-            });
-        } catch(e) {
-            dispatch(setStatus(EnumOfStatusFetching.Error));
-            if (e instanceof Error) {
-                console.error(e.message);
-            } else {
-                console.error(e);
-            }
-        }
-    }
+            })
+            .catch(() => dispatch(setStatus(EnumOfStatusFetching.Error)));
+    },
 );

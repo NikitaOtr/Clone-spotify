@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { apiSearch } from '../../api/apiSearch';
-import { ICollectionOfReleases, ITrack } from './../../types/commonTypes';
+import { ICollectionOfReleases, ICollectionOfTracks } from './../../types/commonTypes';
 
-interface IFetchData {
+interface ISearchData {
     albums: ICollectionOfReleases,
     artists: ICollectionOfReleases,
     playlists: ICollectionOfReleases,
-    tracks: Array<ITrack>,
+    tracks: ICollectionOfTracks,
 }
 
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
     albums: null as null | ICollectionOfReleases,
     artists: null as null | ICollectionOfReleases,
     playlists: null as null | ICollectionOfReleases,
-    tracks: [] as Array<ITrack>
+    tracks: null as null | ICollectionOfTracks,
 };
 
 export const searchReducer = createSlice({
@@ -31,7 +31,7 @@ export const searchReducer = createSlice({
             state.searchText = payload;
         },
 
-        setData(state, { payload }: PayloadAction<IFetchData>) {
+        setData(state, { payload }: PayloadAction<ISearchData>) {
             state.albums = payload.albums;
             state.artists = payload.artists;
             state.playlists = payload.playlists;
@@ -56,11 +56,6 @@ export const fetchAll = createAsyncThunk(
             dispatch(setStatus(EnumOfStatusFetching.Success));
         } catch(e) {
             dispatch(setStatus(EnumOfStatusFetching.Error));
-            if (e instanceof Error) {
-                console.error(e.message);
-            } else {
-                console.error(e);
-            }
         }
-    }
+    },
 );

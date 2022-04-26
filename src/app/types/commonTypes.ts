@@ -37,11 +37,16 @@ export interface ITrack {
     album?: IRelease,
 }
 
-export interface IPlayList {
+export interface ICollectionOfTracks {
+    type: EnumOfPlaylistTypes,
+    items: Array<ITrack>
+}
+
+export interface IPlaylist {
     id: string,
     name: string,
     images: Array<IImage>,
-    tracks: Array<ITrack>,
+    tracks: ICollectionOfTracks,
 }
 
 export interface ICollectionOfReleases<T = IRelease> {

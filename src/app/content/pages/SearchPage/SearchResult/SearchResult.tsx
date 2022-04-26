@@ -20,11 +20,11 @@ export const SearchResult = () => {
         return <Error/>;
     }
 
-    if (status === EnumOfStatusFetching.Loading || !artists || !albums || !playlists) {
+    if (status === EnumOfStatusFetching.Loading || !artists || !albums || !playlists || !tracks) {
         return <Loader/>;
     }
 
-    if (!artists.items.length && !albums.items.length && !playlists.items.length && !tracks.length) {
+    if (!artists.items.length && !albums.items.length && !playlists.items.length && !tracks.items.length) {
         return <div>Увы, по вашему запросу ничего не найдено</div>;
     }
 
@@ -45,7 +45,7 @@ export const SearchResult = () => {
                 : null
             }
 
-            { tracks.length
+            { tracks.items.length
                 ? <Playlist tracks={tracks}/>
                 : null
             }
