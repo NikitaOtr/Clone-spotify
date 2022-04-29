@@ -1,4 +1,5 @@
 @import './../../../style/Vars.scss';
+
 .musicTitle {
     display: flex;
     align-items: center;
@@ -7,27 +8,20 @@
     &__img {
         height: 100%;
     }
-    &__text {
+    &__box {
         display: flex;
         gap: 10px;
         flex-direction: column;
         justify-content: center;
+        width: 240px;
         overflow: hidden;
-        &__name {
+        &__text {
             font-size: 14px;
             font-weight: 600;
             cursor: default;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-        }
-        &__author {
-            font-size: 12px;
-            font-weight: 400;
-            &:hover {
-                text-decoration: underline;
-                color: $colorGreen;
-            }
         }
     }
 }
@@ -38,4 +32,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    &__text {
+        font-size: 12px;
+        font-weight: 400;
+        &:hover {
+            text-decoration: underline;
+            color: $colorGreen;
+        }
+    }
 }

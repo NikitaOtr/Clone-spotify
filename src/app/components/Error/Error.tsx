@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { VFC } from 'react';
+import s from './Error.module.scss';
 
-export const Error = () => {
+export const Error: VFC = () => {
     return (
         <div>
-            <h2>Что-то пошло не так Попробуйте в другой раз</h2>
+            <h2 className={s.text}>Что-то пошло не так. Попробуйте в другой раз</h2>
         </div>
     );
 };

@@ -1,32 +1,4 @@
-.plaListTitle {
-    padding: 50px 0 30px 0;
-    display: flex;
-    align-items: flex-end;
-    gap: 50px;
-    &__boxImg {
-        max-width: 300px;
-        max-height: 300px;
-        &__img {
-            height: 300px
-        }
-    }
-    &__boxText {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        &__name {
-            font-size: 64px;
-            font-weight: 700;
-        }
-        &__count {
-            font-size: 32px;
-            font-weight: 600;
-        }
-    }
-}
-
-.playList {
+.playlist {
     &__header {
         display: grid;
         grid-template-rows: 50px;
@@ -45,23 +17,6 @@
             &__img {
                 height: 30px;
             }
-        }
-    }
-}
-
-.playListBtnPlay {
-    padding: 40px 20px;
-    &__btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 70px;
-        width: 70px;
-        border-radius: 500px;
-        border: none;
-        background-color: #1ed760;
-        &__img {
-            width: 50px;
         }
     }
 }

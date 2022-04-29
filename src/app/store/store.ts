@@ -16,6 +16,10 @@ export const store = configureStore({
         [searchReducer.name]: searchReducer.reducer,
         [artistReducer.name]: artistReducer.reducer,
     },
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+        immutableCheck: false,
+        serializableCheck: false,
+    }),
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;

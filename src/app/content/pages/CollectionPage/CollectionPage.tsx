@@ -8,7 +8,6 @@ import { useAppActions } from '../../../hooks/useAppAction';
 import { EnumOfStatusFetching } from '../../../types/apiTypes';
 import { EnumOfCollectionTypes } from '../../../types/commonTypes';
 
-import { ContainerWrap } from '../../../components/ContainerWrap/ContainerWrap';
 import { Release } from '../../../components/Release/Release';
 import { Loader } from '../../../components/Loader/Loader';
 import { Error } from '../../../components/Error/Error';
@@ -51,11 +50,10 @@ export const CollectionReleasesPage = () => {
 
     return (
         <div>
-            {history.type && <h1 className={s.headline}>{`${TranslateSearchType[history.type]}`}</h1>
-            }
-            <ContainerWrap>
+            {history.type && <h2 className={s.headline}>{`${TranslateSearchType[history.type]}`}</h2>}
+            <div className={s.containerWrap}>
                 {collection.items.map(item => <Release key={item.id} item={item}/>)}
-            </ContainerWrap>
+            </div>
         </div>
     );
 };

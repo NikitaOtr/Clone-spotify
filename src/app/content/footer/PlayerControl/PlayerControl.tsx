@@ -1,15 +1,17 @@
 import React, { VFC, useEffect } from 'react';
 import s from './PlayerControl.module.scss';
-import left from './img/left.svg';
-import right from './img/right.svg';
 
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { useAppActions } from './../../../hooks/useAppAction';
 
+import { EnumOfStatusPlayer } from '../../../types/playerTypes';
+
 import { ButtonPlay } from './ButtonPlay/ButtonPlay';
 import { ButtonMove } from './ButtonMove/ButtonMove';
-import { ProgressBar } from './ProgressBar/ProgressBar';
-import { EnumOfStatusPlayer } from '../../../types/playerTypes';
+import { TimeControl } from './TimeControl/TimeControl';
+
+import left from './img/left.svg';
+import right from './img/right.svg';
 
 interface IProps {
     audio : HTMLAudioElement
@@ -58,7 +60,7 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
                 <ButtonPlay isPlaying={isPlaying} toggle={() => togglePlaying()}/>
                 <ButtonMove img={right} onClick={() => nextTrack()}/>
             </div>
-            <ProgressBar audio={audio}/>
+            <TimeControl audio={audio}/>
         </div>
     );
 };

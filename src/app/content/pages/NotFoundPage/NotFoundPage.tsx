@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { VFC } from 'react';
 import s from './NotFoundPage.module.scss';
 
 import { Link } from 'react-router-dom';
 
-export const NotFoundPage = () => {
+export const NotFoundPage: VFC = () => {
     return (
         <div className={s.container}>
             <h1>Страница не найдена</h1>

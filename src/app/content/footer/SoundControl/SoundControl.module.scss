@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: 15px;
-    width: 200px;
+    width: 300px;
 }
 
 .button {
@@ -23,32 +23,4 @@
             height: 27px;
         }
     }
-}
-
-.progressBar {
-    transition: all 0.3s;
-    cursor: pointer;
-    height: 6px;
-    width: 100px;
-    border-radius: 10px;
-    &__progress {
-        transition: all 0.3s;
-        height: 6px;
-        width: 34px;
-        border-radius: 10px;
-    }
-}
-
-.noHover {
-    background-color: gray;
-    .progressBar__progress {
-        background-color: white;
-    }
-}
-
-.hover {
-    background-color: white;
-        .progressBar__progress {
-            background-color: $colorGreen;
-        }
 }

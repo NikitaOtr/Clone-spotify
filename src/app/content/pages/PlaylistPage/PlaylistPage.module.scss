@@ -1,5 +1,8 @@
-.playListTitle {
-    display: flex;
+@import './../../../style/Vars.scss';
+
+.playlistTitle {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     gap: 50px;
     &__boxImg {
         max-width: 300px;
@@ -14,14 +17,32 @@
         align-items: flex-start;
         justify-content: center;
         gap: 20px;
-        &__name {
+        &__text {
             font-size: 42px;
             font-weight: 700;
         }
     }
 }
 
-.playListBtnPlay {
+.boxImg {
+    height: 300px;
+    width: 300px;
+    &__container {
+        padding-bottom: 100%;
+        position: relative;
+        &__img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    
+}
+
+.playlistBtnPlay {
     padding: 40px 20px;
     &__btn {
         display: flex;
@@ -31,11 +52,9 @@
         width: 70px;
         border-radius: 500px;
         border: none;
-        background-color: #1ed760;
+        background-color: $colorGreen;
         &__img {
             width: 50px;
         }
     }
 }
-
-

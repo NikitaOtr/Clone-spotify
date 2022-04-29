@@ -47,7 +47,7 @@ export const Aside = () => {
                 </div>
 
                 <div className={s.containerLink}>
-                    <NavLink className={setActiveClass} to='playlist/playlist/37i9dQZF1DZ06evO2k8YdG'>
+                    <NavLink className={setActiveClass} to='playlist/playlist/0n9vv15rU5Yh2SNCXzYdT6'>
                         <Heart className={s.navigation__img}/>
                         <span className={s.navigation__text}>Подборка треков</span>
                     </NavLink>

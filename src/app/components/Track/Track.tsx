@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
-import s from './Song.module.scss';
+import s from './Track.module.scss';
+
+import { useAppActions } from '../../hooks/useAppAction';
+
+import { ITrack } from '../../types/commonTypes';
 
 import { Link } from 'react-router-dom';
-import { ITrack } from './../../types/commonTypes';
-import { timeFormatFromMilliseconds } from './../../utils/timeFormat';
-import { useAppActions } from '../../hooks/useAppAction';
+import { timeFormatFromMilliseconds } from '../../utils/timeFormat';
 
 interface IProps {
     index: number
@@ -12,7 +14,7 @@ interface IProps {
     tracks: Array<ITrack>
 }
 
-export const Song: FC<IProps> = ({ track, index, tracks }) => {
+export const Track: FC<IProps> = ({ track, index, tracks }) => {
     const { setPlaylist } = useAppActions();
     return (
         <article onClick={() => setPlaylist({ playlist: tracks, startIndex: index })} className={s.song}>
@@ -22,9 +24,7 @@ export const Song: FC<IProps> = ({ track, index, tracks }) => {
 
             <div className={s.song__box}>
                 {track.album?.images[0]?.url &&
-                    <div>
-                        <img className={s.song__box__img} src={track?.album?.images[0].url} alt=""/>
-                    </div>
+                    <img className={s.song__box__img} src={track?.album?.images[0].url} alt=""/>
                 }
                 <div className={s.song__box__title}>
                     <span className={s.song__box__text}>{track.name}</span>

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 import s from './Mix.module.scss';
 
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ interface IProps {
     mix: IRelease
 }
 
-export const Mix: FC<IProps> = ({ number, mix }) => {
+export const Mix: VFC<IProps> = ({ number, mix }) => {
     return (
         <article>
             <Link className={s.mix__link} to={`playlist/playlist/${mix.id}`}>

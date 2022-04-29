@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 import s from './Recommendation.module.scss';
 import { Link } from 'react-router-dom';
 
-import { ContainerNoWrap } from '../ContainerNoWrap/ContainerNoWrap';
 import { Release } from '../Release/Release';
 import { ICollectionOfReleases } from '../../types/commonTypes';
 
@@ -11,7 +10,7 @@ interface IProps {
     releases: ICollectionOfReleases,
 }
 
-export const Recommendation: FC<IProps> = ({ title, releases }) => {
+export const Recommendation: VFC<IProps> = ({ title, releases }) => {
     const hrefToCollection = `collection/${releases.type}/${releases.id}`;
     return (
         <article className={s.recommendation}>
@@ -20,9 +19,9 @@ export const Recommendation: FC<IProps> = ({ title, releases }) => {
                 <Link className={s.headline__all} to={hrefToCollection}>все</Link>
             </div>
 
-            <ContainerNoWrap>
+            <div className={s.containerNoWrap}>
                 {releases.items.map(release => <Release key={release.id} item={release}/>)}
-            </ContainerNoWrap>
+            </div>
         </article>
     );
 };

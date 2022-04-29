@@ -44,18 +44,20 @@ export const PlaylistPage = () => {
 
     return (
         <div>
-            <div className={s.playListTitle}>
-                <div className={s.playListTitle__boxImg}>
-                    <img className={s.playListTitle__boxImg__img} src={playlist.images[0].url} alt=""/>
+            <div className={s.playlistTitle}>
+                <div className={s.boxImg}>
+                    <div className={s.boxImg__container}>
+                        <img className={s.boxImg__container__img} src={playlist.images[0].url}/>
+                    </div>
                 </div>
-                <div className={s.playListTitle__boxText}>
-                    <h1 className={s.playListTitle__boxText__name}>{playlist.name}</h1>
+                <div className={s.playlistTitle__boxText}>
+                    <h1 className={s.playlistTitle__boxText__text}>{playlist.name}</h1>
                 </div>
             </div>
 
-            <div className={s.playListBtnPlay}>
-                <button className={s.playListBtnPlay__btn}>
-                    <img className={s.playListBtnPlay__btn__img} src={btn}/>
+            <div className={s.playlistBtnPlay}>
+                <button className={s.playlistBtnPlay__btn}>
+                    <img className={s.playlistBtnPlay__btn__img} src={btn}/>
                 </button>
             </div>
 

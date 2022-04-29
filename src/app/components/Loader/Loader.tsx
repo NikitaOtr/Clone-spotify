@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { VFC } from 'react';
 import s from './Loader.module.scss';
 
-export const Loader = () => {
+export const Loader: VFC = () => {
     return (
         <div className={s.skFadingCircleWrap}>
             <div className={s.skFadingCircle}>
-                <i className={s.skCircle1}></i>
-                <i className={s.skCircle2}></i>
-                <i className={s.skCircle3}></i>
-                <i className={s.skCircle4}></i>
-                <i className={s.skCircle5}></i>
-                <i className={s.skCircle6}></i>
-                <i className={s.skCircle7}></i>
-                <i className={s.skCircle8}></i>
-                <i className={s.skCircle9}></i>
-                <i className={s.skCircle10}></i>
-                <i className={s.skCircle11}></i>
-                <i className={s.skCircle12}></i>
+                <span className={s.skCircle1}></span>
+                <span className={s.skCircle2}></span>
+                <span className={s.skCircle3}></span>
+                <span className={s.skCircle4}></span>
+                <span className={s.skCircle5}></span>
+                <span className={s.skCircle6}></span>
+                <span className={s.skCircle7}></span>
+                <span className={s.skCircle8}></span>
+                <span className={s.skCircle9}></span>
+                <span className={s.skCircle10}></span>
+                <span className={s.skCircle11}></span>
+                <span className={s.skCircle12}></span>
             </div>
         </div>
     );

@@ -47,12 +47,14 @@ export const ArtistPage = () => {
 
     return (
         <div>
-            <div className={s.playListTitle}>
-                <div className={s.playListTitle__boxImg}>
-                    <img className={s.playListTitle__boxImg__img} src={artist.images[0]?.url || question } alt=""/>
+            <div className={s.artistTitle}>
+                <div className={s.boxImg}>
+                    <div className={s.boxImg__container}>
+                        <img className={s.boxImg__container__img} src={artist.images[0]?.url || question } alt=""/>
+                    </div>
                 </div>
-                <div className={s.playListTitle__boxText}>
-                    <h1 className={s.playListTitle__boxText__name}>{artist.name}</h1>
+                <div className={s.artistTitle__boxText}>
+                    <h1 className={s.artistTitle__boxText__name}>{artist.name}</h1>
                 </div>
             </div>
 

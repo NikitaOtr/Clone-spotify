@@ -10,6 +10,7 @@ import { Mixes } from './Mixes/Mixes';
 import { Recommendation } from '../../../components/Recommendation/Recommendation';
 import { Loader } from '../../../components/Loader/Loader';
 import { Error } from '../../../components/Error/Error';
+import { ProgressBar } from '../../../components/ProgressBar/ProgressBar';
 
 export const MainPage = () => {
     const status = useAppSelector(state => state.mainPageReducer.status);
