@@ -17,7 +17,7 @@ export enum EnumOfCollectionTypes {
 }
 
 export interface IImage {
-    url?: string,
+    url: string,
 }
 
 export interface IRelease {
@@ -36,21 +36,17 @@ export interface ICollectionOfReleases {
 export interface ITrack {
     id: string,
     name: string,
-    type: string,
+    type: EnumOfItemTypes,
     preview_url: string | null,
     duration_ms: number,
     artists: Array<IRelease>,
     album?: IRelease,
 }
 
-export interface ICollectionOfTracks {
-    type: EnumOfPlaylistTypes,
-    items: Array<ITrack>
-}
-
 export interface IPlaylist {
     id: string,
+    type: EnumOfPlaylistTypes,
     name: string,
     images: Array<IImage>,
-    tracks: ICollectionOfTracks,
+    tracks: Array<ITrack>,
 }

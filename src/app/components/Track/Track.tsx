@@ -1,37 +1,60 @@
-import React, { FC } from 'react';
+import React, { useState, VFC } from 'react';
 import s from './Track.module.scss';
 
-import { useAppActions } from '../../hooks/useAppAction';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppActions } from './../../hooks/useAppAction';
 
 import { ITrack } from '../../types/commonTypes';
 
 import { Link } from 'react-router-dom';
 import { timeFormatFromMilliseconds } from '../../utils/timeFormat';
+import { ButtonPlay } from './../ButtonPlay/ButtonPlay';
 
 interface IProps {
-    index: number
-    track: ITrack
-    tracks: Array<ITrack>
+    index: number,
+    isPlayingThisPlaylist: boolean;
+    track: ITrack,
+    setTrack: () => void,
 }
 
-export const Track: FC<IProps> = ({ track, index, tracks }) => {
-    const { setPlaylist } = useAppActions();
+export const Track: VFC<IProps> = ({ track, index, setTrack, isPlayingThisPlaylist }) => {
+    const playingTrack = useAppSelector(state => state.playerReducer.track);
+    const isPlaying = useAppSelector(state => state.playerReducer.isPlaying);
+    const [active, setActive] = useState(false);
+
+    const { togglePlaying } = useAppActions();
+
+    const isChooseThisTrack = isPlayingThisPlaylist && playingTrack?.id === track.id;
+    const isPlayingThisTrack = isPlaying && isChooseThisTrack;
+
+    const onClick = () => {
+        if (isPlayingThisTrack) {
+            togglePlaying();
+        } else {
+            setTrack();
+        }
+    };
+
     return (
-        <article onClick={() => setPlaylist({ playlist: tracks, startIndex: index })} className={s.song}>
-            <div className={s.song__box}>
-                <span className={s.song__box__text}>{index + 1}</span>
+        <article onClick={onClick} className={isChooseThisTrack ? s.isChooseSong : s.song}
+            onMouseEnter={() => setActive(true)} onMouseLeave={() => setActive(false)}>
+            <div className={s.box}>
+                {isChooseThisTrack || active
+                    ? <ButtonPlay size={30} isPlaying={isPlayingThisTrack} />
+                    : <span className={s.box__text}>{index + 1}</span>
+                }
             </div>
 
-            <div className={s.song__box}>
+            <div className={s.box}>
                 {track.album?.images[0]?.url &&
-                    <img className={s.song__box__img} src={track?.album?.images[0].url} alt=""/>
+                    <img className={s.box__img} src={track?.album?.images[0].url} alt=""/>
                 }
-                <div className={s.song__box__title}>
-                    <span className={s.song__box__text}>{track.name}</span>
-                    <div className={s.song__box__authors}>
+                <div className={s.box__title}>
+                    <span className={s.box__text}>{track.name}</span>
+                    <div className={s.box__authors}>
                         {track.artists.map(artist => (
                             <Link onClick={e => e.stopPropagation()} to={`/artist/${artist.id}`}
-                                key={artist.id} className={s.song__box__authors__author}>
+                                key={artist.id} className={s.box__authors__author}>
                                 {artist.name}
                             </Link>
                         ))}
@@ -39,15 +62,15 @@ export const Track: FC<IProps> = ({ track, index, tracks }) => {
                 </div>
             </div>
 
-            <div className={s.song__box}>
-                <Link onClick={e => e.stopPropagation()} className={s.song__box__album}
+            <div className={s.box}>
+                <Link onClick={e => e.stopPropagation()} className={s.box__album}
                     to={`/playlist/album/${track?.album?.id}`}>
                     {track?.album?.name}
                 </Link>
             </div>
 
-            <div className={s.song__box}>
-                <span className={s.song__box__text}>{timeFormatFromMilliseconds(track.duration_ms)}</span>
+            <div className={s.box}>
+                <span className={s.box__text}>{timeFormatFromMilliseconds(track.duration_ms)}</span>
             </div>
         </article>
     );

@@ -1,12 +1,10 @@
-@import './../../../../Style/hoverEffect.scss';
+@import './../../style/hoverEffect.scss';
 
 .button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
-    border: 0.2rem solid white;
+    border: 5px solid white;
     border-radius: 50%;
     background-color: inherit;
     @extend .hoverEffect
@@ -15,12 +13,8 @@
 .play {
     height: 0;
     width: 0;
-    margin-left: 3px;
     background: none;
     border: none;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: calc(10px * 2 * 0.86) solid white;
     transition: all 0.3s;    
 }
 
@@ -28,8 +22,6 @@
     position: relative;
     background: none;
     border: none;
-    height: calc(10px * 2);
-    width: calc(10px * 2 * 0.86);
     transition: all 0.3s;
     &:before, &:after {
         content: "";

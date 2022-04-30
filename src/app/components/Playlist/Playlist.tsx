@@ -1,17 +1,25 @@
 import React, { VFC } from 'react';
 import s from './Playlist.module.scss';
 
-import { EnumOfPlaylistTypes, ICollectionOfTracks } from './../../types/commonTypes';
+import { useAppActions } from '../../hooks/useAppAction';
+
+import { EnumOfPlaylistTypes, IPlaylist } from './../../types/commonTypes';
 
 import { Track } from '../Track/Track';
 
 import time from './img/time.svg';
+import { useAppSelector } from './../../hooks/useAppSelector';
 
 interface IProps {
-    tracks: ICollectionOfTracks
+    playlist: IPlaylist
 }
 
-export const Playlist: VFC<IProps> = ({ tracks }) => {
+export const Playlist: VFC<IProps> = ({ playlist }) => {
+    const playingPlaylist = useAppSelector(state => state.playerReducer.playlist);
+    const { setPlaylist } = useAppActions();
+
+    const isPlayingThisPlaylist = playingPlaylist.id === playlist.id;
+
     return (
         <section className={s.playlist}>
             <div className={s.playlist__header}>
@@ -25,7 +33,7 @@ export const Playlist: VFC<IProps> = ({ tracks }) => {
 
                 <div className={s.playlist__header__box}>
                     <span className={s.playlist__header__box__text}>
-                        {tracks.type === EnumOfPlaylistTypes.playlist ? 'Альбом' : ''}
+                        {playlist.type === EnumOfPlaylistTypes.playlist ? 'Альбом' : ''}
                     </span>
                 </div>
 
@@ -35,7 +43,10 @@ export const Playlist: VFC<IProps> = ({ tracks }) => {
             </div>
 
             <div>
-                {tracks.items.map((track, i) => <Track key={i} tracks={tracks.items} index={i} track={track}/>)}
+                {playlist.tracks.map((track, i) => (
+                    <Track key={track.id} index={i} track={track} isPlayingThisPlaylist={isPlayingThisPlaylist}
+                        setTrack={() => setPlaylist({ playlist, startIndex: i })}/>
+                ))}
             </div>
         </section>
     );

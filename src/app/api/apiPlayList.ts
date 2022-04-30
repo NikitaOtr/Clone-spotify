@@ -7,10 +7,8 @@ export const apiPlayList = {
         return api.get<IServerAlbum>(`albums/${id}`)
             .then(response => ({
                 ...response.data,
-                tracks: {
-                    type: EnumOfPlaylistTypes.album,
-                    items: response.data.tracks.items,
-                },
+                type: EnumOfPlaylistTypes.album,
+                tracks: response.data.tracks.items,
             }));
     },
 
@@ -18,10 +16,8 @@ export const apiPlayList = {
         return api.get<IServerPlayList>(`playlists/${id}`)
             .then(response => ({
                 ...response.data,
-                tracks: {
-                    type: EnumOfPlaylistTypes.playlist,
-                    items: response.data.tracks.items.map(item => item.track),
-                },
+                type: EnumOfPlaylistTypes.playlist,
+                tracks: response.data.tracks.items.map(item => item.track),
             }));
     },
 };

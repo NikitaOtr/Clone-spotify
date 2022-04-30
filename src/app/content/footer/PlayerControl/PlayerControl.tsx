@@ -6,7 +6,7 @@ import { useAppActions } from './../../../hooks/useAppAction';
 
 import { EnumOfStatusPlayer } from '../../../types/playerTypes';
 
-import { ButtonPlay } from './ButtonPlay/ButtonPlay';
+import { ButtonPlay } from '../../../components/ButtonPlay/ButtonPlay';
 import { ButtonMove } from './ButtonMove/ButtonMove';
 import { TimeControl } from './TimeControl/TimeControl';
 
@@ -57,7 +57,7 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
         <div className={s.playerControl}>
             <div className={s.playerControl__buttons}>
                 <ButtonMove img={left} onClick={() => previousTrack()}/>
-                <ButtonPlay isPlaying={isPlaying} toggle={() => togglePlaying()}/>
+                <ButtonPlay size={40} isPlaying={isPlaying} onClick={togglePlaying}/>
                 <ButtonMove img={right} onClick={() => nextTrack()}/>
             </div>
             <TimeControl audio={audio}/>

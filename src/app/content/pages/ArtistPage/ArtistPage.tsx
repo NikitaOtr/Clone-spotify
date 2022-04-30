@@ -20,7 +20,7 @@ export const ArtistPage = () => {
     const artist = useAppSelector(state => state.artistReducer.artist);
     const relatedArtists = useAppSelector(state => state.artistReducer.relatedArtists);
     const albums = useAppSelector(state => state.artistReducer.albums);
-    const tracks = useAppSelector(state => state.artistReducer.tracks);
+    const playlist = useAppSelector(state => state.artistReducer.playlist);
 
     const { fetchArtist, setStatusArtistPage } = useAppActions();
 
@@ -41,7 +41,7 @@ export const ArtistPage = () => {
     }
 
     if (status === EnumOfStatusFetching.Error ||
-        !artist || !(relatedArtists || albums || tracks)) {
+        !artist || !(relatedArtists || albums || playlist)) {
         return <Error/>;
     }
 
@@ -68,8 +68,8 @@ export const ArtistPage = () => {
                 : null
             }
 
-            {tracks && tracks.items.length
-                ? <Playlist tracks={tracks}/>
+            {playlist && playlist.tracks.length
+                ? <Playlist playlist={playlist}/>
                 : null
             }
         </div>

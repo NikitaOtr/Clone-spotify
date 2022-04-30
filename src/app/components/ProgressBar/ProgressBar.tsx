@@ -37,7 +37,7 @@ export const ProgressBar: VFC<IProps> = ({ width, progressValue, onChange, onMou
         onMouseUp && onMouseUp(progress);
     };
 
-    const styleForContainer = {
+    const styleWidth = {
         width: `${width}px`,
     };
 
@@ -51,11 +51,11 @@ export const ProgressBar: VFC<IProps> = ({ width, progressValue, onChange, onMou
     };
 
     return (
-        <div className={s.container} style={styleForContainer}
+        <div className={s.container} style={styleWidth}
             onMouseDown={onMouseDownContainer} onMouseUp={onMouseUpContainer}>
             <div className={s.progress} style={styleForProgress}/>
             <div className={s.thumb} style={styleForThumb}/>
-            <input className={s.range} type='range' onChange={onChangeValue}/>
+            <input className={s.range} type='range' style={styleWidth} onChange={onChangeValue}/>
         </div>
     );
 };

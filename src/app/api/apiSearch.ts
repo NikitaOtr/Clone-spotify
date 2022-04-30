@@ -24,9 +24,12 @@ export const apiSearch = {
                     items: response.data.playlists.items,
                 },
 
-                tracks: {
+                playlist: {
+                    id: searchText,
                     type: EnumOfPlaylistTypes.playlist,
-                    items: response.data.tracks.items,
+                    name: '',
+                    images: [],
+                    tracks: response.data.tracks.items,
                 },
             }));
     },

@@ -1,6 +1,7 @@
 import { api } from './api';
 import { EnumOfPlaylistTypes, EnumOfCollectionTypes, IRelease } from '../types/commonTypes';
 import { IServerArtists, IServerCollectionItems, IServerTracks } from '../types/serverTypes';
+import { IServerAlbum } from './../types/serverTypes';
 
 export const apiArtist =  {
     getArtist(id: string) {
@@ -20,8 +21,11 @@ export const apiArtist =  {
     getArtistTopTrack(id: string) {
         return api.get<IServerTracks>(`artists/${id}/top-tracks?market=ES`)
             .then(response => ({
+                id,
                 type: EnumOfPlaylistTypes.playlist,
-                items: response.data.tracks,
+                name: '',
+                images: [],
+                tracks: response.data.tracks,
             }));
     },
 

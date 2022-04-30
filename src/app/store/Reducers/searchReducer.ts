@@ -3,13 +3,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { apiSearch } from '../../api/apiSearch';
 
 import { EnumOfStatusFetching } from '../../types/apiTypes';
-import { ICollectionOfReleases, ICollectionOfTracks } from './../../types/commonTypes';
+import { ICollectionOfReleases, IPlaylist } from './../../types/commonTypes';
 
 interface ISearchData {
     albums: ICollectionOfReleases,
     artists: ICollectionOfReleases,
     playlists: ICollectionOfReleases,
-    tracks: ICollectionOfTracks,
+    playlist: IPlaylist,
 }
 
 const initialState = {
@@ -18,7 +18,7 @@ const initialState = {
     albums: null as null | ICollectionOfReleases,
     artists: null as null | ICollectionOfReleases,
     playlists: null as null | ICollectionOfReleases,
-    tracks: null as null | ICollectionOfTracks,
+    playlist: null as null | IPlaylist,
 };
 
 export const searchReducer = createSlice({
@@ -37,7 +37,7 @@ export const searchReducer = createSlice({
             state.albums = payload.albums;
             state.artists = payload.artists;
             state.playlists = payload.playlists;
-            state.tracks = payload.tracks;
+            state.playlist = payload.playlist;
         },
     },
 });

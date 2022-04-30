@@ -14,19 +14,19 @@ export const SearchResult = () => {
     const artists = useAppSelector(state => state.searchReducer.artists);
     const albums = useAppSelector(state => state.searchReducer.albums);
     const playlists = useAppSelector(state => state.searchReducer.playlists);
-    const tracks = useAppSelector(state => state.searchReducer.tracks);
+    const playlist = useAppSelector(state => state.searchReducer.playlist);
 
     if (status === EnumOfStatusFetching.Loading) {
         return <Loader />;
     }
 
     if (status === EnumOfStatusFetching.Error ||
-        !(artists || albums || playlists || tracks)) {
+        !(artists || albums || playlists || playlist)) {
         return <Error/>;
     }
 
     if ((artists && !artists.items.length) && (albums && !albums.items.length)
-        && (playlists && !playlists.items.length) && (tracks && !tracks.items.length)) {
+        && (playlists && !playlists.items.length) && (playlist && !playlist.tracks.length)) {
         return <div>Увы, по вашему запросу ничего не найдено</div>;
     }
 
@@ -47,8 +47,8 @@ export const SearchResult = () => {
                 : null
             }
 
-            {tracks && tracks.items.length
-                ? <Playlist tracks={tracks}/>
+            {playlist && playlist.tracks.length
+                ? <Playlist playlist={playlist}/>
                 : null
             }
         </section>

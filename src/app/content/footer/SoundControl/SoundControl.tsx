@@ -53,7 +53,7 @@ export const SoundControl: VFC<IProps> = ({ audio }) => {
             <button className={s.button} onClick={onClickButton}>
                 <img className={s.button__img} src={imgVolume} alt="Звук"/>
             </button>
-            <ProgressBar width={150} progressValue={volume} onChange={setProgressVolume}/>
+            <ProgressBar width={100} progressValue={volume} onChange={setProgressVolume}/>
         </div>
     );
 };

@@ -6,7 +6,7 @@
     position: relative;
     display: flex;
      &:hover {
-        background-color: white;
+        background-color: $colorWhite;
         .thumb {
            display: block;
         }
@@ -20,7 +20,6 @@
     -webkit-appearance: none;
     cursor: pointer;
     height: 4px;
-    width: 300px;
     opacity: 0;
     margin: 0 auto;
 }

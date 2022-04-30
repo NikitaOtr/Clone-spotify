@@ -12,14 +12,18 @@ import { Playlist } from '../../../components/Playlist/Playlist';
 import { Error } from '../../../components/Error/Error';
 import { Loader } from '../../../components/Loader/Loader';
 
-import btn from './img/greenBtn.svg';
+import { ButtonPlay } from '../../../components/ButtonPlay/ButtonPlay';
 
 export const PlaylistPage = () => {
     const history = useParams<{ type: EnumOfPlaylistTypes, id: string }>();
     const playlist = useAppSelector(state => state.playlistReducer.playlist);
     const status = useAppSelector(state => state.playlistReducer.status);
 
-    const { fetchPlaylist, setStatusPlaylist } = useAppActions();
+    const isPlaying = useAppSelector(state => state.playerReducer.isPlaying);
+    const playingPlaylist = useAppSelector(state => state.playerReducer.playlist);
+
+    const { fetchPlaylist, setStatusPlaylist, setPlaylist, togglePlaying } = useAppActions();
+
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -42,6 +46,17 @@ export const PlaylistPage = () => {
         return <Error/>;
     }
 
+    const isSetThisPlaylist = playlist.id === playingPlaylist.id;
+    const isPlayingThisPlaylist = isPlaying && isSetThisPlaylist;
+
+    const onClick = () => {
+        if (isSetThisPlaylist) {
+            togglePlaying();
+        } else {
+            setPlaylist({ playlist });
+        }
+    };
+
     return (
         <div>
             <div className={s.playlistTitle}>
@@ -56,12 +71,10 @@ export const PlaylistPage = () => {
             </div>
 
             <div className={s.playlistBtnPlay}>
-                <button className={s.playlistBtnPlay__btn}>
-                    <img className={s.playlistBtnPlay__btn__img} src={btn}/>
-                </button>
+                <ButtonPlay size={100} isPlaying={isPlayingThisPlaylist} onClick={onClick}/>
             </div>
 
-            <Playlist tracks={playlist.tracks}/>
+            <Playlist playlist={playlist}/>
         </div>
     );
 };

@@ -3,13 +3,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { apiArtist } from '../../api/apiArtist';
 
 import { EnumOfStatusFetching } from '../../types/apiTypes';
-import { ICollectionOfReleases, ICollectionOfTracks, IRelease } from '../../types/commonTypes';
+import { ICollectionOfReleases, IRelease } from '../../types/commonTypes';
+import { IPlaylist } from './../../types/commonTypes';
 
 interface IArtistData {
     artist: null | IRelease,
     relatedArtists: null | ICollectionOfReleases,
     albums: null | ICollectionOfReleases,
-    tracks: null | ICollectionOfTracks,
+    playlist: null | IPlaylist,
 }
 
 const initialState = {
@@ -17,7 +18,7 @@ const initialState = {
     artist: null as null | IRelease,
     relatedArtists: null as null | ICollectionOfReleases,
     albums: null as null | ICollectionOfReleases,
-    tracks: null as null | ICollectionOfTracks,
+    playlist: null as null | IPlaylist,
 };
 
 export const artistReducer = createSlice({
@@ -32,7 +33,7 @@ export const artistReducer = createSlice({
             state.artist = payload.artist;
             state.albums = payload.albums;
             state.relatedArtists = payload.relatedArtists;
-            state.tracks = payload.tracks;
+            state.playlist = payload.playlist;
         },
     },
 });
@@ -57,7 +58,7 @@ export const fetchArtist = createAsyncThunk(
                     artist: null,
                     albums: null,
                     relatedArtists: null,
-                    tracks: null,
+                    playlist: null,
                 };
                 if (data[0].status === 'fulfilled') {
                     objResponse.artist = data[0].value;
@@ -68,7 +69,7 @@ export const fetchArtist = createAsyncThunk(
                 }
 
                 if (data[2].status === 'fulfilled') {
-                    objResponse.tracks = data[2].value;
+                    objResponse.playlist = data[2].value;
                 }
 
                 if (data[3].status === 'fulfilled') {

@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITrack } from '../../types/commonTypes';
+
 import { EnumOfStatusPlayer } from '../../types/playerTypes';
+import { IPlaylist, ITrack } from '../../types/commonTypes';
 
 const initialState = {
     status: EnumOfStatusPlayer.Success,
     currentTrackIndex: 0,
-    playlist: [] as Array<ITrack>,
+    playlist: {} as IPlaylist,
     track: null as null | ITrack,
     saveVolume: 0.5,
     volume: 0.5,
@@ -43,21 +44,22 @@ export const playerReducer = createSlice({
             state.volume = state.saveVolume;
         },
 
-        setPlaylist(state, { payload }: PayloadAction<{playlist: Array<ITrack>, startIndex?: number}>) {
+        setPlaylist(state, { payload }: PayloadAction<{playlist: IPlaylist, startIndex?: number}>) {
             state.playlist = payload.playlist;
             state.currentTrackIndex = payload.startIndex || 0;
-            state.track = state.playlist[state.currentTrackIndex];
+            state.track = state.playlist.tracks[state.currentTrackIndex];
             state.isPlaying = true;
         },
 
         nextTrack(state) {
-            state.currentTrackIndex = (state.currentTrackIndex + 1) % state.playlist.length;
-            state.track = state.playlist[state.currentTrackIndex];
+            state.currentTrackIndex = (state.currentTrackIndex + 1) % state.playlist.tracks.length;
+            state.track = state.playlist.tracks[state.currentTrackIndex];
         },
 
         previousTrack(state) {
-            state.currentTrackIndex = (state.currentTrackIndex + (state.playlist.length - 1)) % state.playlist.length;
-            state.track = state.playlist[state.currentTrackIndex];
+            const countTracks = state.playlist.tracks.length;
+            state.currentTrackIndex = (state.currentTrackIndex + (countTracks - 1)) % countTracks;
+            state.track = state.playlist.tracks[state.currentTrackIndex];
         },
 
         setPlayerStatus(state, { payload }: PayloadAction<EnumOfStatusPlayer>) {
