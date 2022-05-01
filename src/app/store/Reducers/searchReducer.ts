@@ -6,6 +6,7 @@ import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { ICollectionOfReleases, IPlaylist } from './../../types/commonTypes';
 
 interface ISearchData {
+    searchText: string,
     albums: ICollectionOfReleases,
     artists: ICollectionOfReleases,
     playlists: ICollectionOfReleases,
@@ -14,7 +15,7 @@ interface ISearchData {
 
 const initialState = {
     status: EnumOfStatusFetching.Loading,
-    searchText: 'popular',
+    searchText: '',
     albums: null as null | ICollectionOfReleases,
     artists: null as null | ICollectionOfReleases,
     playlists: null as null | ICollectionOfReleases,
@@ -29,11 +30,8 @@ export const searchReducer = createSlice({
             state.status = payload;
         },
 
-        setSearchText(state, { payload }: PayloadAction<string>) {
-            state.searchText = payload;
-        },
-
         setData(state, { payload }: PayloadAction<ISearchData>) {
+            state.searchText = payload.searchText;
             state.albums = payload.albums;
             state.artists = payload.artists;
             state.playlists = payload.playlists;
@@ -43,7 +41,6 @@ export const searchReducer = createSlice({
 });
 
 export const searchReducerActions = {
-    setSearchText: searchReducer.actions.setSearchText,
     setStatusSearchPage: searchReducer.actions.setStatus,
 };
 
@@ -53,8 +50,11 @@ export const fetchSearch = createAsyncThunk(
     'searchReducer/fetchSearch',
     async ({ searchText }: { searchText: string }, { dispatch }) => {
         try {
-            const data = await apiSearch.getAll(searchText);
-            dispatch(setData(data));
+            const data = await apiSearch.getAll(searchText || 'popular');
+            dispatch(setData({
+                ...data,
+                searchText,
+            }));
             dispatch(setStatus(EnumOfStatusFetching.Success));
         } catch(e) {
             dispatch(setStatus(EnumOfStatusFetching.Error));

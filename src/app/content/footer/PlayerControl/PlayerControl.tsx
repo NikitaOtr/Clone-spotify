@@ -26,15 +26,11 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
         const setDurationHandler = () => setDuration(audio.duration);
         audio.addEventListener('loadedmetadata', setDurationHandler);
 
-        const downloadFullDataHandler = () => (isPlaying ? audio.play() : audio.pause());
-        audio.addEventListener('loadeddata', downloadFullDataHandler);
-
         const nextTrackHandler = () => nextTrack();
         audio.addEventListener('ended', nextTrackHandler);
 
         return () => {
             audio.removeEventListener('loadedmetadata', setDurationHandler);
-            audio.removeEventListener('loadeddata', downloadFullDataHandler);
             audio.removeEventListener('ended', nextTrackHandler);
         };
     }, []);
@@ -52,9 +48,13 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
     }, [track]);
 
     useEffect(() => {
+        const downloadFullDataHandler = () => (isPlaying ? audio.play() : audio.pause());
+        audio.addEventListener('loadeddata', downloadFullDataHandler);
+
         if (track && track.preview_url) {
             isPlaying ? audio.play() : audio.pause();
         }
+        return () => audio.removeEventListener('loadeddata', downloadFullDataHandler);
     }, [isPlaying]);
 
     return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './SearchResult.module.scss';
 
 import { useAppSelector } from '../../../../hooks/useAppSelector';
 
@@ -31,7 +32,7 @@ export const SearchResult = () => {
     }
 
     return (
-        <section>
+        <section className={s.searchResult}>
             {artists && artists.items.length
                 ? <Recommendation title='Исполнители' releases={artists}/>
                 : null

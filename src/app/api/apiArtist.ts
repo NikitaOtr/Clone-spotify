@@ -1,7 +1,6 @@
 import { api } from './api';
 import { EnumOfPlaylistTypes, EnumOfCollectionTypes, IRelease } from '../types/commonTypes';
 import { IServerArtists, IServerCollectionItems, IServerTracks } from '../types/serverTypes';
-import { IServerAlbum } from './../types/serverTypes';
 
 export const apiArtist =  {
     getArtist(id: string) {

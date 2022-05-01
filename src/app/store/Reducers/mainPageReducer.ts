@@ -41,7 +41,7 @@ export const fetchMainPage = createAsyncThunk(
     'mainPageReducer/fetchMainPage',
     async (_, { dispatch }) => {
         Promise.allSettled([
-            apiSearch.getPlaylists('max', 6),
+            apiSearch.getPlaylists('Zara Larsson', 6),
             apiSearch.getPlaylists('Dua', 10),
             apiSearch.getPlaylists('nik', 10),
             apiSearch.getPlaylists('lol', 10),
@@ -68,6 +68,6 @@ export const fetchMainPage = createAsyncThunk(
                 dispatch(setData(objResponse));
                 dispatch(setStatus(EnumOfStatusFetching.Success));
             })
-            .catch(e => dispatch(setStatus(EnumOfStatusFetching.Error)));
+            .catch(() => dispatch(setStatus(EnumOfStatusFetching.Error)));
     },
 );

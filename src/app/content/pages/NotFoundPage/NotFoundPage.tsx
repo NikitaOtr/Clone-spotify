@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export const NotFoundPage = () => {
     return (
         <div className={s.container}>
-            <h1>Страница не найдена</h1>
+            <h2 className={s.title}>Страница не найдена</h2>
             <Link to='/' className={s.link}>Главная</Link>
         </div>
     );

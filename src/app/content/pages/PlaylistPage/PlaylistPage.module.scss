@@ -1,5 +1,11 @@
 @import './../../../style/Vars.scss';
 
+.playlist {
+    display: flex;
+    flex-direction: column;
+    gap: 30px
+}
+
 .playlistTitle {
     display: grid;
     grid-template-columns: 1fr 2fr;

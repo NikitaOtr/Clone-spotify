@@ -27,7 +27,7 @@ export const Track: VFC<IProps> = ({ track, index, setTrack, isSetThisPlaylist }
     const isChooseThisTrack = isSetThisPlaylist && playingTrack?.id === track.id;
     const isPlayingThisTrack = isPlaying && isChooseThisTrack;
 
-    const onClick = () => {
+    const onClickHandler = () => {
         if (isPlayingThisTrack) {
             togglePlaying();
         } else {
@@ -36,18 +36,18 @@ export const Track: VFC<IProps> = ({ track, index, setTrack, isSetThisPlaylist }
     };
 
     return (
-        <article onClick={onClick} className={isChooseThisTrack ? s.isChooseSong : s.song}
+        <article onClick={onClickHandler} className={isChooseThisTrack ? s.isChooseSong : s.song}
             onMouseEnter={() => setActive(true)} onMouseLeave={() => setActive(false)}>
             <div className={s.box}>
                 {isChooseThisTrack || active
-                    ? <ButtonPlay size={30} isPlaying={isPlayingThisTrack} />
+                    ? <ButtonPlay size={30} isPlaying={isPlayingThisTrack}/>
                     : <span className={s.box__text}>{index + 1}</span>
                 }
             </div>
 
             <div className={s.box}>
                 {track.album?.images?.[0].url &&
-                    <img className={s.box__img} src={track?.album?.images[0].url} alt=""/>
+                    <img className={s.box__img} src={track.album?.images[0]?.url}/>
                 }
                 <div className={s.box__title}>
                     <span className={s.box__text}>{track.name}</span>

@@ -58,7 +58,7 @@ export const PlaylistPage = () => {
     };
 
     return (
-        <div>
+        <div className={s.playlist}>
             <div className={s.playlistTitle}>
                 <div className={s.boxImg}>
                     <div className={s.boxImg__container}>

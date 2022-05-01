@@ -10,7 +10,6 @@ import { Mixes } from './Mixes/Mixes';
 import { Recommendation } from '../../../components/Recommendation/Recommendation';
 import { Loader } from '../../../components/Loader/Loader';
 import { Error } from '../../../components/Error/Error';
-import { ProgressBar } from '../../../components/ProgressBar/ProgressBar';
 
 export const MainPage = () => {
     const status = useAppSelector(state => state.mainPageReducer.status);
@@ -20,6 +19,7 @@ export const MainPage = () => {
     const { fetchMainPage, setStatusMainPage } = useAppActions();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchMainPage();
         return () => {
             setStatusMainPage(EnumOfStatusFetching.Loading);
@@ -27,7 +27,7 @@ export const MainPage = () => {
     }, []);
 
     if (status === EnumOfStatusFetching.Loading) {
-        return <Loader />;
+        return <Loader/>;
     }
 
     if (status === EnumOfStatusFetching.Error ||
@@ -36,7 +36,7 @@ export const MainPage = () => {
     }
 
     return (
-        <div>
+        <div className={s.mainPage}>
             <h1 className={s.headline}>Добрый день</h1>
             {mixes && <Mixes mixes={mixes}/>}
             {collectionOfPlaylists.map(playlist => (
