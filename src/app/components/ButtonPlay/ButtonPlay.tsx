@@ -28,12 +28,12 @@ export const ButtonPlay: VFC<IProps> = ({ size, isPlaying, onClick }) => {
         width: `${sizeElement * 1.8}px`,
     };
 
-    const clickHandler = (e: MouseEvent<HTMLElement>) => {
+    const onClickHandler = (e: MouseEvent<HTMLElement>) => {
         onClick && onClick(e);
     };
 
     return (
-        <button className={s.button} style={styleButton} onClick={clickHandler}>
+        <button className={s.button} style={styleButton} onClick={onClickHandler}>
             <div style={isPlaying ? stylePause : stylePlay} className={isPlaying ? s.pause : s.play }></div>
         </button>
     );

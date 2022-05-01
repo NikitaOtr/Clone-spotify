@@ -1,4 +1,4 @@
-import React, { VFC, useEffect, useMemo } from 'react';
+import React, { VFC, useEffect } from 'react';
 import s from './SoundControl.module.scss';
 
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -28,7 +28,7 @@ export const SoundControl: VFC<IProps> = ({ audio }) => {
         setVolume(volume);
     };
 
-    const imgVolume = useMemo(() => {
+    const getImgVolume = () => {
         if (volume === 0) {
             return noVolume;
         } else if (volume < 0.33) {
@@ -38,7 +38,7 @@ export const SoundControl: VFC<IProps> = ({ audio }) => {
         } else {
             return loudVolume;
         }
-    }, [volume]);
+    };
 
     const onClickButton = () => {
         if (volume) {
@@ -51,7 +51,7 @@ export const SoundControl: VFC<IProps> = ({ audio }) => {
     return (
         <div className={s.sound}>
             <button className={s.button} onClick={onClickButton}>
-                <img className={s.button__img} src={imgVolume} alt="Звук"/>
+                <img className={s.button__img} src={getImgVolume()} alt="Звук"/>
             </button>
             <ProgressBar width={100} progressValue={volume} onChange={setProgressVolume}/>
         </div>

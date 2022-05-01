@@ -23,7 +23,8 @@ api.interceptors.response.use(
             originalRequest._isRetry = true;
             await tokenInstance.getToken();
             return api.request(originalRequest);
+        } else {
+            throw error;
         }
-        throw error;
     },
 );
