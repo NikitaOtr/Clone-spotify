@@ -1,4 +1,5 @@
 @import './../../../style/Vars.scss';
+@import './../../../style/hoverEffects.scss';
 
 .musicTitle {
     display: flex;
@@ -35,9 +36,6 @@
     &__text {
         font-size: 12px;
         font-weight: 400;
-        &:hover {
-            text-decoration: underline;
-            color: $colorGreen;
-        }
+        @extend .hoverEffectTextDecoration;
     }
 }

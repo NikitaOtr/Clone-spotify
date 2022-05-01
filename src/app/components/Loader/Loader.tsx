@@ -1,7 +1,7 @@
-import React, { VFC } from 'react';
+import React from 'react';
 import s from './Loader.module.scss';
 
-export const Loader: VFC = () => {
+export const Loader = () => {
     return (
         <div className={s.skFadingCircleWrap}>
             <div className={s.skFadingCircle}>

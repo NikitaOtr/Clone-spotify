@@ -1,5 +1,4 @@
-@import './../../../Style/Vars.scss';
-@import './../../../Style/hoverEffect.scss';
+@import './../../../style/hoverEffects.scss';
 
 .sound {
     display: flex;
@@ -13,11 +12,11 @@
     padding: 0;
     border: none;
     background-color: inherit;
-    @extend .hoverEffect;
     &__img {
         transition: all 0.2s;
         height: 30px;
     }
+    @extend .hoverEffectOpacity;
     &:active {
         .button__img {
             height: 27px;

@@ -18,7 +18,7 @@ export const Playlist: VFC<IProps> = ({ playlist }) => {
     const playingPlaylist = useAppSelector(state => state.playerReducer.playlist);
     const { setPlaylist } = useAppActions();
 
-    const isPlayingThisPlaylist = playingPlaylist.id === playlist.id;
+    const isSetThisPlaylist = playingPlaylist.id === playlist.id;
 
     return (
         <section className={s.playlist}>
@@ -44,7 +44,7 @@ export const Playlist: VFC<IProps> = ({ playlist }) => {
 
             <div>
                 {playlist.tracks.map((track, i) => (
-                    <Track key={track.id} index={i} track={track} isPlayingThisPlaylist={isPlayingThisPlaylist}
+                    <Track key={track.id} index={i} track={track} isSetThisPlaylist={isSetThisPlaylist}
                         setTrack={() => setPlaylist({ playlist, startIndex: i })}/>
                 ))}
             </div>

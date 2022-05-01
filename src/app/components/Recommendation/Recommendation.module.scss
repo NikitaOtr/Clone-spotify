@@ -1,4 +1,4 @@
-@import './../../Style/Vars.scss';
+@import './../../style/hoverEffects.scss';
 
 .recommendation {
     margin-bottom: 30px;
@@ -14,19 +14,13 @@
         transition: all 0.2s;
         font-size: 28px;
         font-weight: 600;
-        &:hover {
-            text-decoration: underline;
-            color: $colorGreen;
-        }
+        @extend .hoverEffectTextDecoration;
     }
     &__all {
         transition: all 0.2s;
         font-size: 16px;
         font-weight: 600;
-        &:hover {
-            text-decoration: underline;
-            color: $colorGreen;
-        }
+        @extend .hoverEffectTextDecoration;
     }
 }
 

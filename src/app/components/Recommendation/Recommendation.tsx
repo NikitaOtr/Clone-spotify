@@ -1,9 +1,10 @@
 import React, { VFC } from 'react';
 import s from './Recommendation.module.scss';
-import { Link } from 'react-router-dom';
 
-import { Release } from '../Release/Release';
 import { ICollectionOfReleases } from '../../types/commonTypes';
+
+import { Link } from 'react-router-dom';
+import { Release } from '../Release/Release';
 
 interface IProps {
     title: string,

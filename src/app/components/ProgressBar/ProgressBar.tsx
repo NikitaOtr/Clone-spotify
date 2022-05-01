@@ -18,7 +18,7 @@ export const ProgressBar: VFC<IProps> = ({ width, progressValue, onChange, onMou
         }
     }, [progressValue]);
 
-    const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+    const ChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = +e.target.value / 100;
         if (onChange) {
             isDependence.current = true;
@@ -28,11 +28,11 @@ export const ProgressBar: VFC<IProps> = ({ width, progressValue, onChange, onMou
         }
     };
 
-    const onMouseDownContainer = () => {
+    const MouseDownHandler = () => {
         isDependence.current = false;
     };
 
-    const onMouseUpContainer = () => {
+    const MouseUpHandler = () => {
         isDependence.current = true;
         onMouseUp && onMouseUp(progress);
     };
@@ -52,10 +52,10 @@ export const ProgressBar: VFC<IProps> = ({ width, progressValue, onChange, onMou
 
     return (
         <div className={s.container} style={styleWidth}
-            onMouseDown={onMouseDownContainer} onMouseUp={onMouseUpContainer}>
+            onMouseDown={MouseDownHandler} onMouseUp={MouseUpHandler}>
             <div className={s.progress} style={styleForProgress}/>
             <div className={s.thumb} style={styleForThumb}/>
-            <input className={s.range} type='range' style={styleWidth} onChange={onChangeValue}/>
+            <input className={s.range} type='range' style={styleWidth} onChange={ChangeHandler}/>
         </div>
     );
 };

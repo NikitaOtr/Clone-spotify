@@ -12,19 +12,19 @@ import { ButtonPlay } from './../ButtonPlay/ButtonPlay';
 
 interface IProps {
     index: number,
-    isPlayingThisPlaylist: boolean;
+    isSetThisPlaylist: boolean;
     track: ITrack,
     setTrack: () => void,
 }
 
-export const Track: VFC<IProps> = ({ track, index, setTrack, isPlayingThisPlaylist }) => {
+export const Track: VFC<IProps> = ({ track, index, setTrack, isSetThisPlaylist }) => {
     const playingTrack = useAppSelector(state => state.playerReducer.track);
     const isPlaying = useAppSelector(state => state.playerReducer.isPlaying);
     const [active, setActive] = useState(false);
 
     const { togglePlaying } = useAppActions();
 
-    const isChooseThisTrack = isPlayingThisPlaylist && playingTrack?.id === track.id;
+    const isChooseThisTrack = isSetThisPlaylist && playingTrack?.id === track.id;
     const isPlayingThisTrack = isPlaying && isChooseThisTrack;
 
     const onClick = () => {
@@ -46,7 +46,7 @@ export const Track: VFC<IProps> = ({ track, index, setTrack, isPlayingThisPlayli
             </div>
 
             <div className={s.box}>
-                {track.album?.images[0]?.url &&
+                {track.album?.images?.[0].url &&
                     <img className={s.box__img} src={track?.album?.images[0].url} alt=""/>
                 }
                 <div className={s.box__title}>

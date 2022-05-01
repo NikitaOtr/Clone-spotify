@@ -1,23 +1,22 @@
-@import './../../Style/Vars.scss';
-@import './../../Style/hoverEffect.scss';
+@import './../../style/hoverEffects.scss';
 
 .aside {
     display: flex;
     flex-direction: column;
     gap: 20px;
     grid-column: 1/2;
-    background-color: black;
-    &__line {
-        height: 2px;
-        width: 200px;
-        margin: 0 auto;
-        background-color: rgba(255, 255, 255, .3);
-    }
+    background-color: black;  
+}
+
+.line {
+    height: 2px;
+    width: 200px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, .3);
 }
 
 .containerLink {
     display: flex;
-    @extend .hoverEffect;
 }
 
 .logo {
@@ -27,32 +26,5 @@
     gap: 16px;
     padding: 15px 24px;
     z-index: 50;
+    @extend .hoverEffectOpacity;
 }
-
-.navigation {
-    &__link {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 0 24px;
-        z-index: 50;
-        height: 40px;
-    }
-    &__img {
-        height: 25px;
-        width: 25px;
-    }
-    &__text {
-        font-size: 16px;
-        font-weight: 600;
-    }
-}
-
-.active {
-    color: $colorGreen;
-    .navigation__img * {
-        fill: $colorGreen;
-    }
-}
-

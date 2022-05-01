@@ -23,22 +23,26 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
     const track = useAppSelector(state => state.playerReducer.track);
 
     useEffect(() => {
-        const callback = () => setDuration(audio.duration);
-        audio.addEventListener('loadedmetadata', callback);
-        return () => audio.removeEventListener('loadedmetadata', callback);
-    }, []);
+        const setDurationHandler = () => setDuration(audio.duration);
+        audio.addEventListener('loadedmetadata', setDurationHandler);
 
-    useEffect(() => {
-        const callback = () => nextTrack();
-        audio.addEventListener('ended', callback);
-        return () => audio.removeEventListener('ended', callback);
+        const downloadFullDataHandler = () => (isPlaying ? audio.play() : audio.pause());
+        audio.addEventListener('loadeddata', downloadFullDataHandler);
+
+        const nextTrackHandler = () => nextTrack();
+        audio.addEventListener('ended', nextTrackHandler);
+
+        return () => {
+            audio.removeEventListener('loadedmetadata', setDurationHandler);
+            audio.removeEventListener('loadeddata', downloadFullDataHandler);
+            audio.removeEventListener('ended', nextTrackHandler);
+        };
     }, []);
 
     useEffect(() => {
         if (track) {
             if (track.preview_url) {
                 audio.src = track.preview_url;
-                isPlaying ? audio.play() : audio.pause();
                 setPlayerStatus(EnumOfStatusPlayer.Success);
             } else {
                 audio.src = '';
@@ -56,9 +60,9 @@ export const PlayerControl: VFC<IProps> = ({ audio }) => {
     return (
         <div className={s.playerControl}>
             <div className={s.playerControl__buttons}>
-                <ButtonMove img={left} onClick={() => previousTrack()}/>
+                <ButtonMove img={left} onClick={previousTrack}/>
                 <ButtonPlay size={40} isPlaying={isPlaying} onClick={togglePlaying}/>
-                <ButtonMove img={right} onClick={() => nextTrack()}/>
+                <ButtonMove img={right} onClick={nextTrack}/>
             </div>
             <TimeControl audio={audio}/>
         </div>

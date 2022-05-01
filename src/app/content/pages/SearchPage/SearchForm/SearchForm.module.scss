@@ -1,5 +1,4 @@
 @import './../../../../Style/Vars.scss';
-@import './../../../../style/hoverEffect.scss';
 
 .searchForm {
     display: flex;
@@ -24,7 +23,6 @@
     font-size: 16px;
     font-weight: 600;
     border: none;
-    @extend .hoverEffect;
     &:active {
         border: 3px green solid;
     }

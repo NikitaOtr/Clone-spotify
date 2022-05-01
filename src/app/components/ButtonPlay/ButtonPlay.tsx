@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react';
+import React, { VFC, MouseEvent } from 'react';
 import s from './ButtonPlay.module.scss';
 
 interface IProps {
@@ -7,34 +7,33 @@ interface IProps {
     onClick?: (e: MouseEvent<HTMLElement>) => void,
 }
 
-export const ButtonPlay: FC<IProps> = ({ size, isPlaying, onClick }) => {
+export const ButtonPlay: VFC<IProps> = ({ size, isPlaying, onClick }) => {
     const styleButton = {
         width: `${size}px`,
         height: `${size}px`,
-        border: `${size / 8}px solid white`,
+        borderWidth: `${size / 8}px`,
     };
 
     const sizeElement = size / 4;
 
     const stylePlay = {
-        borderTop: `${sizeElement}px solid transparent`,
-        borderBottom: `${sizeElement}px solid transparent`,
-        borderLeft: `calc(${sizeElement}px * 1.72) solid white`,
+        borderTopWidth: `${sizeElement}px`,
+        borderBottomWidth: `${sizeElement}px`,
+        borderLeftWidth: `${sizeElement * 1.8}px`,
         marginLeft: `${size / 15}px`,
     };
 
     const stylePause = {
-        height: `calc(${sizeElement}px * 2)`,
-        width: `calc(${sizeElement}px * 2 * 0.86)`,
+        height: `${sizeElement * 2}px`,
+        width: `${sizeElement * 1.8}px`,
     };
 
-    const t = (e: MouseEvent<HTMLElement>) => {
+    const clickHandler = (e: MouseEvent<HTMLElement>) => {
         onClick && onClick(e);
-
     };
 
     return (
-        <button className={s.button} style={styleButton} onClick={t}>
+        <button className={s.button} style={styleButton} onClick={clickHandler}>
             <div style={isPlaying ? stylePause : stylePlay} className={isPlaying ? s.pause : s.play }></div>
         </button>
     );

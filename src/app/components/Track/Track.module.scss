@@ -1,4 +1,6 @@
 @import './../../style/Vars.scss';
+@import './../../style/hoverEffects.scss';
+
 .song {
     display: grid;
     grid-template-rows: 50px;
@@ -45,10 +47,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        &:hover {
-                text-decoration: underline;
-                color: $colorGreen;
-            }
+        @extend .hoverEffectTextDecoration
     }
     &__img {
         height: 40px;
@@ -64,11 +63,8 @@
         display: flex;
         gap: 10px;
         &__author {
-        font-weight: 500;
-            &:hover {
-                text-decoration: underline;
-                color: $colorGreen;
-            }
+            font-weight: 500;
+            @extend .hoverEffectTextDecoration
         }
     }
 }

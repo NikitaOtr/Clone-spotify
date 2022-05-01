@@ -1,0 +1,16 @@
+@import './Vars.scss';
+
+.hoverEffectOpacity {
+    opacity: 0.7;
+    transition: all linear .2s;
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.hoverEffectTextDecoration {
+    &:hover {
+        text-decoration: underline;
+        color: $colorGreen;
+    }
+}

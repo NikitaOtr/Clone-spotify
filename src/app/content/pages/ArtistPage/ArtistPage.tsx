@@ -50,7 +50,7 @@ export const ArtistPage = () => {
             <div className={s.artistTitle}>
                 <div className={s.boxImg}>
                     <div className={s.boxImg__container}>
-                        <img className={s.boxImg__container__img} src={artist.images[0]?.url || question } alt=""/>
+                        <img className={s.boxImg__container__img} src={artist.images?.[0].url || question }/>
                     </div>
                 </div>
                 <div className={s.artistTitle__boxText}>

@@ -41,20 +41,3 @@
     }
     
 }
-
-.playlistBtnPlay {
-    padding: 40px 20px;
-    &__btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 70px;
-        width: 70px;
-        border-radius: 500px;
-        border: none;
-        background-color: $colorGreen;
-        &__img {
-            width: 50px;
-        }
-    }
-}
