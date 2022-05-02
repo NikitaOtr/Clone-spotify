@@ -2,7 +2,7 @@ import React, { VFC, useEffect } from 'react';
 import s from './PlayerControl.module.scss';
 
 import { useAppSelector } from '../../../hooks/useAppSelector';
-import { useAppActions } from './../../../hooks/useAppAction';
+import { useAppActions } from '../../../hooks/useAppAction';
 
 import { EnumOfStatusPlayer } from '../../../types/playerTypes';
 

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { apiSearch } from './../../api/apiSearch';
-import { apiArtist } from './../../api/apiArtist';
+import { apiSearch } from '../../api/apiSearch';
+import { apiArtist } from '../../api/apiArtist';
 
 import { EnumOfStatusFetching } from '../../types/apiTypes';
 import { EnumOfCollectionTypes, ICollectionOfReleases } from '../../types/commonTypes';

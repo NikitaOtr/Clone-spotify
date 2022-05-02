@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 import s from './ButtonMove.module.scss';
 
 interface IProps {
@@ -6,7 +6,7 @@ interface IProps {
     onClick(): void
 }
 
-export const ButtonMove: FC<IProps> = ({ img, onClick }) => {
+export const ButtonMove: VFC<IProps> = ({ img, onClick }) => {
     return (
         <button onClick={onClick} className={s.button}>
             <img className={s.button__img} src={img}/>
