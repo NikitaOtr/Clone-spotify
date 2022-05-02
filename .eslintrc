@@ -29,7 +29,7 @@
         ],
         "linebreak-style": [
             "warn",
-            "windows"
+            "unix"
         ],
         "semi": [
             "warn",
